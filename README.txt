@@ -1,8 +1,11 @@
-KiCad README
+KiCad-eSim README
+* This particular repository is of version 4.0.7 from KiCad EDA tool, maintained by eSim Team of  FOSSEE project at IIT Bombay (contact-esim@fossee.in) to be used in eSim EDA tool*
+
 ============
 For specific documentation like Compiling, GUI translation, Old changelogs see the
 Documentation subfolder.
 
+This partic
 Files
 -----
 AUTHORS.txt         - The authors, contributors, document writers and translators list
