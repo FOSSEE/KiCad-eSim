@@ -40,6 +40,8 @@ Mario Luzeiro <mrluzeiro[at]ua-dot-pt>
 Mateusz Skowroński <skowri[at]gmail-dot-com>
 See also CHANGELOG.txt for contributors.
 
+== eSim Contributors
+Saurabh Bansode <saurabhbansode[at]gmail-dot-com>
 
 == Document Writers
 Jean-Pierre Charras <jean-pierre.charras[at]gipsa-lab.inpg-dot-fr>
