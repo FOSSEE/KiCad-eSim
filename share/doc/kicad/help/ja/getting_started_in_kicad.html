@@ -1,0 +1,2877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="AsciiDoc 8.6.8">
+<title>KiCadことはじめ</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #777777;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+tt {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+.monospaced {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+/*
+ * Theme specific overrides of the preceding (asciidoc.css) CSS.
+ *
+ */
+body {
+  font-family: Garamond, Georgia, serif;
+  font-size: 17px;
+  color: #3E4349;
+  line-height: 1.3em;
+}
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Garmond, Georgia, serif;
+  font-weight: normal;
+  border-bottom-width: 0;
+  color: #3E4349;
+}
+div.title, caption.title { color: #596673; font-weight: bold; }
+h1 { font-size: 240%; }
+h2 { font-size: 180%; }
+h3 { font-size: 150%; }
+h4 { font-size: 130%; }
+h5 { font-size: 115%; }
+h6 { font-size: 100%; }
+#header h1 { margin-top: 0; }
+#toc {
+  color: #444444;
+  line-height: 1.5;
+  padding-top: 1.5em;
+}
+#toctitle {
+  font-size: 20px;
+}
+#toc a {
+    border-bottom: 1px dotted #999999;
+    color: #444444 !important;
+    text-decoration: none !important;
+}
+#toc a:hover {
+    border-bottom: 1px solid #6D4100;
+    color: #6D4100 !important;
+    text-decoration: none !important;
+}
+div.toclevel1 { margin-top: 0.2em; font-size: 16px; }
+div.toclevel2 { margin-top: 0.15em; font-size: 14px; }
+em, dt, td.hdlist1 { color: black; }
+strong { color: #3E4349; }
+a { color: #004B6B; text-decoration: none; border-bottom: 1px dotted #004B6B; }
+a:visited { color: #615FA0; border-bottom: 1px dotted #615FA0; }
+a:hover { color: #6D4100; border-bottom: 1px solid #6D4100; }
+div.tableblock > table, table.tableblock { border: 3px solid #E8E8E8; }
+th.tableblock, td.tableblock { border: 1px solid #E8E8E8; }
+ul > li > * { color: #3E4349; }
+pre, tt, .monospaced { font-family: Consolas,Menlo,'Deja Vu Sans Mono','Bitstream Vera Sans Mono',monospace; }
+tt, .monospaced { font-size: 0.9em; color: black;
+}
+div.exampleblock > div.content, div.sidebarblock > div.content, div.listingblock > div.content { border-width: 0 0 0 3px; border-color: #E8E8E8; }
+div.verseblock { border-left-width: 0; margin-left: 3em; }
+div.quoteblock { border-left-width: 3px; margin-left: 0; margin-right: 0;}
+div.admonitionblock td.content { border-left: 3px solid #E8E8E8; }
+
+
+@media screen {
+  body {
+    max-width: 50em; /* approximately 80 characters wide */
+    margin-left: 16em;
+  }
+
+  #toc {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 13em;
+    padding: 0.5em;
+    padding-bottom: 1.5em;
+    margin: 0;
+    overflow: auto;
+    border-right: 3px solid #f8f8f8;
+    background-color: white;
+  }
+
+  #toc .toclevel1 {
+    margin-top: 0.5em;
+  }
+
+  #toc .toclevel2 {
+    margin-top: 0.25em;
+    display: list-item;
+    color: #aaaaaa;
+  }
+
+  #toctitle {
+    margin-top: 0.5em;
+  }
+}
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install(2);
+/*]]>*/
+</script>
+</head>
+<body class="book">
+<div id="header">
+<h1>KiCadことはじめ</h1>
+<span id="author">The KiCad Team</span><br>
+<div id="toc">
+  <div id="toctitle">目次</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p><em>洗練された電子プリント回路基板の開発を成功に導く、KiCadをマスターするための必須で簡潔なガイド</em></p></div>
+<div class="paragraph" id="copyright"><p><strong>著作権</strong></p></div>
+<div class="paragraph"><p>このドキュメントは以下の貢献者により著作権所有 &#169; 2010-2015 されています。あなたは、GNU General Public License
+( <a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html</a> ) のバージョン 3 以降、あるいはクリエイティブ・コモンズ・ライセンス
+( <a href="http://creativecommons.org/licenses/by/3.0/">http://creativecommons.org/licenses/by/3.0/</a> ) のバージョン 3.0
+以降のいずれかの条件の下で、配布または変更することができます。</p></div>
+<div class="paragraph"><p>このガイドの中のすべての商標は、正当な所有者に帰属します。</p></div>
+<div class="paragraph" id="contributors"><p>*貢献者*</p></div>
+<div class="paragraph"><p>David Jahshan, Phil Hutchinson, Fabrizio Tappero, Christina Jarron, Melroy
+van den Berg.</p></div>
+<div class="paragraph" id="translation"><p><strong>翻訳</strong></p></div>
+<div class="paragraph"><p>kinichiro &lt;kinichiro.inoguchi AT gmail.com&gt;, 2015.
+silvermoon &lt;silvermoon AT kicad.jp&gt;, 2011-2015.
+yoneken &lt;yoneken AT kicad.jp&gt;, 2011-2015.</p></div>
+<div class="paragraph" id="feedback"><p><strong>フィードバック</strong></p></div>
+<div class="paragraph"><p>バグ報告や提案はこちらへお知らせください:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+KiCad のドキュメントについて : <a href="https://github.com/KiCad/kicad-doc/issues">https://github.com/KiCad/kicad-doc/issues</a>
+</p>
+</li>
+<li>
+<p>
+KiCad ソフトウェアについて : <a href="https://bugs.launchpad.net/kicad">https://bugs.launchpad.net/kicad</a>
+</p>
+</li>
+<li>
+<p>
+KiCad ソフトウェアの国際化について : <a href="https://github.com/KiCad/kicad-i18n/issues">https://github.com/KiCad/kicad-i18n/issues</a>
+</p>
+</li>
+</ul></div>
+<div class="paragraph" id="publication_date"><p><strong>発行日</strong></p></div>
+<div class="paragraph"><p>2015年5月16日</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="introduction-to-kicad">1. KiCadのご紹介</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>KiCadは、電子回路図とPCBレイアウトを作成するためのオープンソースのソフトウェア・ツールです。その一つの外観の下に、KiCadは、以下の独立したソフトウェア・ツール群のすばらしい組み合わせを実現しています:</p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:33%;">
+<col style="width:33%;">
+<col style="width:33%;">
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" >プログラム名</th>
+<th class="tableblock halign-left valign-top" >説明</th>
+<th class="tableblock halign-left valign-top" >拡張子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">KiCad</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">プロジェクト・マネージャ</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="monospaced">*.pro</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Eeschema</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">回路図エディタ (回路図とコンポーネント)</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="monospaced">*.sch, *.lib, *.net</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">CvPcb</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">フットプリント・セレクタ</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="monospaced">*.net</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Pcbnew</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">PCBレイアウト</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="monospaced">*.kicad_pcb</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">GerbView</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">ガーバー・ビューア</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">全ての通常のガーバー</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Bitmap2Component</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">ビットマップをコンポーネントやフットプリントに変換</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="monospaced">*.lib, *.kicad_mod, *.kicad_wks</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">PCB Calculator</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">コンポーネント、線幅、電気的安全間隔、カラーコード等のための計算機</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">なし</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Pl Editor</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">図枠エディタ</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="monospaced">*.kicad_wks</span></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">注</div>
+</td>
+<td class="content">拡張子の一覧は完全ではなく、KiCadが連携するファイルの一部のみを含んでおり、どのファイルがどのKiCad固有のアプリケーションで使われるのかの基本的な理解に役立ちます。</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>KiCadは、複雑な電子基板の開発やメンテナンスに十分使えるほどに成熟していると考えることができます。</p></div>
+<div class="paragraph"><p>KiCadには基板サイズの制限がなく、最大32の導体レイヤ、最大14のテクニカルレイヤそして最大4の補助レイヤを容易に扱えます。KiCadは、ガーバー・ファイル、ドリル・ファイル、コンポーネント・ロケーション・ファイル等のプリント基板作成に必要な全てのファイルを作ることができます。</p></div>
+<div class="paragraph"><p>オープンソース(GPLライセンスに基づく)であるため、KiCadは、オープンソース志向の電子機器作成プロジェクトに理想的なツールです。</p></div>
+<div class="paragraph"><p>インターネット上のKiCadのホームページ:</p></div>
+<div class="paragraph"><p><a href="http://www.kicad-pcb.org/">http://www.kicad-pcb.org/</a></p></div>
+<div class="sect2">
+<h3 id="download-and-install-kicad">1.1. KiCadのダウンロードとインストール</h3>
+<div class="paragraph"><p>KiCad は GNU/Linux、Apple OS X、Windows で動作します。以下の URL
+で最新のインストール手順とダウンロードのリンクが見つかります:</p></div>
+<div class="paragraph"><p><a href="http://www.kicad-pcb.org/download/">http://www.kicad-pcb.org/download/</a></p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">重要</div>
+</td>
+<td class="content">KiCad 安定版は
+<a href="http://ci.kicad-pcb.org/job/kicad-doxygen/ws/Documentation/doxygen/html/md_Documentation_development_stable-release-policy.html">KiCad
+Stable Release Policy</a>
+に基づいて定期的にリリースされます。新機能は継続的に開発ブランチに追加されています。もしあなたが新機能を活用したりテストをするなら、あなたのプラットホームの最新の夜間ビルドをダウンロードしてください。夜間ビルドにはバグがあるかもしれませんが、KiCad
+開発チームは新機能の開発中も開発ブランチを可能な限り使用可能にしておくことを目標にしています。</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="under-linux">1.2. GNU/Linuxの場合</h3>
+<div class="paragraph"><div class="title">安定版：</div><p>KiCad の安定版はほとんどのディストリビューション・パッケージ・マネージャで kicad と kicad-doc
+として見つけることができます。もしあなたがお使いのディストリビューションが最新の安定版を提供してなければ、不安定版の指示に従って、最新の安定版を選択してインストールしてください。</p></div>
+<div class="paragraph"><div class="title">不安定版（夜間の開発中ビルド）：</div><p>不安定版は最新のソースコードからビルドされます。不安定版は、ファイルを壊したり、悪いガーバーを生成したり等のバグがあることもありますが、一般的には安定しており、そして最新の機能を持っています。</p></div>
+<div class="paragraph"><p>Ubuntu の場合、KiCad の不安定版の夜間ビルドをインストールする最も簡単な方法は <em>PPA</em> と <em>Aptitude</em>
+によるものです。端末で次のようにタイプします:</p></div>
+<div class="quoteblock">
+<div class="content">
+<div class="paragraph"><p>sudo add-apt-repository ppa:js-reynaud/ppa-kicad</p></div>
+<div class="paragraph"><p>sudo aptitude update &amp;&amp; sudo aptitude safe-upgrade</p></div>
+<div class="paragraph"><p>sudo aptitude install kicad kicad-doc-en</p></div>
+</div>
+<div class="attribution">
+</div></div>
+<div class="paragraph"><p>Fedora の場合、KiCad の不安定版の夜間ビルドをインストールする最も簡単な方法は  <em>copr</em> によるものです。KiCad を copr
+でインストールするには端末で次のようにタイプします:</p></div>
+<div class="quoteblock">
+<div class="content">
+<div class="paragraph"><p>sudo dnf copr enable mangelajo/kicad</p></div>
+<div class="paragraph"><p>sudo dnf install kicad</p></div>
+</div>
+<div class="attribution">
+</div></div>
+<div class="paragraph"><p>あるいは、コンパイル済みバージョンのKiCadをダウンロードしてインストールしたり、直接KiCadのソースコードをダウンロードしてコンパイルしてインストールすることもできます。</p></div>
+</div>
+<div class="sect2">
+<h3 id="under-apple-os-x">1.3. Apple OS Xの場合</h3>
+<div class="paragraph"><div class="title">安定版：</div><p>OS X 用の安定版の KiCad は以下の URL で見つけられます:<br>
+<a href="http://downloads.kicad-pcb.org/osx/stable/">http://downloads.kicad-pcb.org/osx/stable/</a></p></div>
+<div class="paragraph"><div class="title">不安定版（夜間の開発中ビルド）：</div><p>不安定版は最新のソースコードからビルドされます。不安定版は、ファイルを壊したり、悪いガーバーを生成したり等のバグがあることもありますが、一般的には安定しており、そして最新の機能を持っています。</p></div>
+<div class="paragraph"><p>不安定版の夜間ビルドは以下の URL で見つけられます:<br>
+<a href="http://downloads.kicad-pcb.org/osx/">http://downloads.kicad-pcb.org/osx/</a></p></div>
+</div>
+<div class="sect2">
+<h3 id="under-Windows">1.4. Windowsの場合</h3>
+<div class="paragraph"><div class="title">安定版：</div><p>Windows 用の安定版の KiCad は以下の URL で見つけられます:<br>
+<a href="http://downloads.kicad-pcb.org/windows/stable/">http://downloads.kicad-pcb.org/windows/stable/</a></p></div>
+<div class="paragraph"><div class="title">不安定版（夜間の開発中ビルド）：</div><p>不安定版は最新のソースコードからビルドされます。不安定版は、ファイルを壊したり、悪いガーバーを生成したり等のバグがあることもありますが、一般的には安定しており、そして最新の機能を持っています。</p></div>
+<div class="paragraph"><p>Windows 用の夜間ビルドは以下の URL で見つけられます:<br>
+<a href="http://downloads.kicad-pcb.org/windows/">http://downloads.kicad-pcb.org/windows/</a></p></div>
+</div>
+<div class="sect2">
+<h3 id="support">1.5. サポート</h3>
+<div class="paragraph"><p>何か思いついたり、発言したいことがあったり、質問があったり、ヘルプが必要だったり &#8230; いずれの場合でも:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+訪れてみましょう。 <a href="https://forum.kicad.info/">Forum</a>
+</p>
+</li>
+<li>
+<p>
+参加してみましょう。 <a href="http://webchat.freenode.net/?channels=kicad">#kicad IRC channel</a>
+  on Freenode
+</p>
+</li>
+<li>
+<p>
+熟読してみましょう。 <a href="http://www.kicad-pcb.org/help/tutorials/">Tutorials</a>
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="kicad-work-flow">2. KiCad 作業の流れ</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>他のPCBソフトウェア・ツールとの類似性にもかかわらず、KiCadは、回路図のコンポーネントとフットプリントを実際には別々の2つの実体とする、面白い作業の流れを特徴としています。このことはよくインターネットのフォーラムでの議論の対象となります。</p></div>
+<div class="sect2">
+<h3 id="kicad-work-flow-overview">2.1. KiCad 作業フローチャート</h3>
+<div class="paragraph"><p>KiCadの作業の流れは２つの主要なタスクで構成されています。それは回路図の作成と基板への配置です。これら2つのタスクのためにコンポーネントのライブラリとフットプリントのライブラリの両方が必要とされます。KiCadはその両方の多くを持っています。それでは不十分な場合、KiCadは、新しいそれらを作るのに必要なツールも持っています。</p></div>
+<div class="paragraph"><p>下の図はKiCadの作業の流れを示すフローチャートです。この図はあなたが取る必要のあるステップを、どんな順序で行うのかを説明しています。適用できる場合には便宜上アイコンを付け加えています。</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/kicad_flowchart.png" alt="KiCad Flowchart">
+</div>
+</div>
+<div class="paragraph"><p>コンポーネントの作成についての更なる情報は、この文書の
+<a href="#make-schematic-components-in-kicad">「KiCad回路図コンポーネントの作成」</a>
+の章を参照して下さい。また、どのように新しいフットプリントを作成するかについての更なる情報は、この文書の
+<a href="#make-component-footprints">「フットプリントの作成」</a> の章を参照して下さい。</p></div>
+<div class="paragraph"><p>以下のサイト:</p></div>
+<div class="paragraph"><p><a href="http://kicad.rohrbacher.net/quicklib.php">http://kicad.rohrbacher.net/quicklib.php</a></p></div>
+<div class="paragraph"><p>では、素早くKiCadのコンポーネントを作成することのできるツールの例を見つけることができるでしょう。quicklib
+についての更なる情報は、この文書の <a href="#make-schematic-components-with-quicklib">「quicklibによる回路図コンポーネントの作成」</a> の章を参照して下さい。</p></div>
+</div>
+<div class="sect2">
+<h3 id="forward-and-backward-annotation">2.2. 前方向と後方向のアノテーション</h3>
+<div class="paragraph"><p>電子回路図を完全に描き終わったら、次のステップはKiCadの作業の流れに従い、それをPCBに移すことです。基板レイアウトの工程を部分的にあるいは完全に終え、追加のコンポーネントやネットが付け足される必要があるかもしれませんし、部品達を並び替えたり、色々あるでしょう。これは2つの方法で行うことができます:
+後方向アノテーションと前方向アノテーション。</p></div>
+<div class="paragraph"><p>後方向アノテーションは、PCBレイアウトの変更をその対応する回路図に送り戻す処理です。この特別な機能を特に便利と思わない人もいるでしょう。</p></div>
+<div class="paragraph"><p>前方向アノテーションは回路図の変更を対応するPCBレイアウトに送る機能です。回路図に変更を加える度にPCBのレイアウト全体をやり直したくはないでしょうからこれは基本的な機能です。前方向アノテーションは
+<a href="#forward-annotation-in-kicad">「KiCadの前方向アノテーション」</a> の章で議論されています。</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="draw-electronic-schematics">3. 電子回路図の描画</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>この章ではKiCadを使ってどのように電子回路図を描画するかを学びます。</p></div>
+<div class="sect2">
+<h3 id="using-eeschema">3.1. Eeschema の使用</h3>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Windowsの場合、kicad.exeを実行して下さい。Linuxの場合、端末で <em>kicad</em> とタイプして下さい。KiCad
+    プロジェクト・マネージャのメイン画面が現れるでしょう。ここからあなたは次の8つの独立したソフトウェア・ツールを使うことができます:
+    <em>Eeschema</em>, <em>コンポーネント・ライブラリ・エディタ</em>, <em>Pcbnew</em>, <em>フットプリント・エディタ</em>,
+    <em>GerbView</em>, <em>Bitmap2Component</em>, <em>PCB Calulator</em> そして <em>Pl Editor</em>
+    です。主要なツール群がどのように使われるのか理解するために KiCad作業の流れ の図を参照して下さい。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/kicad_main_window.png" alt="KiCad Main Window">
+</div>
+</div>
+</li>
+<li>
+<p>
+新規プロジェクトを作成します: <strong>ファイル</strong> &#8594; <strong>新規プロジェクト</strong> &#8594; <strong>新規プロジェクト</strong> 。プロジェクトファイルは
+    <em>tutorial1</em> と名付けましょう。プロジェクトファイルの拡張子は自動的に ".pro" となります。KiCad
+    はこのプロジェクト専用のディレクトリを作るかを確認してくるので、 "はい" をクリックしましょう。あなたのプロジェクトファイルは全てここに保存されます。
+</p>
+</li>
+<li>
+<p>
+回路図の作成から始めてみましょう。回路図エディタ <em>Eeschema</em> を起動します
+    <span class="image">
+<img src="images/icons/eeschema.png" alt="Eeschema">
+</span> 。左から1番目のボタンです。
+</p>
+</li>
+<li>
+<p>
+トップツールバーの <em>ページの設定</em> アイコン <span class="image">
+<img src="images/icons/sheetset.png" alt="Sheet settings icon">
+</span>
+    をクリックします。ページサイズを <em>A4</em> に選択し、タイトルを <em>Tutorial 1</em>
+    と入力します。必要に応じて更に多くの情報をここで入力できることが分かるでしょう。OKをクリックします。この情報は回路図面の右下隅に取り込まれます。ズームインするにはマウスのホイールを使います。回路図プロジェクトを保存しましょう:
+    <strong>ファイル</strong> &#8594; <strong>回路図プロジェクトの保存</strong>
+</p>
+</li>
+<li>
+<p>
+では最初のコンポーネントを置いてみます。右ツールバーの <em>コンポーネントの配置</em> アイコン
+    <span class="image">
+<img src="images/icons/add_component.png" alt="Add component Icon">
+</span>
+    をクリックします。同じ機能はショートカットの "a" キーによる <em>コンポーネントの配置</em> によっても行えます。
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">注</div>
+</td>
+<td class="content">"?" を押すと利用できるショートカットキーの一覧を見ることができます。</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+回路図シートの中央あたりをクリックします。 <em>コンポーネントの選択</em>
+    ウィンドウが表示されます。抵抗器を配置してみましょう。フィルタに抵抗器(<strong>R</strong>esitor)の <em>R</em> を入力して探します。抵抗器の上に
+    <em>device</em> と見出しが出ることに気付いたと思います。この <em>device</em>
+    という見出しは、そのコンポーネントが存在するライブラリの名前で、それはとても汎用的で便利なライブラリです。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/choose_component.png" alt="Choose Component">
+</div>
+</div>
+</li>
+<li>
+<p>
+その上でダブルクリックします。これにより <em>コンポーネントの選択</em>
+    ウィンドウが閉じられます。回路図シート上の置きたいと思う所をクリックすることでコンポーネントを配置します。
+</p>
+</li>
+<li>
+<p>
+ズームインするためにコンポーネント上で拡大鏡をクリックします。あるいは、ズームインとズームアウトをするためにマウスのホイールを使います。水平方向と垂直方向にパンするにはマウスの（中央）ホイールを押します。
+</p>
+</li>
+<li>
+<p>
+コンポーネント <em>R</em> の上にマウスカーソルを合わせて、"r"
+    キーを押します。コンポーネントが回転します。回転させるためにコンポーネント上でクリックする必要はありません。
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">注</div>
+</td>
+<td class="content">マウスカーソルが <em>フィールド Reference</em>  (<em>R</em>) か <em>フィールド Value</em> (<em>R?</em>)
+の上にあればメニューが現れるでしょう。この <em>明示的な選択</em> メニューはしばしば KiCad
+で見られ、互いに重なっているオブジェクトへの作業を可能にします。今回の場合、 <em>コンポーネント R</em> にアクションを実行することを KiCad
+に伝えます。</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+コンポーネントの中央で右クリックし、<strong>コンポーネントの編集</strong> &#8594; <strong>定数</strong> を選択します。コンポーネントの上にマウスカーソルを合わせて "v"
+    キーを押しても同じことができます。あるいは、"e"
+    キーで更に全般的な編集ウィンドウを開けます。以下の右クリックのコンテキストメニューが、全ての可能なアクションに対する全ての利用可能なショートカットキーを見せてくれることに注目しましょう。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/edit_component_dropdown.png" alt="Edit component menu">
+</div>
+</div>
+</li>
+<li>
+<p>
+フィールド定数の編集のウィンドウが表示されます。現在の定数の <em>R</em> を <em>1k</em> に置き換えます。OKをクリックします。
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">注</div>
+</td>
+<td class="content">リファレンス・フィールド (R?) を変更しないで下さい。これは後ほど自動的に行われます。これで抵抗器の中の定数は <em>1k</em> となりました。</td>
+</tr></table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/resistor_value.png" alt="Resistor Value">
+</div>
+</div>
+</li>
+<li>
+<p>
+別の抵抗器を配置するには、抵抗器を置きたい場所を単にクリックします。コンポーネント選択のウィンドウが再び表示されます。
+</p>
+</li>
+<li>
+<p>
+前に選んだ抵抗器が履歴リスト上に <em>R</em> として表示されています。OKをクリックしてコンポーネントを配置します。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/component_history.png" alt="Component history">
+</div>
+</div>
+</li>
+<li>
+<p>
+間違えたコンポーネントを削除したい場合は、コンポーネント上で右クリックして <em>コンポーネント削除</em>
+    をクリックします。これでコンポーネントは回路図から取り除かれます。あるいは、削除したいコンポーネント上にマウスカーソルを置いて "Delete"
+    キーを押すこともできます。
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">注</div>
+</td>
+<td class="content">デフォルトのショートカットキーは <strong>設定</strong> &#8594; <strong>ホットキー</strong> &#8594; <strong>ホットキーの編集</strong> で編集できます。変更は即座に保存されます。</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+既に回路図シート上にあるコンポーネントにマウスカーソルを合わせて "c"
+    キーを押すことにより、複製することができます。新しく複製したコンポーネントを置きたい場所をクリックして下さい。
+</p>
+</li>
+<li>
+<p>
+2つ目の抵抗器を右クリックします。<em>コンポーネントの移動</em>
+    を選択します。コンポーネントを再配置して左クリックで置きます。同じ機能が、コンポーネントにマウスカーソルを合わせて "g"
+    キーを押すことでも可能です。回転させるためには "r" キーを使います。"x" キーと "y" キーはコンポーネントを反転させます。
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">注</div>
+</td>
+<td class="content"><strong>右クリック</strong> &#8594; <strong>コンポーネントの移動</strong> ("m" キーと同等)
+もまた色んなものを移動する便利なオプションですが、
+コンポーネントのラベルや未接続のコンポーネントにのみ使うのが良いです。
+なぜそうなのかは後述します。</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+2つ目の抵抗器にマウスカーソルを置いて "v" キーを押して編集します。<em>R</em> を <em>100</em> で置き換えます。"Ctrl+Z"
+    キーによってどんな編集操作も「元に戻す」ができます。
+</p>
+</li>
+<li>
+<p>
+グリッドのサイズを変更します。回路図シート上では、全てのコンポーネントが大きなマス目のグリッドに沿っていることに気付いていると思います。グリッドのサイズは
+    <strong>右クリック</strong> &#8594; <strong>グリッドの選択</strong> で変更することができます。 <em>一般的に、回路図シートでは50.0ミルのグリッドをお勧めします。</em>
+</p>
+</li>
+<li>
+<p>
+デフォルトのプロジェクトでは設定されていないライブラリに含まれているコンポーネントを追加します。メニューで <strong>設定</strong> &#8594; <strong>コンポーネント
+    ライブラリ</strong> を選んで <strong>コンポーネント ライブラリ ファイル</strong> の右にある <strong>追加</strong> ボタンをクリックします。
+</p>
+</li>
+<li>
+<p>
+公式の KiCad ライブラリがあなたのコンピュータのどこにインストールされているか見つける必要があります。たくさんの <em>.dcm</em> ファイルと
+    <em>.lib</em> ファイルのある <em>library</em> ディレクトリを探しましょう。 <span class="monospaced">C:\Program Files
+    (x86)\KiCad\share\</span> (Windows) や <span class="monospaced">/usr/share/kicad/library/</span> (Linux)
+    を見てみましょう。ディレクトリを見つけたら、 <em>microchip_pic12mcu</em>
+    ライブラリを選んで追加し、コンポーネントライブラリのダイアログを閉じましょう。
+</p>
+</li>
+<li>
+<p>
+コンポーネント追加のステップを続けますが、今度は <em>device</em> ライブラリの代わりに <em>microchip_pic12mcu</em> ライブラリを選択して
+    <em>PIC12C508A-I/SN</em> コンポーネントを選びましょう。
+</p>
+</li>
+<li>
+<p>
+マイクロコントローラのコンポーネントにマウスカーソルを置きます。"y" キーか "x"
+    キーを押します。コンポーネントがx軸、y軸でどのように反転するかが分かります。キーをもう一度押すと元の方向に戻ります。
+</p>
+</li>
+<li>
+<p>
+コンポーネント追加のステップを続けますが、今度は <em>device</em> ライブラリを選択して <em>LED</em> コンポーネントを選びましょう。
+</p>
+</li>
+<li>
+<p>
+回路図シート上の全てのコンポーネントを以下のように整理します。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_010.png" alt="gsik_tutorial1_010_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+私達は3ピンのコネクタのために <em>MYCONN3</em> という回路図コンポーネントを作る必要があります。
+    <a href="#make-schematic-components-in-kicad">「KiCad回路図コンポーネントの作成」</a>
+    の章にジャンプし、一からコンポーネントを作る方法を学び、この章に戻ってきて下さい。
+</p>
+</li>
+<li>
+<p>
+さあ、新たに作成されたコンポーネントを配置することができるようになりました。"a" キーを押して <em>List All</em> を選択します。<em>myLib</em>
+    ライブラリを選択して <em>MYCONN3</em> コンポーネントを選びます。
+</p>
+</li>
+<li>
+<p>
+コンポーネントの識別子 <em>J?</em> が <em>MYCONN3</em> ラベルの下に見えます。位置を変えたいなら、<em>J?</em> の上で右クリックして
+    <em>リファレンスの移動</em> ("m" キーと同等) をクリックします。これを行う前か最中にズームインすると便利かもしれません。コンポーネントの <em>J?</em>
+    を以下に示すように再配置します。ラベルは何回でも好きなだけ動かすことができます。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_myconn3_s.png" alt="gsik_myconn3_s_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+電源とGNDのシンボルを配置します。右ツールバーにある <em>電源ポートの配置</em> ボタン
+    <span class="image">
+<img src="images/icons/add_power.png" alt="add_power_png">
+</span> をクリックします。あるいは、"p"
+    キーを押します。コンポーネント選択のウィンドウで下方にスクロールし、 <em>power</em> ライブラリから <em>VCC</em> 選択します。OKをクリックします。
+</p>
+</li>
+<li>
+<p>
+VCC部品を配置するために、1kの抵抗器のピンの上方をクリックします。マイクロコントローラ の <em>VDD</em> の上方をクリックします。
+    <em>コンポーネント選択履歴</em> の中から <em>VCC</em> を選び、VDDピンの隣に配置します。追加作業を繰り返して、VCC部品を <em>MYCONN3</em>
+    のVCCピンの上方に配置します。
+</p>
+</li>
+<li>
+<p>
+ピン追加のステップを続けますが、今度はGND部品を選択します。GND部品を <em>MYCONN3</em>
+    のGNDピンの下に配置します。別のGNDシンボルを、マイクロコントローラのVSSピンの右に配置します。回路図はこのようになっているはずです。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_020.png" alt="gsik_tutorial1_020_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+次に、全てのコンポーネントの配線をします。右ツールバーの <em>ワイヤの配置</em> アイコン
+    <span class="image">
+<img src="images/icons/add_line.png" alt="Place wire">
+</span> をクリックします。
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">注</div>
+</td>
+<td class="content"><em>バスの配置</em> を選ばないように注意しましょう。このボタンの直ぐ下にあり線が太いです。 <a href="#bus-connections-in-kicad">「KiCadでのバス接続」</a> の節でバスをどのように使うか説明しています。</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+マイクロコントローラのピン7の端の小丸をクリックし、それからLEDのピン1の小丸をクリックします。接続を配置する時にズームインすることができます。
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">注</div>
+</td>
+<td class="content">配線されたコンポーネントを再配置したい場合、"g" キー (掴む) を使うことが重要で、"m" キー (移動) は使うべきではありません。(掴む)
+を使うことでワイヤの接続を維持できます。コンポーネントの移動方法を忘れたならステップ16,27を見直しましょう。</td>
+</tr></table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_030.png" alt="gsik_tutorial1_030_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+この処理を繰り返して以下の全てのコンポーネントの配線を済ませます。ワイヤを終端するにはダブルクリックをします。VCCとGNDのシンボルへの配線は、VCCシンボルなら下部に、GNDシンボルなら上部中央にタッチします。下のスクリーンショットを見てください。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_040.png" alt="gsik_tutorial1_040_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+今度はラベルを使った別の接続方法を考えてみましょう。右ツールバーの <em>ネット名の配置</em> アイコン
+    <span class="image">
+<img src="images/icons/add_line_label.png" alt="label_png">
+</span> をクリックして ネット名の配置ツールを選びます。"l"
+    キーを使うこともできます。
+</p>
+</li>
+<li>
+<p>
+マイクロコントローラのピン6に接続されているワイヤの中程をクリックします。このラベルに <em>INPUT</em> と名前をつけます。
+</p>
+</li>
+<li>
+<p>
+同じ手順に従い100Ωの抵抗器の右にある配線に別のラベルを配置します。同様に <em>INPUT</em>
+    と名前を付けます。2つの同じ名前を持つラベルは、見えない接続をPICのピン6と100Ω抵抗器の間に作ります。これは線が混雑した複雑なデザインの場合に便利な配線テクニックです。ラベルを配置するのに必ずしもワイヤは必要ではなく、単純にピンにラベルを付けることができます。
+</p>
+</li>
+<li>
+<p>
+ラベルはまた、単に配線に有用な名前をつける目的で使うこともできます。PICのピン7にラベルを付けて <em>uCtoLED</em>
+    と名前をつけたり、抵抗器とLEDの間のワイヤに <em>LEDtoR</em> と名前をつけたり、<em>MYCONN3</em> と抵抗器の間のワイヤに <em>INPUTtoR</em>
+    つけたり、です。
+</p>
+</li>
+<li>
+<p>
+VCCとGNDの線にラベルをつける必要はありません。そのラベルは、接続されている電源オブジェクトから暗黙的に定義されています。
+</p>
+</li>
+<li>
+<p>
+下図に最終的な結果がどのように見えるかを示します。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_050.png" alt="gsik_tutorial1_050_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+それでは接続されていないワイヤに対処しましょう。接続されていないピンやワイヤはKiCadにチェックされた時に警告されます。これらの警告を避けるため、ワイヤが接続されていないのが意図的であることをプログラムに指示することができます。
+</p>
+</li>
+<li>
+<p>
+右ツールバーにある <em>空き端子フラグを配置</em> というアイコン  <span class="image">
+<img src="images/icons/noconn.png" alt="noconn_png">
+</span>
+    をクリックします。2, 3, 4 と 5 の線の端にある小丸の上でクリックします。 Xは未接続が意図的であることを示すために表示されます。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_060.png" alt="gsik_tutorial1_060_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+見えない電源ピンを持つコンポーネントがあります。左ツールバーの <em>非表示ピンを表示</em> のアイコン
+    <span class="image">
+<img src="images/icons/hidden_pin.png" alt="hidden_pin_png">
+</span>
+    をクリックすることでそれらを見えるようにできます。VCCとGNDの名前付けが尊重される場合、隠れた電源ピンは自動的に接続されます。一般的には、隠れた電源ピンを作らないように努力すべきです。
+</p>
+</li>
+<li>
+<p>
+KiCadに、どこから電源が来るのかを示すために、<em>電源フラグ</em> を追加する必要があります。"a" キーを押して <em>List All</em>
+    を選択し、<em>power</em> ライブラリの上でダブルクリックを行い、<em>PWR_FLAG</em>
+    を探します。それを２つ配置します。以下に示すようにGNDとVCCに接続しましょう。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_070.png" alt="gsik_tutorial1_070_png">
+</div>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">注</div>
+</td>
+<td class="content">これにより典型的な回路図チェックの警告を避けることができます: 警告 power_in ピンは駆動されていません (Net xx)</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+あちこちにコメントを書いておくのが良いこともあります。回路図にコメントを追加するには、右ツールバーの <em>テキストの配置</em> のアイコン
+    <span class="image">
+<img src="images/icons/add_text.png" alt="add_text_png">
+</span> を使います。
+</p>
+</li>
+<li>
+<p>
+全てのコンポーネントは今ユニークな識別子を持つ必要があります。実際には私達のコンポーネントの多くはまだ <em>R?</em> や <em>J?</em>
+    と名付けられています。識別子の割り当ては、トップツールバーの <em>回路図のアノテーション</em> のアイコン
+    <span class="image">
+<img src="images/icons/annotate.png" alt="annotate_png">
+</span> をクリックすることで自動的に行われます。
+</p>
+</li>
+<li>
+<p>
+<em>回路図のアノテーション</em> ウィンドウでは、 <em>全ての回路図、階層を使用</em> を選択し、<em>アノテーション</em>
+    ボタンをクリックします。確認のメッセージにOKをクリックし、<em>閉じる</em> をクリックします。コンポーネントの全ての <em>?</em>
+    が数字に置き換えられたことがわかります。各識別子はユニークです。私達の例では、 <em>R1</em> 、 <em>R2</em> 、 <em>U1</em> 、 <em>D1</em> そして <em>J1</em>
+    と名付けられました。
+</p>
+</li>
+<li>
+<p>
+ここで回路図のエラーをチェックします。トップツールバーの <em>エレクトリカル ルール チェックの実行</em> アイコン
+    <span class="image">
+<img src="images/icons/erc.png" alt="erc_png">
+</span> をクリックします。<em>実行</em>
+    ボタンをクリックします。接続されていないワイヤ等のエラーや警告のレポートが通知されます。エラー０、警告０にしましょう。エラーや警告がある場合には、小さな緑色の矢印が回路図上のエラーや警告のある場所に表示されます
+    。よりエラーの情報を得るため <em>ERCレポートファイルの生成</em> をチェックし、<em>実行</em> ボタンを再度押します。
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">注</div>
+</td>
+<td class="content">もしも "デフォルトのエディタが指定されていません。エディタを指定して下さい。" のワーニングが出たなら、
+<span class="monospaced">C:\Windows\notepad.exe</span> (Windows) か <span class="monospaced">/usr/bin/gedit</span> (Linux) を設定してみてください。</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+回路図は完成しました。これでコンポーネントに対応するフットプリントを付け足す、ネットリストのファイルを作成することができるようになりました。トップツールバーにある
+    <em>ネットリストの生成</em> のアイコン <span class="image">
+<img src="images/icons/netlist.png" alt="netlist_png">
+</span> をクリックします。<em>生成</em>
+    をクリックし、デフォルトのファイル名で <em>保存</em> をクリックします。
+</p>
+</li>
+<li>
+<p>
+ネットリストを生成したら、トップツールバーにある <em>CvPcb(コンポーネントとフットプリントの関連付け)を実行</em> のアイコン
+    <span class="image">
+<img src="images/icons/cvpcb.png" alt="icon_cvpcb_small_png">
+</span>
+    をクリックします。ファイルが存在しませんのエラーが表示されたらOKをクリックします。
+</p>
+</li>
+<li>
+<p>
+<em>CvPcb</em>
+    により、回路図の全てのコンポーネントに、KiCadライブラリ内のフットプリントをリンクすることができます。左側のペインは回路図で使われている全てのコンポーネントを表示しています。まず
+    <em>D1</em> を選択します。右側のペインは全ての利用可能なフットプリントを表示しています。ここでは <em>LEDs:LED-5MM</em>
+    までスクロールダウンして、それをダブルクリックします。
+</p>
+</li>
+<li>
+<p>
+右側のペインに、利用可能なフットプリントの内、選択されたサブグループだけを表示することもできます。これはKiCadが適切なフットプリントだけをあなたに提示しようとするためです。このフィルタを有効/無効するにはこれらのアイコン
+    <span class="image">
+<img src="images/icons/module_filtered_list.png" alt="module_filtered_list_png">
+</span>
+    <span class="image">
+<img src="images/icons/module_pin_filtered_list.png" alt="module_pin_filtered_list_png">
+</span>
+    <span class="image">
+<img src="images/icons/module_library_list.png" alt="module_library_list_png">
+</span>
+    をクリックします。
+</p>
+</li>
+<li>
+<p>
+<em>IC1</em> にはフットプリント <em>Housings_DIP:DIP-8_W7.62mm</em> を選択します。 <em>J1</em> にはフットプリント
+    <em>Connect:Banana_Jack_3Pin</em> を選択します。 <em>R1</em> と <em>R2</em> にはフットプリント <em>Discret:R1</em>
+    footprint を選択します。
+</p>
+</li>
+<li>
+<p>
+選択したフットプリントがどんな風に見えるのかを知りたいなら2つの選択肢があります。現在のフットプリントのプレビューには <em>選択したフットプリントを見る</em>
+    のアイコン <span class="image">
+<img src="images/icons/show_footprint.png" alt="show_footprint_png">
+</span>
+    をクリックします。あるいは <em>フットプリントのドキュメントを表示</em> のアイコン
+    <span class="image">
+<img src="images/icons/datasheet.png" alt="datasheet_png">
+</span>
+    をクリックすると、全ての利用可能なフットプリントのPDF文書が得られます。印刷して部品の寸法が適合することを確認できます。
+</p>
+</li>
+<li>
+<p>
+割り当てができました。これで全ての関連付けたフットプリントでもってネットリストのファイルを更新することができます。 <strong>ファイル</strong> &#8594;
+    <strong>編集を保存</strong> をクリックします。デフォルトの <em>tutorial1.net</em> のままで保存をクリックします。あるいはアイコン
+    <span class="image">
+<img src="images/icons/save.png" alt="Save icon">
+</span>
+    も使えます。これでネットリストのファイルは全てフットプリントで更新されました。フットプリントのない部品がある場合、独自にフットプリントを作る必要があることに注意して下さい。このことについてはこの文書の後の章で説明されます。
+</p>
+</li>
+<li>
+<p>
+<em>CvPcb</em> を閉じて <em>Eeschema</em> 回路図エディタに戻ります。 <strong>ファイル</strong> &#8594; <strong>回路図プロジェクトの保存</strong>
+    をクリックしてプロジェクトを保存します。 Eeschema を閉じます。
+</p>
+</li>
+<li>
+<p>
+KiCadプロジェクト・マネージャに切り替えます。
+</p>
+</li>
+<li>
+<p>
+ネットリストには、全てのコンポーネントとそのそれぞれのピン接続が記述されています。ネットリストはテキストファイルなので、容易に検査したり編集したり書いたりすることができます。
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">注</div>
+</td>
+<td class="content">ライブラリファイル (<em>*.lib</em>) もテキストファイルなので、同様に容易に編集したり記述することができます。</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+部品表 (BOM) を作成するには <em>Eeschema</em> 回路図エディタを起動してトップツールバーにある <em>部品表の生成</em> のアイコン
+    <span class="image">
+<img src="images/icons/bom.png" alt="bom_png">
+</span> をクリックします。デフォルトではプラグインは全て無効になっています。
+    *プラグインの追加* ボタンをクリックすることで追加することができます。使いたい *.xsl ファイルを選択します。この場合は
+    <em>bom2csv.xsl</em> を選択します。
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">注</div>
+</td>
+<td class="content">
+<div class="paragraph"><p>*.xsl ファイルは、KiCadをインストールしたディレクトリの <em>plugins</em> にあり、それは次の場所に位置します:
+/usr/lib/kicad/plugins/</p></div>
+<div class="paragraph"><p>または次のようにしてファイルを入手します:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>wget https://raw.githubusercontent.com/KiCad/kicad-source-mirror/master/eeschema/plugins/bom2csv.xsl</pre>
+</div></div>
+</td>
+</tr></table>
+</div>
+<div class="listingblock">
+<div class="title">KiCadは自動的にコマンドを生成します、例えばこのように:</div>
+<div class="content monospaced">
+<pre>xsltproc -o "%O" "/home/&lt;user&gt;/kicad/eeschema/plugins/bom2csv.xsl" "%I"</pre>
+</div></div>
+<div class="listingblock">
+<div class="title">拡張子を与えたい場合、このコマンドラインを変更します:</div>
+<div class="content monospaced">
+<pre>xsltproc -o "%O.csv" "/home/&lt;user&gt;/kicad/eeschema/plugins/bom2csv.xsl" "%I"</pre>
+</div></div>
+<div class="paragraph"><p>ヘルプボタンを押すことで更に情報が得られます。</p></div>
+</li>
+<li>
+<p>
+さあ <em>生成</em> を押してみましょう。ファイル(プロジェクトと同じ名前です)はプロジェクトフォルダの中にあります。<strong>*.csv</strong> ファイルを
+    LibreOffice Calc か Excel で開いてみましょう。インポートのウィンドウが表示されたらOKを押します。
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>あなたはこれで次の章のPCBレイアウトのパートに進む準備ができました。ですが先に進む前に、コンポーネントのピンをバスで接続する方法をさっと見ておきましょう。</p></div>
+</div>
+<div class="sect2">
+<h3 id="bus-connections-in-kicad">3.2. KiCadでのバス接続</h3>
+<div class="paragraph"><p>コンポーネントAの連続したピンと、別のコンポーネントBの連続したピンを接続しなければならないことがあります。この場合2つの選択肢があります:
+私達が既に見てきたラベルによる方法とバス接続です。どうするのか見てみましょう。</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+4ピンのコネクタが3つあり、ピン同士を接続したいのだと仮定しましょう。ラベルを使って ("l" キーを押す) コネクタP4のピン4に <em>a1</em>
+    という名前のラベルを付けます。Ins キーを押して、ピン4の下のピン3に自動的に同様の処理を行います。ラベルは自動的に <em>a2</em> とリネームされます。
+</p>
+</li>
+<li>
+<p>
+"Insert" キーを更に2回押してください。"Insert" キーは <em>Repeat last item</em>
+    機能に対応しており、あなたの仕事を楽にしてくれるとても便利なコマンドです。
+</p>
+</li>
+<li>
+<p>
+ラベル付け作業を他の2つのコネクタ CONN_2 と CONN_3
+    にも繰り返して終えました。このまま進めてPCBを作成すると、3つのコネクタがお互い接続されていることでしょう。図2に説明したことが表されています。美しく見せるために、図3に示すよう、アイコン
+    <span class="image">
+<img src="images/icons/add_line2bus.png" alt="Place wire to bus entry">
+</span> を使った一連の
+    <em>ワイヤ-バスエントリを配置</em> と、アイコン <span class="image">
+<img src="images/icons/add_bus2bus.png" alt="Place bus to bus     entry">
+</span> を使ったバスラインを付け加えることも可能です。PCBにはなんの影響もありませんが。
+</p>
+</li>
+<li>
+<p>
+図2の、ピンに接触している短いワイヤは厳密には不要であることを指摘しておきます。実際、ラベルはピンに直接付けることができるのでした。
+</p>
+</li>
+<li>
+<p>
+もう一歩進んで、4つ目のコネクタ CONN_4 を仮定します。何らかの理由により、そのラベル付けは少し異なっています(b1, b2, b3,
+    b4)。私達は <em>Bus a</em> と <em>Bus b</em>
+    をピンとピンの方法で接続したいのです。ピンにラベル付けする方法(も可能ですが)は使わずに、代わりに、バス毎に1ラベルで、バスラインにラベル付けする方法で実現したいわけです。
+</p>
+</li>
+<li>
+<p>
+前に説明したラベル付けの方法を使って、CONN_4に接続してラベルを付けます。ピンには  b1, b2, b3 そして b4 と名前を付けます。アイコン
+    <span class="image">
+<img src="images/icons/add_line2bus.png" alt="add_line2bus_png">
+</span> を使った一連の
+    <em>ワイヤ-バスエントリを配置</em> と、アイコン <span class="image">
+<img src="images/icons/add_bus.png" alt="add_bus_png">
+</span>
+    を使ったバスラインに、ピンを接続します。図4を見て下さい。
+</p>
+</li>
+<li>
+<p>
+CONN_4のバスにラベルを付けて("l" キーを押して) <em>b[1..4]</em> と名付けます。
+</p>
+</li>
+<li>
+<p>
+以前のバスにラベルを付けて("l" キーを押して) <em>a[1..4]</em> と名付けます。
+</p>
+</li>
+<li>
+<p>
+これでボタン <span class="image">
+<img src="images/icons/add_bus.png" alt="add_bus_png">
+</span>
+    を使って、バスa[1..4]とバスb[1..4]を接続することでできるようになりました。
+</p>
+</li>
+<li>
+<p>
+2つのバスを接続することで、ピンa1は自動的にピンb1に接続され、a2はb2に接続され、以下同様となります。図4は最終結果がどのように見えるか示しています。
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">注</div>
+</td>
+<td class="content">"Insert" キーによる <em>Repeat last item</em>
+機能は、繰り返される周期的な作業にうまく使うことができます。例えば、短いワイヤを全てのピンに接続する図2、図3、図4 での作業はこの機能でできました。</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+"Insert" キーによる <em>Repeat last item</em> 機能は、アイコン
+    <span class="image">
+<img src="images/icons/add_line2bus.png" alt="add_line2bus_png">
+</span> を使っての、たくさんの連続した
+    <em>ワイヤ-バスエントリを配置</em> にも適用できます。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_bus_connection.png" alt="gsik_bus_connection_png">
+</div>
+</div>
+</li>
+</ol></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="layout-printed-circuit-boards">4. プリント基板のレイアウト</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>生成したネットリストのファイルを使ってPCBのレイアウトを行う時が来ました。これは <em>Pcbnew</em> ツールで行います。</p></div>
+<div class="sect2">
+<h3 id="using-pdbnew">4.1. Pcbnew の使用</h3>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+KiCadプロジェクト・マネージャから <em>Pcbnew</em> のアイコン <span class="image">
+<img src="images/icons/pcbnew.png" alt="pcbnew_png">
+</span>
+    をクリックします。 <em>Pcbnew</em> ウィンドウが開きます。 「ボード <em>*.kicad_pcb</em>
+    は存在しません。新規作成しますか？」というエラーメッセージが出たら <em>はい</em> をクリックします。
+</p>
+</li>
+<li>
+<p>
+いくつか回路図情報を入力することから始めます。トップツールバーの <em>ページ設定</em> のアイコン
+    <span class="image">
+<img src="images/icons/sheetset.png" alt="sheetset_png">
+</span> をクリックします。<em>ページサイズ</em> を <em>A4</em>
+    に設定して、 <em>タイトル</em> を <em>Tutorial 1</em> と設定します。
+</p>
+</li>
+<li>
+<p>
+PCBメーカーが要求する <strong>クリアランス</strong> と <strong>最少配線幅* に設定することから始めるのは良い考えです。一般的にクリアランスを <em>0.25</em>
+    に、最少配線幅を <em>0.25</em> に設定します。メニューの *デザインルール</strong> &#8594; <strong>デザインルール</strong> をクリックします。もしまだ表示されていなければ
+    <em>ネットクラスエディタ</em> のタブをクリックします。以下に示すように、ウィンドウの上部にある <em>クリアランス</em> のフィールドを <em>0.25</em> に、
+    <em>配線幅' のフィールドを '0.25</em> に変更します。ここでの寸法は mm です。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/design_rules.png" alt="Design Rules Window">
+</div>
+</div>
+</li>
+<li>
+<p>
+<em>グローバルデザインルール</em> タブ上でクリックし、 <em>最小の配線幅' を '0.25</em>
+    に設定します。変更を確定するためOKボタンをクリックし、デザインルールエディタのウィンドウを閉じます。
+</p>
+</li>
+<li>
+<p>
+さあネットリストのファイルをインポートしましょう。トップツールバーにある <em>ネットリストの読込み</em> アイコン
+    <span class="image">
+<img src="images/icons/netlist.png" alt="netlist_png">
+</span> をクリックします。<em>ネットリストファイルを参照する</em>
+    ボタンをクリックし、選択ダイアログの中で <em>tutorial1.net</em> を選択し、 <em>現在のネットリストを読み込む</em>
+    をクリックします。その後、<em>閉じる</em> ボタンをクリックします。
+</p>
+</li>
+<li>
+<p>
+全てのコンポーネントはページ上の左上隅に表示されるはずです。見えない場合にはスクロールアップしましょう。
+</p>
+</li>
+<li>
+<p>
+マウスで全てのコンポーネントを選択して基板の中央に移動します。必要であれば、コンポーネントの移動中にズームインやズームアウトすることができます。
+</p>
+</li>
+<li>
+<p>
+全てのコンポーネントは <em>ラッツネスト</em> と呼ばれる細いワイヤで接続されています。<em>ボードのラッツネストを非表示</em> のボタン
+    <span class="image">
+<img src="images/icons/general_ratsnest.png" alt="general_ratsnest_png">
+</span>
+    が押されていることを確認します。 これでラッツネストが全てのコンポーネントをつないでいるのが見えます。
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">注</div>
+</td>
+<td class="content">ツールチップは逆を示します; このボタンを押すことでラッツネストを表示します。</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+コンポーネントにマウスカーソルを置いて "g"
+    キーを押すことで移動することができます。配置したい所でクリックします。配線の交差数が最少になるまで全てのコンポーネントを移動します。
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">注</div>
+</td>
+<td class="content">コンポーネントを掴む("g" キーで)代わりに "m" キーを使って移動すると接続が失われることに注意しましょう(同じことが Eeschema
+でもおきます)。要するに、いつでも "g" キーを使いましょう。</td>
+</tr></table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_080.png" alt="gsik_tutorial1_080_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+ラッツネストが消えたり画面が乱れてきた場合には、右クリックして <em>ビューの再描画</em>
+    をクリックします。どのように100Ωの抵抗器のピンがPICコンポーネントのピン6に接続されているかに注意しましょう。これがピンを接続するのに使ったラベル付けの結果です。ラベルは実際のワイヤより好まれます。実際のワイヤは回路図を乱雑にするからです。
+</p>
+</li>
+<li>
+<p>
+PCBの外形を定義しましょう。トップツールバーのドロップダウンメニューから <em>Edge.Cuts</em> を選択します。右ツールバーにある
+    <em>図形ライン（またはポリゴン）を入力</em> のアイコン
+    <span class="image">
+<img src="images/icons/add_dashed_line.png" alt="add_dashed_line_png">
+</span>
+    をクリックします。基板の各コーナーをクリックして基板外形をトレースします。緑色端部とPCBの端部の間には小さな隙間を残すことを覚えておきましょう。
+</p>
+</li>
+<li>
+<p>
+次にGNDを除く全てのワイヤを接続してしまいましょう。実際の所、全てのGNDの接続は、基板の底部の銅箔面( <em>B.Cu</em>
+    と呼ばれます)に配置されたグランドプレーンを使って一気に行います。
+</p>
+</li>
+<li>
+<p>
+私達はどの銅のレイヤで作業するかを選ばねばなりません。トップツールバーにあるドロップダウンメニューの <em>F.Cu ("PgUp" キー)</em>
+    を選択します。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/select_top_copper.png" alt="Select the Front top copper layer">
+</div>
+</div>
+</li>
+<li>
+<p>
+例えば 4層PCBで行くと決定したならば、 <strong>デザインルール</strong> &#8594; <strong>レイヤのセットアップ</strong> を開いて <em>銅のレイヤ数</em> を4に変更します。
+    <em>レイヤ</em> の表ではレイヤに名前を付けられ、それらを何に使うのかを決定することができます。 <em>プリセットレイヤのグループ</em>
+    メニューで、便利なプリセットが選択できることを覚えておきましょう。
+</p>
+</li>
+<li>
+<p>
+右ツールバーにある <em>配線とビアの追加' のアイコン <span class="image">
+<img src="images/icons/add_tracks.png" alt="add_tracks_png">
+</span>
+    をクリックします。 'J1</em> のピン１をクリックしパッド <em>R2</em>
+    への配線を引きます。配線の終点を設定するため、ダブルクリックします。この配線の幅はデフォルトで0.250mmです。トップツールバーのドロップダウンメニューから配線幅を変更できます。デフォルトではただ一つの配線幅が利用できることに気付いてください。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/pcbnew_select_track_width.png" alt="pcbnew_select_track_width_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+もっと配線幅を追加したい場合: <strong>デザインルール</strong> &#8594; <strong>デザインルール</strong> &#8594; <strong>グローバルデザインルール</strong>
+    タブを表示し、このウィンドウの右下で利用したい配線幅を追加します。これで基板のレイアウトの時にドロップダウンメニューから配線幅を選ぶことができるようになります。以下の例(インチ単位)をご覧下さい。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/custom_tracks_width.png" alt="custom_tracks_width_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+あるいは、指定したオプションのセットの中でネットクラスを追加することができます。 <strong>デザインルール</strong> &#8594; <strong>デザインルール</strong> &#8594;
+    <strong>ネットクラスエディタ</strong> を表示して <em>power</em>
+    という新しいクラスを追加します。配線幅を8ミル(0.0080と表示)から24ミル(0.0240と表示)に変更します。次に <em>power</em>
+    クラスにGND以外の全てを追加します(左で <em>default</em> を選び、右で <em>power</em> を選び、矢印を使います)。
+</p>
+</li>
+<li>
+<p>
+グリッドサイズを変更したい場合は <strong>右クリック</strong> &#8594; <strong>グリッドの選択</strong>
+    です。コンポーネントを配置して配線で接続する前か後に、最適なグリッドサイズを選択して下さい。
+</p>
+</li>
+<li>
+<p>
+J1のピン3を除く全ての配線が接続されるまで、この作業を繰り返します。あなたの基板は以下の例のようになるでしょう。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_090.png" alt="gsik_tutorial1_090_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+PCBの他の銅箔面側での配線を行いましょう。トップツールバーにあるドロップダウンメニューで <em>B.Cu("PgDn" キー)</em> を選択します。
+    '配線とビアの追加' のアイコン <span class="image">
+<img src="images/icons/add_tracks.png" alt="add_tracks_png">
+</span>
+    をクリックします。J1のピン3とU1のピン8の間の配線を行います。実際の所、グラウンドプレーンですませるのでこの配線は必要ではありません。配線の色が変わっていることに注意しましょう。
+</p>
+</li>
+<li>
+<p>
+<strong>レイヤの変更によってピンAからピンBに行きましょう。</strong>
+    ビアを配置することで、配線をしている銅プレーンを変更することが可能です。
+    上面の銅プレーンに配線している時に、
+    右クリックして <em>貫通ビアの配置</em> を選択するか
+    単に "v" キーを押します。
+    これにより配線を終えた所で底面のレイヤに行くことができます。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/place_a_via.png" alt="place_a_via_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+特定の接続を検査したい場合には右ツールバーにある <em>ネットをハイライト</em> のアイコン
+    <span class="image">
+<img src="images/icons/net_highlight.png" alt="net_highlight_png">
+</span>
+    をクリックします。J1のピン3をクリックします。配線そのものとそれに接続されている全てのパッドがハイライトされるでしょう。
+</p>
+</li>
+<li>
+<p>
+全てのGNDピンに接続されるグランドプレーンを作りましょう。右ツールバーにある <em>塗りつぶしゾーンの追加' のアイコン
+    <span class="image">
+<img src="images/icons/add_zone.png" alt="add_zone_png">
+</span>
+    をクリックします。基板の周囲に長方形を描くつもりで、想定するコーナーの１つをクリックします。表示されたダイアログの中で、 'パッド接続</em> を
+    <em>サーマルリリーフ</em> に、<em>外枠の角度</em> を <em>任意角度</em> に設定してOKをクリックします。
+</p>
+</li>
+<li>
+<p>
+順番にそれぞれのコーナーでクリックして基板の外形を描きます。ダブルクリックで長方形を完成させます。描いた領域の内側で右クリックします。
+    <em>全てのゾーンを塗りつぶす</em> をクリックすると、基板は緑色に塗りつぶされ、このように見えるでしょう。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_100.png" alt="gsik_tutorial1_100_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+トップツールバーにある <em>デザインルールチェックの実行</em> のアイコン <span class="image">
+<img src="images/icons/drc.png" alt="erc_png">
+</span>
+    をクリックして、デザインルールチェックを実行します。 <em>DRCの起動</em> をクリックします。 エラーはないはずです。 <em>未結線情報の一覧</em>
+    をクリックします。未接続はないはずです。OKをクリックしてDRCのウィンドウを閉じます。
+</p>
+</li>
+<li>
+<p>
+<strong>ファイル</strong> &#8594; <strong>保存</strong> をクリックしてファイルを保存します。3Dで基板を閲覧するためには <strong>表示</strong> &#8594; <strong>3D ビューア</strong>
+    をクリックします。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/pcbnew_3d_viewer.png" alt="pcbnew_3d_viewer_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+PCBの周囲でマウスをドラッグしてPCBを回転させることができます。
+</p>
+</li>
+<li>
+<p>
+基板はこれで完成です。メーカーに送るためにはガーバーファイルを生成する必要があります。
+</p>
+</li>
+</ol></div>
+</div>
+<div class="sect2">
+<h3 id="generate-gerber-files">4.2. ガーバーファイルの生成</h3>
+<div class="paragraph"><p>PCBが完成したら、全てのレイヤのガーバーファイルを生成して、基板を製造してくれるあなたのお好みのPCBメーカーに送ることができます。</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+KiCadから <em>Pcbnew</em> ツールを開き、アイコン
+    <span class="image">
+<img src="images/icons/open_document.png" alt="open_document_png">
+</span>
+    をクリックして基板のファイルを読み込みます。
+</p>
+</li>
+<li>
+<p>
+<strong>ファイル</strong> &#8594; <strong>プロット</strong> をクリックします。 <em>出力フォーマット</em> として <em>ガーバー</em>
+    を選択し、ガーバーファイルを保存するフォルダを選択します。 <em>製造ファイル出力</em> ボタンを押して出力します。
+</p>
+</li>
+<li>
+<p>
+これらは典型的な2層PCBを製造するために選択する必要があるレイヤです:
+</p>
+</li>
+</ol></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:20%;">
+<col style="width:20%;">
+<col style="width:20%;">
+<col style="width:20%;">
+<col style="width:20%;">
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" >レイヤ </th>
+<th class="tableblock halign-left valign-top" >KiCadレイヤ名 </th>
+<th class="tableblock halign-left valign-top" >旧KiCadレイヤ名 </th>
+<th class="tableblock halign-left valign-top" >デフォルトの拡張子
+    </th>
+<th class="tableblock halign-left valign-top" >"Protelの拡張子を使用する" がチェックされている時</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">裏面導体レイヤ</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">B.Cu</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Copper</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GBR</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GBL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">表面導体レイヤ</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">F.Cu</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Component</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GBR</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GTL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">表面シルクスクリーン</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">F.SilkS</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">SilkS_Cmp</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GBR</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GTO</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">裏面ソルダマスク</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">B.Mask</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Mask_Cop</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GBR</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GBS</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">表面ソルダマスク</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">F.Mask</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Mask_Cmp</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GBR</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GTS</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">基板外形</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Edge.Cuts</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Edges_Pcb</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GBR</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GM1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="using-gerbview">4.3. GerbView の使用</h3>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+全てのガーバーファイルを見るためにはKiCadプロジェクト・マネージャ上で <em>GerbView</em> アイコンをクリックします。ドロップダウンメニューで
+    <em>Layer 1</em> を選択します。 <strong>ファイル</strong> &#8594; <strong>ガーバーファイルを読み込む</strong> をクリックするか、アイコン
+    <span class="image">
+<img src="images/icons/gerber_file.png" alt="gerber_file_png">
+</span>
+    をクリックします。生成された全てのガーバーファイルを一つずつ読み込みます。それら全てが積み重なって表示されることに注意しましょう。
+</p>
+</li>
+<li>
+<p>
+どのレイヤを表示するかの選択/非選択を右側のメニューで行います。メーカーに送る前に注意深く全てのレイヤを検査しましょう。
+</p>
+</li>
+<li>
+<p>
+ドリルファイルを生成するには、 <em>Pcbnew</em> から <strong>ファイル</strong> &#8594; <strong>プロット</strong> を再び行います。デフォルトの設定でよいでしょう。
+</p>
+</li>
+</ol></div>
+</div>
+<div class="sect2">
+<h3 id="automatically-route-with-freerouter">4.4. Freerouterによる自動配線</h3>
+<div class="paragraph"><p>基板の手配線は手早くて楽しいですが、大量のコンポーネントを含む基板の場合には自動配線を使いたくなるかもしれません。最初に重要な配線を手で行ってから、退屈な仕事をさせるために自動配線をセットするということを覚えておきましょう。その仕事は未配線についてのみ応えてくれます。ここで私達が使う自動配線は
+<em>freerouting.net</em> のFreerouterです。</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">注</div>
+</td>
+<td class="content">Freerouter はオープンソースの java アプリケーションで、KiCadと使うためには自分でビルドする必要があります。Freerouter
+のソースコードはこのサイトにあります: <a href="https://github.com/nikropht/FreeRouting">https://github.com/nikropht/FreeRouting</a></td>
+</tr></table>
+</div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+<em>Pcbnew</em> から <strong>ファイル</strong> &#8594; <strong>エクスポート</strong> &#8594; <strong>Specctra DSNファイル</strong> をクリックするか、<strong>ツール</strong> &#8594;
+    <strong>FreeRoute</strong> &#8594; <strong>現在のボードを”Specctra DSN”ファイルへエクスポート</strong>
+    をクリックするかしてローカルにファイルを保存します。 Freerouter を起動して <em>Open Your Own Design</em>
+    ボタンをクリックし、 <em>dsn</em> ファイルを選んで読み込ませます。
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">注</div>
+</td>
+<td class="content"><strong>ツール</strong> &#8594; <strong>FreeRoute</strong> ウィンドウには素晴らしいヘルプボタンがあり、ファイルビューアで <strong>Freerouter
+Guidelines</strong> という小さなドキュメントを開いてくれます。 Freerouter を効果的に使うためにこのガイドラインに従いましょう。</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+Freerouterは、手配線と自動配線の両方で、KiCadが現時点で持っていない特徴を持っています。Freerouterは2つの主要なステップで操作します:
+    最初に基板に配線を行い、次にそれを最適化します。完全最適化には時間がかかるかもしれませんが、いつでも必要なら停止することができます。
+</p>
+</li>
+<li>
+<p>
+トップバーにある <em>Autorouter</em>
+    ボタンをクリックすることで自動配線を開始できます。下部のバーは実行中の配線作業の情報を知らせてくれます。もしも <em>Pass</em>
+    カウントが30以上になったら、あなたの基板はおそらくこのルーターでは自動配線できないでしょう。コンポーネント間隔をもっと広げたり良い向きに回転させてから再挑戦しましょう。部品の回転と位置決めのゴールは、ラッツネストの空中交差の数を少なくすることです。
+</p>
+</li>
+<li>
+<p>
+マウスの左クリックにより、自動配線を停止して最適化プロセスを自動的に開始させることができます。もう一度左クリックすると、最適化プロセスが停止します。停止する必要がないのであれば、Freerouterが仕事を終えるのに任せるのが良いでしょう。
+</p>
+</li>
+<li>
+<p>
+<strong>File</strong> &#8594; <strong>Export Specctra Session File</strong> メニューをクリックして基板ファイルを <em>.ses</em>
+    拡張子で保存します。Freerouter ルールファイルは保存する必要がありません。
+</p>
+</li>
+<li>
+<p>
+<em>Pcbnew</em> に戻りましょう。<strong>ツール</strong> &#8594; <strong>FreeRoute</strong> をクリックし、 <em>スペクトラ・セッション ファイル (.ses)
+    のバックインポート</em> ボタンをクリックして <em>.ses</em> ファイルを選択し、新たに配線された基板をインポートします。
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>もし気に入らない配線があれば、配線を削除して再配線できます。"Delete" キーと、右ツールバーにある '配線とビアの追加' のアイコン
+<span class="image">
+<img src="images/icons/add_tracks.png" alt="Add Track icon">
+</span> の配線ツールを使いましょう。</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="forward-annotation-in-kicad">5. KiCadの前方向アノテーション</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>電子回路図、フットプリントの割り当て、基板レイアウト、ガーバーファイルの生成を完了したら、基板を現実のものとするために、PCBメーカーに全てを送る準備ができました。</p></div>
+<div class="paragraph"><p>しばしば、この線形の作業の流れは一方向ではなくなります。例えば、既にこの作業の流れを完了していたはずの基板を変更/拡張しなければならない時ですが、あなたは、部品を動かしたり、他のものと入れ替えたり、部品を変更したり、等々する必要が起こりえます。この変更の作業の中で、あなたがやりたくないことは基板全体を一から配線し直すことでしょう。代わりにこのようにすべきです:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+仮想的なコネクタのCON1をCON2と入れ替えたいと想定しましょう。
+</p>
+</li>
+<li>
+<p>
+あなたは既に完成した回路図と配線を終えたPCBを持っています。
+</p>
+</li>
+<li>
+<p>
+KiCadから <em>Eeschema</em> を起動して、CON1を削除しCON2を追加して変更を行います。アイコン
+    <span class="image">
+<img src="images/icons/save.png" alt="Save icon">
+</span> で回路図プロジェクトを保存して、トップツールバーにある
+    <em>ネットリストの生成</em> のアイコン <span class="image">
+<img src="images/icons/netlist.png" alt="netlist_png">
+</span> をクリックします。
+</p>
+</li>
+<li>
+<p>
+<em>ネットリスト</em> をクリックし <em>保存</em> します。デフォルトのファイル名で保存しましょう。古いファイルを上書きします。
+</p>
+</li>
+<li>
+<p>
+CON2にフットプリントを割り当てます。トップツールバーにある <em>CvPcb(コンポーネントとフットプリントの関連付け)を実行</em> のアイコン
+    <span class="image">
+<img src="images/icons/cvpcb.png" alt="cvpcb_png">
+</span>
+    をクリックします。新しいデバイスのCON2にフットプリントを割り当てます。残りのコンポーネントは以前に割り当てたフットプリントのままです。
+    <em>CvPcb</em> を閉じます。
+</p>
+</li>
+<li>
+<p>
+Eeschema に戻り、 <em>ファイル</em> &#8594; <em>回路図プロジェクトの保存</em> をクリックしてプロジェクトを保存します。 Eeschema を閉じます。
+</p>
+</li>
+<li>
+<p>
+KiCadプロジェクト・マネージャから <em>Pcbnew</em> のアイコンをクリックします。 <em>Pcbnew</em> のウィンドウが開きます。
+</p>
+</li>
+<li>
+<p>
+古い、配線済みの基板が自動的に開きます。新しいネットリストファイルをインポートしましょう。トップツールバーにある <em>ネットリストの読込み</em> のアイコン
+    <span class="image">
+<img src="images/icons/netlist.png" alt="netlist_png">
+</span> をクリックします。
+</p>
+</li>
+<li>
+<p>
+<em>ネットリストファイルを参照する</em> ボタンをクリックして、ネットリストファイルを選択し、 <em>現在のネットリストを読み込む</em> をクリックします。そして
+    <em>閉じる</em> ボタンをクリックします。
+</p>
+</li>
+<li>
+<p>
+この時点で、以前の全ての部品が配線済みのレイアウトが見られます。左上の隅に全ての未配線の部品、今回の例ではCON2が見えるでしょう。マウスでCON2を選択します。基板の中央まで移動しましょう。
+</p>
+</li>
+<li>
+<p>
+CON2を配置して配線します。完了したらいつものように保存してガーバーファイルの生成をしましょう。
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>ここに書いた手順は必要に応じて何度でも容易に繰り返すことが可能です。上述した前方向アノテーションとは別に、後方向アノテーションとして知られる別の方法があります。この方法はPcbnewで配線済みにした基盤の変更を、回路図とネットリストに反映することを可能にします。が、後方向アノテーションはそんなに便利ではないのでここでは書きません。</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="make-schematic-components-in-kicad">6. KiCad回路図コンポーネントの作成</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>あなたが回路図に配置したいコンポーネントがKiCadのライブラリの中にないことがあります。これは当たり前のことで嘆くことではありません。この章では、新しい回路図コンポーネントがKiCadでいかに素早く作れるのかを見ていきましょう。しかし、KiCadコンポーネントはいつでもインターネット上で見つけられることも覚えておきましょう。例えば、ここからです:</p></div>
+<div class="paragraph"><p><a href="http://per.launay.free.fr/kicad/kicad_php/composant.php">http://per.launay.free.fr/kicad/kicad_php/composant.php</a></p></div>
+<div class="paragraph"><p>KiCadでは、コンポーネントは <em>DEF</em> で始まり <em>ENDDEF</em> で終わるテキストの断片です。普通は一つ以上のコンポーネントが拡張子
+<em>.lib</em>
+のライブラリファイルに含まれています。コンポーネントをライブラリファイルに追加したいなら、あなたはただカット＆ペーストを使えばよいのです。</p></div>
+<div class="sect2">
+<h3 id="using-component-library-editor">6.1. コンポーネント・ライブラリ・エディタの使用</h3>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+新しいコンポーネントの作成には <em>コンポーネント・ライブラリ・エディタ</em> (<em>Eeschema</em> の一部) を使います。プロジェクトフォルダ
+    <em>tutorial1</em> 内に <em>library</em> というフォルダを作りましょう。新コンポーネントを作ったら、そこに新しいライブラリファイル
+    <em>myLib.lib</em> を置きます。
+</p>
+</li>
+<li>
+<p>
+さあ新しいコンポーネントの作成を始めましょう。KiCadから <em>Eeschema</em> を起動して、<em>コンポーネント・ライブラリ・エディタ</em> のアイコン
+    <span class="image">
+<img src="images/icons/libedit.png" alt="libedit_png">
+</span> をクリックし、<em>新規コンポーネント作成</em> のアイコン
+    <span class="image">
+<img src="images/icons/new_component.png" alt="new_component_png">
+</span>
+    をクリックします。コンポーネント・プロパティのウィンドウが現れます。新しいコンポーネントを <em>MYCONN3</em> と名付け、<em>デフォルトの参照記号</em> を
+    <em>J</em> に、<em>パッケージ内のユニット数</em> を <em>1</em> に設定します。OKをクリックします。警告が出たらyesをクリックしておきます。
+    この時点ではコンポーネントは、そのラベルだけで構成されています。ピンをいくつか足してみましょう。右ツールバーにある <em>コンポーネントにピンを追加'
+    のアイコン <span class="image">
+<img src="images/icons/pin.png" alt="pin_png">
+</span> をクリックします。ピンを配置するには、シートの 'MYCONN3</em>
+    ラベルの下あたりを左クリックします。
+</p>
+</li>
+<li>
+<p>
+現れた <em>ピンのプロパティ</em> ウィンドウで、ピン名を <em>VCC</em> 、ピン番号を <em>1</em> 、<em>エレクトリックタイプ</em> を <em>パッシブ</em>
+    と設定してOKをクリックします。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/pin_properties.png" alt="Pin Properties">
+</div>
+</div>
+</li>
+<li>
+<p>
+適当な場所、 <em>MYCONN3</em> ラベルの右下あたり、をクリックしてピンを配置します。
+</p>
+</li>
+<li>
+<p>
+ピン配置のステップを繰り返します。今度は <em>ピン名</em> は <em>INPUT</em> で、 <em>ピン番号</em> は <em>2</em> で、 <em>エレクトリックタイプ</em> は
+    <em>パッシブ</em> とします。
+</p>
+</li>
+<li>
+<p>
+ピン配置のステップを繰り返します。今度は <em>ピン名</em> は <em>GND</em> で、 <em>ピン番号</em> は <em>3</em> で、 <em>エレクトリックタイプ</em> は <em>パッシブ</em>
+    とします。ピンを順に重ねて配置します。コンポーネントのラベルの <em>MYCONN3</em> をページの中心(青いラインが交差する所)にします。
+</p>
+</li>
+<li>
+<p>
+次にコンポーネントの輪郭を描きましょう。 <em>コンポーネントのボディに矩形を入力</em> のアイコン
+    <span class="image">
+<img src="images/icons/add_rectangle.png" alt="add_rectangle_png">
+</span>
+    をクリックします。以下に示すようにピンに隣接して長方形を描きます。まず、長方形の左上の角にしたい所をクリックします（マウスボタンを押したままにしません）。そして、長方形の右下の角にしたい所をクリックします。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_myconn3_l.png" alt="gsik_myconn3_l_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+矩形を黄色で塗りつぶしたい場合、まず <strong>設定</strong> &#8594; <strong>色の設定</strong> で "ボディ背景色" を "Yellow 4"
+    に設定します。そして、編集画面上で塗りつぶしたい矩形の枠上にマウスカーソルを置いて "e" キーを押して <strong>図形のプロパティ</strong> ウィンドウを表示し、
+    <em>背景色で塗りつぶし</em> を選択します。
+</p>
+</li>
+<li>
+<p>
+コンポーネントをあなたのライブラリ <em>myLib.lib</em> に保存しましょう。 <em>新しいライブラリへ現在のコンポーネントを保存</em> のアイコン
+    <span class="image">
+<img src="images/icons/new_library.png" alt="new_library_png">
+</span> をクリックして、フォルダ
+    <em>tutorial1/library/</em> を選び、新しいライブラリファイルを <em>myLib.lib</em> という名前で保存します。
+</p>
+</li>
+<li>
+<p>
+<strong>設定</strong> &#8594; <strong>コンポーネントライブラリ</strong> で、 <em>tutorial1/library/</em> を <em>ユーザ定義の検索パス</em> に追加し、
+    <em>myLib.lib</em> を <em>コンポーネントライブラリファイル</em> に追加します。
+</p>
+</li>
+<li>
+<p>
+<em>作業ライブラリの選択</em> のアイコン <span class="image">
+<img src="images/icons/library.png" alt="library_png">
+</span>
+    をクリックします。ライブラリの選択ウィンドウ内で  <em>myLib</em>
+    を選択してOKをクリックします。ウィンドウの上部が現在使用中のライブラリを示しており、それが <em>myLib</em> であることに注意しましょう。
+</p>
+</li>
+<li>
+<p>
+トップツールバーにある <em>現在のライブラリ内の現在のコンポーネントを更新</em> のアイコン
+    <span class="image">
+<img src="images/icons/save_part_in_mem.png" alt="save_part_in_mem_png">
+</span>
+    をクリックします。トップツールバーにある <em>ディスクに現在のライブラリを保存</em> のアイコン
+    <span class="image">
+<img src="images/icons/save_library.png" alt="save_library_png">
+</span>
+    をクリックして変更を全て保存します。どの確認メッセージにも <em>はい</em>
+    をクリックして下さい。新しい回路図コンポーネントは完成して、ウィンドウのタイトルバーに示されているライブラリから使えます。
+</p>
+</li>
+<li>
+<p>
+コンポーネント・ライブラリ・エディタのウィンドウを閉じます。 Eeschema のウィンドウに戻ります。あなたの新しいコンポーネントはライブラリ
+    <em>myLib</em> から利用できます。
+</p>
+</li>
+<li>
+<p>
+ライブラリパスに追加することによって、ライブラリの <em>file.lib</em> ファイルを利用できるようになります。 <em>Eeschema</em> から <strong>設定</strong>
+    &#8594; <strong>コンポーネントライブラリ</strong> として、それへのパスを <em>ユーザ定義の検索パス</em> に追加し、 <em>file.lib</em> を
+    <em>コンポーネントライブラリファイル</em> に追加します。
+</p>
+</li>
+</ol></div>
+</div>
+<div class="sect2">
+<h3 id="export-import-and-modify-library-components">6.2. コンポーネントのエクスポート、インポート、変更</h3>
+<div class="paragraph"><p>一からコンポーネントを作るよりも、既に作られたものから始めてそれを変更する方が簡単なこともあります。この章では、KiCadの標準ライブラリ
+<em>device</em> から、あなた独自のライブラリ <em>myOwnLib.lib</em> にコンポーネントをエクスポートして、それを変更する方法を見ていきましょう。</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+KiCadから <em>Eeschema</em> を起動して、 <em>コンポーネント・ライブラリ・エディタ</em> のアイコン
+    <span class="image">
+<img src="images/icons/libedit.png" alt="libedit_png">
+</span> をクリックして、 <em>作業ライブラリの選択</em> のアイコン
+    <span class="image">
+<img src="images/icons/library.png" alt="library_png">
+</span> をクリックし、 <em>device</em> ライブラリを選びます。
+    <em>現在のライブラリからエディタへコンポーネントを読み込む</em> のアイコン
+    <span class="image">
+<img src="images/icons/import_cmp_from_lib.png" alt="import_cmp_from_lib_png">
+</span> をクリックして
+    <em>RELAY_2RT</em> をインポートします。
+</p>
+</li>
+<li>
+<p>
+<em>コンポーネントのエクスポート</em> のアイコン <span class="image">
+<img src="images/icons/export.png" alt="export_png">
+</span>
+    をクリックして、フォルダ <em>library/</em> へ行き、新しいライブラリファイルを <em>myOwnLib.lib</em> という名前で保存します。
+</p>
+</li>
+<li>
+<p>
+ライブラリパスに追加することで、このコンポーネントとライブラリ全体 <em>myOwnLib.lib</em> が利用できるようになります。 <em>Eeschema</em>
+    から <strong>設定</strong> &#8594; <strong>コンポーネントライブラリ</strong> として、 <em>library/</em> を <em>ユーザ定義の検索パス</em> に追加し、
+    <em>myOwnLib.lib</em> を <em>コンポーネントライブラリファイル</em> に追加します。追加したら "OK" ボタンを押してウィンドウを閉じます。
+</p>
+</li>
+<li>
+<p>
+<em>作業ライブラリの選択</em> のアイコン <span class="image">
+<img src="images/icons/library.png" alt="library_png">
+</span>
+    をクリックします。ライブラリの選択ウィンドウ内で  <em>myOwnLib</em>
+    を選択してOKをクリックします。ウィンドウの上部が現在使用中のライブラリを示しており、それが <em>myOwnLib</em> であることに注意しましょう。
+</p>
+</li>
+<li>
+<p>
+<em>現在のライブラリからエディタへコンポーネントを読み込む</em> のアイコン
+    <span class="image">
+<img src="images/icons/import_cmp_from_lib.png" alt="import_cmp_from_lib_png">
+</span> をクリックして
+    <em>RELAY_2RT</em> をインポートします。
+</p>
+</li>
+<li>
+<p>
+これでコンポーネントを好きなように変更できます。マウスカーソルをラベル <em>RELAY_2RT</em> に重ねて "e" キーを押して
+    <em>MY_RELAY_2RT</em> にリネームします。
+</p>
+</li>
+<li>
+<p>
+トップツールバーにある <em>現在のライブラリ内の現在のコンポーネントを更新</em> のアイコン
+    <span class="image">
+<img src="images/icons/save_part_in_mem.png" alt="save_part_in_mem_png">
+</span>
+    をクリックします。トップツールバーにある <em>ディスクに現在のライブラリを保存</em> のアイコン
+    <span class="image">
+<img src="images/icons/save_library.png" alt="save_library_png">
+</span> をクリックして変更を全て保存します。
+</p>
+</li>
+</ol></div>
+</div>
+<div class="sect2">
+<h3 id="make-schematic-components-with-quicklib">6.3. quicklibによる回路図コンポーネントの作成</h3>
+<div class="paragraph"><p>この章では、インターネットのツール <em>quicklib</em> を使った、回路図コンポーネント MYCONN3 (前の <a href="#myconn3">「MYCONN3」</a> 参照) の別の作成方法を紹介します。</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+<em>quicklib</em> のウェブページに行きましょう: <a href="http://kicad.rohrbacher.net/quicklib.php">http://kicad.rohrbacher.net/quicklib.php</a>
+</p>
+</li>
+<li>
+<p>
+ページに次の情報を入力しましょう: Component name: MYCONN3、 Reference Prefix: J、 Pin Layout
+    Style: SIL、 Pin Count, N: 3
+</p>
+</li>
+<li>
+<p>
+<em>Assign Pins</em> をクリックします。ページに次の情報を入力しましょう: Pin 1: VCC、 Pin 2: input、 Pin 3:
+    GND 。Type は3つのピンとも Passive を選択します。
+</p>
+</li>
+<li>
+<p>
+<em>Preview</em> をクリックします。満足なら <em>Build Library Component</em> をクリックします。 ファイルをダウンロードして
+    <em>tutorial1/library/myQuickLib.lib</em> と名付けます。できました！
+</p>
+</li>
+<li>
+<p>
+それをKiCadを使って見てみましょう。KiCadプロジェクト・マネージャから  <em>Eeschema</em> を起動して、
+    <em>コンポーネント・ライブラリ・エディタ</em> のアイコン <span class="image">
+<img src="images/icons/libedit.png" alt="libedit_png">
+</span>
+    をクリックし、 <em>コンポーネントのインポート</em> のアイコン <span class="image">
+<img src="images/icons/import.png" alt="import_png">
+</span>
+    をクリックし、 <em>tutorial1/library/</em> へ行き <em>myQuickLib.lib</em> を選択します。
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_myconn3_quicklib.png" alt="gsik_myconn3_quicklib_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+ライブラリパスに追加することで、このコンポーネントとライブラリ全体 <em>myQuickLib.lib</em> が利用できるようになります。
+    <em>Eeschema</em> から <strong>設定</strong> &#8594; <strong>コンポーネントライブラリ</strong> として、 <em>library/</em> を <em>ユーザ定義の検索パス</em> に追加し、
+    <em>myQuickLib.lib</em> を <em>コンポーネントライブラリファイル</em> に追加します。
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>このコンポーネント作成方法は、たくさんのピンを持つコンポーネントを作りたい時に非常に効果的であると想像できるでしょう。</p></div>
+</div>
+<div class="sect2">
+<h3 id="make-a-high-pin-count-schematic-component">6.4. 大量ピンの回路図コンポーネントの作成</h3>
+<div class="paragraph"><p><em>quicklibによる回路図コンポーネントの作成</em> の章で、ウェブベースのツール <em>quicklib</em>
+を使った回路図コンポーネントの作成方法を見ました。しかし、時に、大量ピン(数百のピン)を持つ回路図コンポーネントを作る必要があることに気付くでしょう。KiCadでは、これはそんなにややこしい仕事ではありません。</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+50ピンのデバイスのための回路図コンポーネントを作成したいとします。複数の少量ピンの図形、例えば25ピンの図形を2つ、を使ってそれを描くのが一般的な方法です。このコンポーネント表現はピン接続が容易でしょう。
+</p>
+</li>
+<li>
+<p>
+このコンポーネントを作成する最良の方法は、<em>quicklib</em>
+    を使って別々に25ピンのコンポーネントを生成して、Pythonスクリプトでそれらのピン番号を振り直し、最終的に2つを統合して一組のDEFとENDDEFの中にコピー＆ペーストすることです。
+</p>
+</li>
+<li>
+<p>
+以下に <em>in.txt</em> ファイルと <em>out.txt</em> ファイルと連動して使えるシンプルなPythonスクリプトの例を示します。これは
+    <em>in.txt</em> ファイルの中の全ての行に対して、 <span class="monospaced">X PIN1 1 -750 600 300 R 50 50 1 1 I</span> を <span class="monospaced">X PIN26
+    26 -750 600 300 R 50 50 1 1 I</span> のように数字の振り替えをします。
+</p>
+</li>
+</ol></div>
+<div class="listingblock">
+<div class="title">シンプルなスクリプト</div>
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">#!/usr/bin/env python</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">''' simple script to manipulate KiCad component pins numbering'''</span></span>
+<span style="font-weight: bold"><span style="color: #000080">import</span></span> sys<span style="color: #990000">,</span> re
+<span style="font-weight: bold"><span style="color: #0000FF">try</span></span><span style="color: #990000">:</span>
+    fin<span style="color: #990000">=</span><span style="font-weight: bold"><span style="color: #000000">open</span></span><span style="color: #990000">(</span>sys<span style="color: #990000">.</span>argv<span style="color: #990000">[</span><span style="color: #993399">1</span><span style="color: #990000">],</span><span style="color: #FF0000">'r'</span><span style="color: #990000">)</span>
+    fout<span style="color: #990000">=</span><span style="font-weight: bold"><span style="color: #000000">open</span></span><span style="color: #990000">(</span>sys<span style="color: #990000">.</span>argv<span style="color: #990000">[</span><span style="color: #993399">2</span><span style="color: #990000">],</span><span style="color: #FF0000">'w'</span><span style="color: #990000">)</span>
+<span style="font-weight: bold"><span style="color: #0000FF">except</span></span><span style="color: #990000">:</span>
+    <span style="font-weight: bold"><span style="color: #0000FF">print</span></span> <span style="color: #FF0000">"oh, wrong use of this app, try:"</span><span style="color: #990000">,</span> sys<span style="color: #990000">.</span>argv<span style="color: #990000">[</span><span style="color: #993399">0</span><span style="color: #990000">],</span> <span style="color: #FF0000">"in.txt out.txt"</span>
+    sys<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">exit</span></span><span style="color: #990000">()</span>
+<span style="font-weight: bold"><span style="color: #0000FF">for</span></span> ln <span style="font-weight: bold"><span style="color: #0000FF">in</span></span> fin<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">readlines</span></span><span style="color: #990000">():</span>
+    obj<span style="color: #990000">=</span>re<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">search</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"(X PIN)(\d*)(\s)(\d*)(\s.*)"</span><span style="color: #990000">,</span>ln<span style="color: #990000">)</span>
+<span style="font-weight: bold"><span style="color: #0000FF">if</span></span> obj<span style="color: #990000">:</span>
+    num <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">(</span>obj<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">group</span></span><span style="color: #990000">(</span><span style="color: #993399">2</span><span style="color: #990000">))+</span><span style="color: #993399">25</span>
+    ln<span style="color: #990000">=</span>obj<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">group</span></span><span style="color: #990000">(</span><span style="color: #993399">1</span><span style="color: #990000">)</span> <span style="color: #990000">+</span> <span style="font-weight: bold"><span style="color: #000000">str</span></span><span style="color: #990000">(</span>num<span style="color: #990000">)</span> <span style="color: #990000">+</span> obj<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">group</span></span><span style="color: #990000">(</span><span style="color: #993399">3</span><span style="color: #990000">)</span> <span style="color: #990000">+</span> <span style="font-weight: bold"><span style="color: #000000">str</span></span><span style="color: #990000">(</span>num<span style="color: #990000">)</span> <span style="color: #990000">+</span> obj<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">group</span></span><span style="color: #990000">(</span><span style="color: #993399">5</span><span style="color: #990000">)</span> <span style="color: #990000">+</span><span style="color: #FF0000">'\n'</span>
+    fout<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">write</span></span><span style="color: #990000">(</span>ln<span style="color: #990000">)</span>
+fin<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">close</span></span><span style="color: #990000">();</span> fout<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">close</span></span><span style="color: #990000">()</span>
+<span style="font-style: italic"><span style="color: #9A1900">#</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># for more info about regular expression syntax and KiCad component generation:</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># http://gskinner.com/RegExr/</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># http://kicad.rohrbacher.net/quicklib.php</span></span></tt></pre></div></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+2つのコンポーネントを一つに統合するために、 Eeschema
+    からコンポーネント・ライブラリ・エディタを使って、1番目のコンポーネントを移動し、2番目に重ならないようにしてやる必要があるでしょう。以下に最終的な
+    .lib ファイルとその <em>Eeschema</em> での表現を示します。
+</p>
+</li>
+</ol></div>
+<div class="listingblock">
+<div class="title">*.lib ファイルの内容</div>
+<div class="content monospaced">
+<pre>Eeschema-LIBRARY Version 2.3
+#encoding utf-8
+# COMP
+DEF COMP U 0 40 Y Y 1 F N
+F0 "U" -1800 -100 50 H V C CNN
+F1 "COMP" -1800 100 50 H V C CNN
+DRAW
+S -2250 -800 -1350 800 0 0 0 N
+S -450 -800 450 800 0 0 0 N
+X PIN1 1 -2550 600 300 R 50 50 1 1 I
+
+...
+
+X PIN49 49 750 -500 300 L 50 50 1 1 I
+ENDDRAW
+ENDDEF
+#End Library</pre>
+</div></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_high_number_pins.png" alt="gsik_high_number_pins_png">
+</div>
+</div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+ここで紹介しているPythonスクリプトは、ピン番号とピンラベルを操作するとても強力なツールです。その威力は、難解ではありますが驚くほどに便利な正規表現構文による、ということを覚えておいて下さい:
+    <a href="http://gskinner.com/RegExr/">http://gskinner.com/RegExr/</a>
+</p>
+</li>
+</ol></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="make-component-footprints">7. フットプリントの作成</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>他の、一種類のライブラリに回路図記号とフットプリントの両方を含むEDAソフトウェア・ツールと異なり、KiCadの <em>.lib</em>
+ファイルはコンポーネントを、 <em>.kicad_mod</em> ファイルはフットプリントを含んでいます。 <em>CvPcb</em>
+はコンポーネントにフットプリントを割り当てるのに使われます。</p></div>
+<div class="paragraph"><p><em>.lib</em> と同様に、 <em>.kicad_mod</em> ファイルはテキストファイルで、一つのフットプリントを含むことができます。</p></div>
+<div class="paragraph"><p>KiCadには豊富なフットプリントのライブラリがありますが、あなたが必要とするフットプリントがKiCadのライブラリ内にないこともあるでしょう。ここではKiCadで新しいPCBフットプリントを作成する手順を示します:</p></div>
+<div class="sect2">
+<h3 id="using-footprint-editor">7.1. フットプリント・エディタの使用</h3>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+KiCadプロジェクト・マネージャから <em>Pcbnew</em> ツールを起動します。トップツールバーにある <em>フットプリント エディタを開く</em> のアイコン
+    <span class="image">
+<img src="images/icons/edit_module.png" alt="edit_module_png">
+</span> をクリックします。 <em>フットプリント・エディタ</em>
+    が開きます。
+</p>
+</li>
+<li>
+<p>
+新しいフットプリント <em>MYCONN3</em> を新しいフットプリントライブラリ <em>myfootprint</em> に保存します。プロジェクトのフォルダ
+    <em>tutorial1/</em> 内に新しく  <em>myfootprint.pretty/</em> フォルダを作成して下さい。 <strong>設定</strong> &#8594; <strong>フットプリント
+    ライブラリの管理</strong> をクリックして <em>ライブラリの追加' ボタンを押します。テーブルに次のように入力します。別名（ニックネーム）には
+    "myfootprint" 、ライブラリのパスには "${KIPRJMOD}/myfootprint.pretty" 、プラグインの種類には
+    "KiCad"。入力したらOKを押して、PCBライブラリ一覧のダイアログを閉じます。トップツールバーにある 'アクティブなライブラリを選択</em> のアイコン
+    <span class="image">
+<img src="images/icons/library.png" alt="library_png">
+</span> をクリックします。そして <em>myfootprint</em>
+    ライブラリを選択しましょう。
+</p>
+</li>
+<li>
+<p>
+トップツールバーにある <em>新規フットプリント</em> のアイコン
+    <span class="image">
+<img src="images/icons/new_footprint.png" alt="new_footprint_png">
+</span> をクリックします。 <em>フットプリント名</em>
+    に <em>MYCONN3</em> を入力します。画面中央に <em>MYCONN3</em> ラベルが表示されます。そのラベルの下に <em>REF*<em></em> があります。
+    <em>MYCONN3</em> の上で右クリックし、 <em>REF</em> の上方に移動します。 <em>REF*</em></em> 上で右クリックして、 <em>テキストの編集</em> を選び、
+    <em>SMD</em> にリネームします。テキストプロパティの <em>表示</em> の項目で <em>非表示</em> を選択します。
+</p>
+</li>
+<li>
+<p>
+右ツールバーにある <em>パッド入力</em> のアイコン <span class="image">
+<img src="images/icons/pad.png" alt="pad_png">
+</span>
+    を選択します。パッドを配置するため画面をクリックします。新しいパッド上で右クリックし <em>パッドの編集</em> をクリックします。代わりに "e"
+    キーのショートカットも使えます。
+</p>
+<div class="imageblock" id="myconn3">
+<div class="content">
+<img src="images/ja/pad_properties.png" alt="Pad Properties">
+</div>
+</div>
+</li>
+<li>
+<p>
+<em>パッド番号</em> を <em>1</em> に、 <em>形状</em> を <em>四角</em> に、 <em>パッド形状</em> を <em>SMD</em> に、 <em>サイズX</em> を <em>0.4</em> に、 <em>サイズY</em>
+    を <em>0.8</em> に設定し、OKをクリックします。再度 <em>パッド入力</em> をクリックし、 もう2つパッドを配置します。
+</p>
+</li>
+<li>
+<p>
+グリッドサイズを変更したいなら <strong>右クリック</strong> &#8594; <strong>グリッドの選択</strong> とします。配置する前に適切なグリッドサイズを選択しましょう。
+</p>
+</li>
+<li>
+<p>
+上の図のように <em>MYCONN3</em> と <em>SMD</em> のラベルを外側に移動します。
+</p>
+</li>
+<li>
+<p>
+パッドを配置する時には、相対的な距離を測る必要があります。相対座標軸の <em>(0,0)</em>
+    としたい所にカーソルを置き、スペースキーを押します。カーソルを動かすと、カーソル位置の相対的な指標がウィンドウの下方に見えるでしょう。新しい原点を設定するにはスペースキーを押しましょう。
+</p>
+</li>
+<li>
+<p>
+フットプリントの輪郭を加えましょう。右ツールバーにある <em>図形ライン（またはポリゴン）を入力</em> のボタン
+    <span class="image">
+<img src="images/icons/add_polygon.png" alt="add_polygon_png">
+</span>
+    をクリックします。パーツの周囲にコネクタの外形を描きます。
+</p>
+</li>
+<li>
+<p>
+トップツールバーにある <em>アクティブなライブラリへフットプリントを保存</em> のアイコン
+    <span class="image">
+<img src="images/icons/save_library.png" alt="save_library_png">
+</span>
+    をクリックし、デフォルト名のMYCONN3で保存します。
+</p>
+</li>
+</ol></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="note-about-portability-of-kicad-project-files">8. KiCadプロジェクトファイルの可搬性について</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>あなたのKiCadプロジェクトを、他の人が完全に取り込んで使えるために、どのファイルを送る必要があるでしょうか？</p></div>
+<div class="paragraph"><p>誰かとKiCadのプロジェクトを共有する時、回路図ファイル <em>.sch</em> 、基板ファイル <em>.kicad_pcb</em> 、プロジェクトファイル
+<em>.pro</em> 、ネットリストファイル <em>.net</em> を、コンポーネントライブラリファイル <em>.lib</em> 及びフットプリントライブラリファイル
+<em>.kicad_mod</em> と一緒に送ることが重要です。この方法でのみ完全に自由に回路図と基板を変更することができます。</p></div>
+<div class="paragraph"><p>KiCadの回路図では、回路図記号を含む <em>.lib</em> ファイルが必要です。それらのライブラリファイルは <em>Eeschema</em>
+の設定で読み込まれる必要があります。一方、基板( <em>.kicad_pcb</em> ファイル)では、フットプリントは <em>.kicad_pcb</em>
+ファイルの中に保存させることができます。誰かに <em>.kicad_pcb</em>
+ファイルだけを送っても、彼はその基板を見たり編集したりできるわけです。しかし、もし彼がネットリストからコンポーネントを読み込みたいのであれば、フットプリントライブラリ
+(<em>.kicad_mod</em> ファイル) が存在し、回路図の場合と同様に、 <em>Pcbnew</em> の設定で読み込まれている必要があります。同様に、
+<em>CvPcb</em> でモジュールが表示されるようにするためには、 <em>Pcbnew</em> の設定で <em>.kicad_mod</em>
+ファイルが読み込まれていることが必要です。</p></div>
+<div class="paragraph"><p>もし誰かが フットプリント付きの <em>.kicad_pcb</em>
+ファイルを送ってくれたら、あなたはそれを他の基板でも利用したいでしょう。フットプリント・エディタを開き、現在の基板からフットプリントを読み込み、保存するか別のフットプリント・ライブラリ・ファイルにエクスポートします。
+<em>.kicad_pcb</em> ファイルから全てのフットプリントを一度にエクスポートすることもできます。 <strong>Pcbnew</strong> &#8594; <strong>ファイル</strong> &#8594;
+<strong>フットプリントのアーカイブ</strong> &#8594; <strong>フットプリントアーカイブの作成</strong> で、基板上の全てのフットプリントの <em>.kicad_mod</em>
+ファイルが生成されます。</p></div>
+<div class="paragraph"><p>結論として、PCBだけを配布したいのなら、基板ファイル <em>.kicad_pcb</em>
+だけで十分です。しかし、あなたが他の人に、回路図と部品と基板の、利用と変更の完全な自由を与えたいのならば、以下のプロジェクトディレクトリをzipして送ることをお勧めいたします。</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>tutorial1/
+|-- tutorial1.pro
+|-- tutorial1.sch
+|-- tutorial1.kicad_pcb
+|-- tutorial1.net
+|-- library/
+|   |-- myLib.lib
+|   |-- myOwnLib.lib
+|   \-- myQuickLib.lib
+|
+|-- myfootprint.pretty/
+|   \-- MYCONN3.kicad_mod
+|
+\-- gerber/
+    |-- ...
+    \-- ...</pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="more-about-kicad-documentation">9. KiCadドキュメントの詳細</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>この文書はKiCadの大部分の機能のクイックガイドでした。より詳細な手順については、それぞれのKiCadツールから参照できるヘルプファイルを参照して下さい。
+<strong>ヘルプ</strong> &#8594; <strong>マニュアル</strong> をクリックです。</p></div>
+<div class="paragraph"><p>KiCadには、その4つのソフトウェアコンポーネント全てに、とても良い多言語のマニュアルが付いてきます。</p></div>
+<div class="paragraph"><p>全KiCadマニュアルの英語版はKiCadと一緒に配布されます。</p></div>
+<div class="paragraph"><p>マニュアルに加えて、KiCadはこの、他の言語にも翻訳されたチュートリアルと一緒に配布されます。このチュートリアルは無料で最新版のKiCadと共に配布されます。このチュートリアルとマニュアルはご利用のKiCadと共にパッケージされています。</p></div>
+<div class="paragraph"><p>Linux の場合、ディストリビューションにもよりますが、一般的に次のディレクトリでしょう:</p></div>
+<div class="literalblock">
+<div class="content monospaced">
+<pre>/usr/share/doc/kicad/help/en/
+/usr/local/share/doc/kicad/help/en</pre>
+</div></div>
+<div class="paragraph"><p>Windows の場合:</p></div>
+<div class="literalblock">
+<div class="content monospaced">
+<pre>&lt;installation directory&gt;/share/doc/kicad/help/en</pre>
+</div></div>
+<div class="paragraph"><p>OS X の場合:</p></div>
+<div class="literalblock">
+<div class="content monospaced">
+<pre>/Library/Application Support/kicad/help/en</pre>
+</div></div>
+<div class="sect2">
+<h3 id="kicad-documentation-on-the-web">9.1. Web上のKiCadドキュメント</h3>
+<div class="paragraph"><p>最新のKiCadのドキュメンテーションは、複数の言語に翻訳されてWeb上にあります。</p></div>
+<div class="paragraph"><p><a href="http://kicad-pcb.org/help/documentation/">http://kicad-pcb.org/help/documentation/</a></p></div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr></div>
+<div id="footer">
+<div id="footer-text">
+2017-08-24 22:13:25 BST 更新
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="AsciiDoc 8.6.8">
+<title>IDF Exporter</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #777777;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+tt {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+.monospaced {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+/*
+ * Theme specific overrides of the preceding (asciidoc.css) CSS.
+ *
+ */
+body {
+  font-family: Garamond, Georgia, serif;
+  font-size: 17px;
+  color: #3E4349;
+  line-height: 1.3em;
+}
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Garmond, Georgia, serif;
+  font-weight: normal;
+  border-bottom-width: 0;
+  color: #3E4349;
+}
+div.title, caption.title { color: #596673; font-weight: bold; }
+h1 { font-size: 240%; }
+h2 { font-size: 180%; }
+h3 { font-size: 150%; }
+h4 { font-size: 130%; }
+h5 { font-size: 115%; }
+h6 { font-size: 100%; }
+#header h1 { margin-top: 0; }
+#toc {
+  color: #444444;
+  line-height: 1.5;
+  padding-top: 1.5em;
+}
+#toctitle {
+  font-size: 20px;
+}
+#toc a {
+    border-bottom: 1px dotted #999999;
+    color: #444444 !important;
+    text-decoration: none !important;
+}
+#toc a:hover {
+    border-bottom: 1px solid #6D4100;
+    color: #6D4100 !important;
+    text-decoration: none !important;
+}
+div.toclevel1 { margin-top: 0.2em; font-size: 16px; }
+div.toclevel2 { margin-top: 0.15em; font-size: 14px; }
+em, dt, td.hdlist1 { color: black; }
+strong { color: #3E4349; }
+a { color: #004B6B; text-decoration: none; border-bottom: 1px dotted #004B6B; }
+a:visited { color: #615FA0; border-bottom: 1px dotted #615FA0; }
+a:hover { color: #6D4100; border-bottom: 1px solid #6D4100; }
+div.tableblock > table, table.tableblock { border: 3px solid #E8E8E8; }
+th.tableblock, td.tableblock { border: 1px solid #E8E8E8; }
+ul > li > * { color: #3E4349; }
+pre, tt, .monospaced { font-family: Consolas,Menlo,'Deja Vu Sans Mono','Bitstream Vera Sans Mono',monospace; }
+tt, .monospaced { font-size: 0.9em; color: black;
+}
+div.exampleblock > div.content, div.sidebarblock > div.content, div.listingblock > div.content { border-width: 0 0 0 3px; border-color: #E8E8E8; }
+div.verseblock { border-left-width: 0; margin-left: 3em; }
+div.quoteblock { border-left-width: 3px; margin-left: 0; margin-right: 0;}
+div.admonitionblock td.content { border-left: 3px solid #E8E8E8; }
+
+
+@media screen {
+  body {
+    max-width: 50em; /* approximately 80 characters wide */
+    margin-left: 16em;
+  }
+
+  #toc {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 13em;
+    padding: 0.5em;
+    padding-bottom: 1.5em;
+    margin: 0;
+    overflow: auto;
+    border-right: 3px solid #f8f8f8;
+    background-color: white;
+  }
+
+  #toc .toclevel1 {
+    margin-top: 0.5em;
+  }
+
+  #toc .toclevel2 {
+    margin-top: 0.25em;
+    display: list-item;
+    color: #aaaaaa;
+  }
+
+  #toctitle {
+    margin-top: 0.5em;
+  }
+}
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install(2);
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>IDF Exporter</h1>
+<span id="author">The KiCad Team</span><br>
+<div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p><em>Reference manual</em></p></div>
+<div class="paragraph" id="copyright"><p><strong>Copyright</strong></p></div>
+<div class="paragraph"><p>This document is Copyright &#169; 2014-2015 by it&#8217;s contributors as listed below.
+You may distribute it and/or modify it under the terms of either the GNU
+General Public License (<a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html</a>), version 3
+or later, or the Creative Commons Attribution License
+(<a href="http://creativecommons.org/licenses/by/3.0/">http://creativecommons.org/licenses/by/3.0/</a>), version 3.0 or later.</p></div>
+<div class="paragraph"><p>All trademarks within this guide belong to their legitimate owners.</p></div>
+<div class="paragraph" id="contributors"><p><strong>Contributors</strong></p></div>
+<div class="paragraph"><p>Cirilo Bernardo</p></div>
+<div class="paragraph" id="feedback"><p><strong>Feedback</strong></p></div>
+<div class="paragraph"><p>Please direct any bug reports, suggestions or new versions to here:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+About KiCad document: <a href="https://github.com/KiCad/kicad-doc/issues">https://github.com/KiCad/kicad-doc/issues</a>
+</p>
+</li>
+<li>
+<p>
+About KiCad software: <a href="https://bugs.launchpad.net/kicad">https://bugs.launchpad.net/kicad</a>
+</p>
+</li>
+<li>
+<p>
+About KiCad software i18n: <a href="https://github.com/KiCad/kicad-i18n/issues">https://github.com/KiCad/kicad-i18n/issues</a>
+</p>
+</li>
+</ul></div>
+<div class="paragraph" id="publication_date_and_software_version"><p><strong>Publication date and software version</strong></p></div>
+<div class="paragraph"><p>Published on January 26, 2014.</p></div>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_introduction_to_the_idfv3_exporter">1. Introduction to the IDFv3 exporter</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The IDF exporter exports an IDFv3
+<span class="footnote"><br>[<a href="http://www.simplifiedsolutionsinc.com/images/idf_v30_spec.pdf">http://www.simplifiedsolutionsinc.com/images/idf_v30_spec.pdf</a>]<br></span>
+compliant board (.emn) and library (.emp) file for communicating
+mechanical dimensions to a mechanical CAD package. The exporter
+currently exports the board outline and cutouts, all pad and mounting
+thru-holes including slotted holes, and component outlines; this is the
+most basic set of mechanical data required for interaction with
+mechanical designers. All other entities described in the IDFv3
+specification are currently not exported.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifying_component_models_for_use_by_the_exporter">2. Specifying component models for use by the exporter</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The IDF exporter makes use of the 3D model file attribute which was
+originally used by the 3D viewer. Since the 3D viewer, IDF, and possible
+future mechanical CAD exporters are generally interested in different
+types of file format, it is possible to use the 3D model file attribute
+to specify models for multiple exporters.</p></div>
+<div class="paragraph"><p>From within the Footprint Editor or Pcbnew, edit the footprint parameters
+and click on the 3D settings tab (see <a href="#figure-1">figure 1</a>), click on Add 3D
+Shape, and select the filter "IDFv3 component files (*.idf)" (see
+<a href="#figure-2">figure 2</a>). Select the desired outline file and enter any
+necessary values for the offset and rotation. Note that only the offset
+values and the Z rotation value are used by the IDF exporter; all other
+values are ignored. The offsets must be specified using the IDF board
+output units (mm or thou) and in the IDF coordinate system, that is a
+right-hand coordinate system with +Z moving towards the viewer, +X is to
+the viewer&#8217;s right, and +Y is up. The rotation must be in degrees and a
+positive rotation is a counter-clockwise rotation as described in the
+IDFv3 specification. Multiple outlines may be combined with appropriate
+offsets to represent simple assemblies such as a DIP package in a
+socket. [<strong>BUG:</strong> in discussions it has been decided that the unit
+of the Z offset should be inches, which is consistent with the
+units of the VRML model offset. It may also be useful not to ignore the
+(X,Y) offset values. The behavior mentioned here will change at some
+point in the future.]</p></div>
+<div class="paragraph"><p>Once models have been specified for all desired components, from within
+pcbnew select the <strong>File</strong> menu then <strong>Export</strong> and finally <strong>IDFv3
+Export</strong>. A dialog box will pop up (see <a href="#figure-3">figure 3</a>) which
+allows the output filename and IDF output units (mm or mils) to be set.
+The exported IDF files can be viewed in the free mechanical CAD software
+<a href="http://www.freecadweb.org/">FreeCAD</a> or converted to VRML using the
+idf2vrml tool and viewed with any suitable VRML viewer.</p></div>
+<div class="imageblock" id="figure-1">
+<div class="content">
+<img src="images/module_params.png" alt="Footprint properties, 3D settings">
+</div>
+<div class="title">Figure 1. Footprint properties, 3D settings</div>
+</div>
+<div class="imageblock" id="figure-2">
+<div class="content">
+<img src="images/idf_select.png" alt="IDF component outline selection">
+</div>
+<div class="title">Figure 2. IDF component outline selection</div>
+</div>
+<div class="imageblock" id="figure-3">
+<div class="content">
+<img src="images/idf_export.png" alt="IDF output settings">
+</div>
+<div class="title">Figure 3. IDF output settings</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_creating_a_component_outline_file">3. Creating a component outline file</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The component outline file (*.idf) consists of a single .ELECTRICAL or .MECHANICAL
+section as described in the specification document. The
+section may be preceded by any number of comment lines; the comment
+lines are copied by the exporter into the library file and can be used
+to track metadata such as references to the documents used to determine
+the component&#8217;s outline and dimensions.</p></div>
+<div class="paragraph"><p>The component outline section contains fields which are strings,
+integers, or floating point numbers. A string is a combination of
+characters which may include spaces; if a string contains spaces then it
+must be quoted. Quotation marks must not appear within a string.
+Floating point numbers may be represented using decimal or exponential
+notations but decimal notation is preferred for human readability. The
+decimal point must be a dot and not a comma. The IDF file must consist
+only of 7-bit ASCII characters; use of 8-bit characters will result in
+undefined behavior.</p></div>
+<div class="paragraph"><p>An IDF file consists of SECTIONS which consist of RECORDS which consist
+of FIELDS. For the IDF outline files only one type of section may exist
+and must be one of .ELECTRICAL or .MECHANICAL. A record is a single line
+of text and may contain one or more fields. Fields are sequences of
+characters separated by one or more spaces which do not appear between
+quotation marks. All fields of a record must appear on a single line;
+records may not span lines.</p></div>
+<div class="paragraph"><p>The section heading (.ELECTRICAL or .MECHANICAL) is considered the first
+record (Record 1) of the section. Record 1 must be followed by Record 2
+which has four fields:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Geometry Name: a string which in combination with the Part Number
+    must form a unique identifier for the component outline. For
+    standardized packages, the package name is a good value for the
+    geometry name, for example "SOT-23". For unique packages the
+    manufacturer&#8217;s part number is a good choice for the geometry name.
+</p>
+</li>
+<li>
+<p>
+Part Number: although obviously intended for the part number, for
+    example BS107, it is better to use this string to help describe the
+    package. For example if the geometry name is "TO-92", the part number
+    entry may be used to describe the layout of the pads or the
+    orientation of this particular TO-92 outline file.
+</p>
+</li>
+<li>
+<p>
+IDF Unit: this must be one of MM or THOU and it applies only to the
+    units describing this single component outline.
+</p>
+</li>
+<li>
+<p>
+Height: this is a floating point number representing the nominal
+    height of the component using units specified in Field 3.
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>Record 2 must be followed by a number of Record 3 entries which specify
+the outline of the component. Record 3 consists of four fields:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Loop Index: 0 (outline points are specified in counter-clockwise
+    order) or 1 (outline points are specified in clockwise order)
+</p>
+</li>
+<li>
+<p>
+X coordinate: a floating point number
+</p>
+</li>
+<li>
+<p>
+Y coordinate: a floating point number
+</p>
+</li>
+<li>
+<p>
+Included Angle: a floating point number. If the value is 0 then a
+    straight line segment is drawn from the previous point to this point.
+    If the value is 360 then the previous point specifies the center of a
+    circle and this point specifies a point on the circle; never specify
+    a circle using a value of -360 as at least one major mechanical CAD
+    package does not behave well in that situation. If the value is
+    negative then a clockwise arc is drawn from the previous point to
+    this point and if the value is positive then a counter-clockwise
+    arc is drawn.
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>Only one closed loop is permitted and it is not possible to specify a
+cutout. The last point specified must be the same as the first point
+unless the outline is a circle.</p></div>
+<div class="paragraph"><p>Example IDF File 1:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre># a simple cylinder - this could represent an electrolytic capacitor
+.ELECTRICAL
+    "cylinder" "5mm OD, 5mm height" MM 5
+    0 0 0 0
+    0 2.5 0 360
+.END_ELECTRICAL</pre>
+</div></div>
+<div class="paragraph"><p>Example IDF File 2:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre># an upside-down T
+# a comment added for the sake of adding comments
+.ELECTRICAL
+    "Capital T" "5x8x10mm, upside down" MM 10
+    0 -0.5 8 0
+    0 -0.5 0.5 0
+    0 -2.5 0.5 0
+    0 -2.5 -0.5 180
+    0 2.5 -0.5 0
+    0 2.5 0.5 180
+    0 0.5 0.5 0
+    0 0.5 8 0
+    0 -0.5 8 180
+.END_ELECTRICAL</pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_guidelines_for_creating_outlines">4. Guidelines for creating outlines</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>When creating outlines, and especially when sharing the work with
+others, consistency in the design and naming of files helps people
+locate files quicker and place the components with minimal hassles.</p></div>
+<div class="sect2">
+<h3 id="_package_naming">4.1. Package naming</h3>
+<div class="paragraph"><p>Try to make some information about the outline available in the filename
+to give the user a general idea of what the outline is. For example
+axial leaded cylindrical packages may represent some types of capacitors
+as well as some types of resistors, so it makes sense to identify an
+outline as a horizontal or vertical axial leaded device and to add some
+extra information on the relevant dimensions: diameter, length, and
+pitch are the most important. If a device has a unique outline, the
+manufacturer&#8217;s part number and a prefix to indicate the class of device
+are adequate.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_comments">4.2. Comments</h3>
+<div class="paragraph"><p>Use comments in the IDF file to give users more information about the
+outline, for example a reference to the source used for dimensional
+information.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_geometry_and_part_number_entries">4.3. Geometry and Part Number entries</h3>
+<div class="paragraph"><p>Think carefully about the values to give to the Geometry and Part Number
+entries. Taken together, these strings act as a unique identifier for
+the MCAD system. The values of the strings will ideally have some
+meaning to a user, but this is not necessary: the values are primarily
+intended for the MCAD system to use as a unique ID. Ideally the values
+chosen will be unique within any large collection of outlines; choosing
+values well will result in fewer clashes especially in complex boards.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_pin_orientation_and_positioning">4.4. Pin orientation and positioning</h3>
+<div class="paragraph"><p>For through-hole components there are no widely accepted schemes for
+determining the pin orientation and component center in 3D models. For
+consistency, if there are only 2 pins they must be in a horizontal
+arrangement (see <a href="#figure-4">figure 4</a>) along the X axis and for 3
+pins try to keep 2 in a horizontal arrangement on the X axis. Polarized
+devices such as electrolytic or tantalum capacitors must have the
+positive lead on Pin 1 and diodes must have the cathode on Pin 1; this is
+to maintain compatibility of the schematic symbols with the orientation
+defined for SMT devices; however, note that many existing KiCad
+schematics and footprints place the anode at Pin 1.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">In the latest revision of the KiCad footprints on github the anode
+is now Pin 2 for THT as well as SMT components.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>For DIP devices the center of the outline must be at the center of the
+rectangle described by the pin locations and Pin 1 is preferably at the
+top left corner; this will maintain some consistency with the
+standardized orientation of SMT components; however, such a model will
+be rotated -90 degrees relative to most existing KiCad component
+footprints and VRML models. For items such as a horizontal radial leaded
+capacitor or a horizontal TO-220 package, prefer to place the leads in a
+row on the X axis and with the body of the device extending upwards (see
+<a href="#figure-4">figure 4</a>). Non-polarized vertical axial leaded components must
+have the wire on the right hand side; polarized vertical axial leaded
+components may have the wire on either side, depending on whether Pin 1
+is on the lower end (wire on right) or on the upper end (wire on left).</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">In the current revision of the KiCad footprint modules the
+THT components are being organized with pins along the Y axis
+rather than the X axis and Pin 1 of the device is at the origin rather
+than at the center of the package. Orient and position the component outline
+to suit your specific footprints; this will avoid the need to specify a
+non-zero rotation for the IDF component outlines. Since the IDF
+exporter currently ignores the (X,Y) offset values it is vital that
+you use the correct origin in the IDF component outline.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>For SMT components the orientation, package center, and outline are
+defined by various standards. Use the standard appropriate to your work.
+Also keep in mind that many devices do not conform to any standard; in
+such cases the offending device is probably best identified by using the
+manufacturer&#8217;s part number in the outline file name. In general, an SMT
+outline is a rectangle encompassing the component package and including
+the leads; the package is oriented such that Pin 1 is as close as
+possible to the top left corner and the top left corner is usually
+chamfered for visual reference.</p></div>
+<div class="imageblock" id="figure-4">
+<div class="content">
+<img src="images/test_idf_blobs.png" alt="Sample outlines">
+</div>
+<div class="title">Figure 4. Sample outlines generated by the programs idfcyl and idfrect and rendered by SolidWorks.</div>
+</div>
+<div class="paragraph"><p>From left to right are (a) vertical radial leaded cylinder, (b) vertical
+axial leaded cylinder with wire on left, (c) vertical axial leaded
+cylinder with wire on right, (d) horizontal axial leaded cylinder, (e)
+horizontal radial leaded cylinder, (f) square outline, plain, (g) square
+outline with chamfer, (h) square outline with axial lead on right. The
+top outlines were specified in units of millimeters while the bottom
+outlines were specified in units of inches.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_tips_on_dimensions">4.5. Tips on dimensions</h3>
+<div class="paragraph"><p>The purpose served by the extruded outlines is to give the mechanical
+designer some idea of the location and physical space occupied by each
+component. In a typical scenario the mechanical designer will replace
+some of the crude outlines with more detailed mechanical models, for
+example when checking to ensure that a right-angle mounted LED will fit
+into a hole on a panel. In most situations the accuracy of an outline
+doesn&#8217;t matter, but it is good practice to create outlines which convey
+the best mechanical information possible. In a few instances a user may
+wish to fit the component into a case with very little excess space, for
+example in a portable music player. In such a situation, if most
+extruded outlines are a good enough representation of components then
+the mechanical designer may only have to replace very few models while
+designing the case. If the outlines are not a reliable reflection of
+reality then the mechanical designer will waste a lot of time replacing
+models to ensure a good fit. After all, if you put garbage in you can
+expect garbage to come out. If you put in good information, you can be
+confident of good results.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_idf_component_outline_tools">5. IDF Component Outline Tools</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>A number of command-line tools are available to help generate IDF
+component outlines. The tools are:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+<strong>idfcyl:</strong> creates an outline of a cylinder in vertical or horizontal
+    orientation and with axial or radial leads
+</p>
+</li>
+<li>
+<p>
+<strong>idfrect:</strong> creates an outline of a rectangle which may have either
+    an axial lead or a chamfer in the top left corner
+</p>
+</li>
+<li>
+<p>
+<strong>dxf2idf:</strong> converts a drawing in DXF format into an IDF component
+    outline
+</p>
+</li>
+</ol></div>
+<div class="sect2">
+<h3 id="_idfcyl">5.1. idfcyl</h3>
+<div class="paragraph"><p>When <strong>idfcyl</strong> is invoked with no arguments it prints out a usage note
+and a summary of its inputs:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>idfcyl: This program generates an outline for a cylindrical component.
+    The cylinder may be horizontal or vertical.
+    A horizontal cylinder may have wires at one or both ends.
+    A vertical cylinder may have at most one wire which may be
+    placed on the left or right side.
+
+Input:
+    Unit: mm, in (millimeters or inches)
+    Orientation: V (vertical)
+    Lead type: X, R (axial, radial)
+    Diameter of body
+    Length of body
+    Board offset
+    *   Wire diameter
+    *   Pitch
+    **  Wire side: L, R (left, right)
+    *** Lead length
+    File name (must end in *.idf)
+
+    NOTES:
+        *   only required for horizontal orientation or
+            vertical orientation with axial leads
+
+        **  only required for vertical orientation with axial leads
+
+        *** only required for horizontal orientation with radial leads</pre>
+</div></div>
+<div class="paragraph"><p>The notes can be suppressed by entering any arbitrary argument on the
+command line. A user can manually enter information at the command line
+or create scripts to generate outlines. The following script creates a
+single cylinder axial leaded outline with the lead on the right hand side:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">#!/bin/bash</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># Generate a cylindrical IDF outline for test purposes</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># vertical 5mm cylinder,  nominal length 8mm + 3mm board offset,</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># axial wire on right,  0.8mm wire dia., 3.5mm pitch</span></span>
+idfcyl - <span style="color: #993399">1</span> <span style="color: #990000">&gt;</span> /dev/null <span style="color: #990000">&lt;&lt;</span>  _EOF
+mm
+v
+x
+<span style="color: #993399">5</span>
+<span style="color: #993399">8</span>
+<span style="color: #993399">3</span>
+<span style="color: #993399">0.8</span>
+<span style="color: #993399">3.5</span>
+r
+cylvmm_1R_D5_L8_Z3_WD0<span style="color: #990000">.</span>8_P3<span style="color: #990000">.</span><span style="color: #993399">5</span><span style="color: #990000">.</span>idf
+_EOF</tt></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="_idfrect">5.2. idfrect</h3>
+<div class="paragraph"><p>When <strong>idfrect</strong> is invoked with no arguments it prints out a usage note
+and a summary of its inputs:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>idfrect: This program generates an outline for a rectangular component.
+    The component may have a single lead (axial) or a chamfer on the
+    upper left corner.
+Input:
+    Unit: mm, in (millimeters or inches)
+    Width:
+    Length:
+    Height:
+    Chamfer: length of the 45 deg. chamfer
+    *  Leaded: Y,N (lead is always to the right)
+    ** Wire diameter
+    ** Pitch
+    File name (must end in *.idf)
+
+    NOTES:
+        *   only required if chamfer = 0
+
+        **  only required for leaded components</pre>
+</div></div>
+<div class="paragraph"><p>The notes can be suppressed by entering any arbitrary argument on the
+command line. A user can manually enter information at the command line
+or create scripts to generate outlines. The following script creates a
+chamfered rectangle and an axial leaded outline:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">#!/bin/bash</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># Generate various rectangular IDF outlines for test purposes</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># 10x10, 1mm chamfer, 2mm height</span></span>
+idfrect - <span style="color: #993399">1</span> <span style="color: #990000">&gt;</span> /dev/null <span style="color: #990000">&lt;&lt;</span>  _EOF
+mm
+<span style="color: #993399">10</span>
+<span style="color: #993399">10</span>
+<span style="color: #993399">2</span>
+<span style="color: #993399">1</span>
+rectMM_10x10x2_C0<span style="color: #990000">.</span><span style="color: #993399">5</span><span style="color: #990000">.</span>idf
+_EOF
+<span style="font-style: italic"><span style="color: #9A1900"># 10x10x12,  0.8mm lead on 6mm pitch</span></span>
+idfrect - <span style="color: #993399">1</span> <span style="color: #990000">&gt;</span> /dev/null <span style="color: #990000">&lt;&lt;</span>  _EOF
+mm
+<span style="color: #993399">10</span>
+<span style="color: #993399">10</span>
+<span style="color: #993399">12</span>
+<span style="color: #993399">0</span>
+Y
+<span style="color: #993399">0.8</span>
+<span style="color: #993399">6</span>
+rectLMM_10x10x12_D0<span style="color: #990000">.</span>8_P6<span style="color: #990000">.</span><span style="color: #993399">0</span><span style="color: #990000">.</span>idf
+_EOF</tt></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="_dxf2idf">5.3. dxf2idf</h3>
+<div class="paragraph"><p>The DXF file used to specify the component outline can be prepared with
+the free software <a href="http://librecad.org/">LibreCAD</a> for best compatibility.
+When <strong>dxf2idf</strong> is invoked with no arguments it prints out a usage note
+and a summary of its inputs:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>dxf2idf: this program takes line, arc, and circle segments
+    from a DXF file and creates an IDF component outline file.
+
+Input:
+    DXF filename: the input file, must end in '.dxf'
+    Units: mm, in (millimeters or inches)
+    Geometry Name: string, as per IDF version 3.0 specification
+    Part Name: as per IDF version 3.0 specification of Part Number
+    Height: extruded height of the outline
+    Comments: all non-empty lines are comments to be added to
+        the IDF file. An empty line signifies the end of
+        the comment block.
+    File name: output filename, must end in '.idf'</pre>
+</div></div>
+<div class="paragraph"><p>The notes can be suppressed by entering any arbitrary argument on the
+command line. A user can manually enter information at the command line
+or create scripts to generate outlines. The following script creates a
+5mm high outline from a DXF file <em>test.dxf</em>:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">#!/bin/bash</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># Generate an IDF outlines from a DXF file</span></span>
+dxf2idf - <span style="color: #993399">1</span> <span style="color: #990000">&gt;</span> /dev/null <span style="color: #990000">&lt;&lt;</span> _EOF
+<span style="font-weight: bold"><span style="color: #0000FF">test</span></span><span style="color: #990000">.</span>dxf
+mm
+DXF TEST GEOMETRY
+DXF TEST PART
+<span style="color: #993399">5</span>
+This is an IDF <span style="font-weight: bold"><span style="color: #0000FF">test</span></span> file produced from the outline <span style="color: #FF0000">'test.dxf'</span>
+This is a second IDF comment to demonstrate multiple comments
+
+test_dxf2idf<span style="color: #990000">.</span>idf
+_EOF</tt></pre></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_idf2vrml">6. idf2vrml</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The idf2vrml tool reads a set of one IDF Board (.emn) and one IDF
+Component file (.emp) and produces a VRML file which can be viewed
+with a VRML viewer. This feature is useful for visualization of the
+board assembly in cases where the user does not have access to MCAD
+software. Invoking idf2vrml without any arguments will result in the
+display of a usage message:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>&gt;./idf2vrml
+Usage: idf2vrml -f input_file.emn -s scale_factor {-k} {-d} {-z} {-m}
+flags:
+   -k: produce KiCad-friendly VRML output; default is compact VRML
+   -d: suppress substitution of default outlines
+   -z: suppress rendering of zero-height outlines
+   -m: print object mapping to stdout for debugging purposes
+example to produce a model for use by KiCad: idf2vrml -f input.emn -s 0.3937008 -k
+&gt;</pre>
+</div></div>
+<div class="paragraph"><p>[<strong>BUG:</strong> The idf2vrml tool currently does not correctly render <strong>OTHER_OUTLINE</strong>
+entities in an emn file if that entity is specifies on the back layer
+of the PCB; however you will not notice this bug using files exported
+by KiCad since there is no mechanism to specify such an entity.
+Essentially this bug is only an issue in rare instances where you might
+render a third party emn file which does employ the entity on the back
+side of a board.]</p></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr></div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-08-24 22:13:45 BST
+</div>
+</div>
+</body>
+</html>

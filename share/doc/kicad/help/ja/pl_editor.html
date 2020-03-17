@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="AsciiDoc 8.6.8">
+<title>Pl_Editor</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #777777;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+tt {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+.monospaced {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+/*
+ * Theme specific overrides of the preceding (asciidoc.css) CSS.
+ *
+ */
+body {
+  font-family: Garamond, Georgia, serif;
+  font-size: 17px;
+  color: #3E4349;
+  line-height: 1.3em;
+}
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Garmond, Georgia, serif;
+  font-weight: normal;
+  border-bottom-width: 0;
+  color: #3E4349;
+}
+div.title, caption.title { color: #596673; font-weight: bold; }
+h1 { font-size: 240%; }
+h2 { font-size: 180%; }
+h3 { font-size: 150%; }
+h4 { font-size: 130%; }
+h5 { font-size: 115%; }
+h6 { font-size: 100%; }
+#header h1 { margin-top: 0; }
+#toc {
+  color: #444444;
+  line-height: 1.5;
+  padding-top: 1.5em;
+}
+#toctitle {
+  font-size: 20px;
+}
+#toc a {
+    border-bottom: 1px dotted #999999;
+    color: #444444 !important;
+    text-decoration: none !important;
+}
+#toc a:hover {
+    border-bottom: 1px solid #6D4100;
+    color: #6D4100 !important;
+    text-decoration: none !important;
+}
+div.toclevel1 { margin-top: 0.2em; font-size: 16px; }
+div.toclevel2 { margin-top: 0.15em; font-size: 14px; }
+em, dt, td.hdlist1 { color: black; }
+strong { color: #3E4349; }
+a { color: #004B6B; text-decoration: none; border-bottom: 1px dotted #004B6B; }
+a:visited { color: #615FA0; border-bottom: 1px dotted #615FA0; }
+a:hover { color: #6D4100; border-bottom: 1px solid #6D4100; }
+div.tableblock > table, table.tableblock { border: 3px solid #E8E8E8; }
+th.tableblock, td.tableblock { border: 1px solid #E8E8E8; }
+ul > li > * { color: #3E4349; }
+pre, tt, .monospaced { font-family: Consolas,Menlo,'Deja Vu Sans Mono','Bitstream Vera Sans Mono',monospace; }
+tt, .monospaced { font-size: 0.9em; color: black;
+}
+div.exampleblock > div.content, div.sidebarblock > div.content, div.listingblock > div.content { border-width: 0 0 0 3px; border-color: #E8E8E8; }
+div.verseblock { border-left-width: 0; margin-left: 3em; }
+div.quoteblock { border-left-width: 3px; margin-left: 0; margin-right: 0;}
+div.admonitionblock td.content { border-left: 3px solid #E8E8E8; }
+
+
+@media screen {
+  body {
+    max-width: 50em; /* approximately 80 characters wide */
+    margin-left: 16em;
+  }
+
+  #toc {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 13em;
+    padding: 0.5em;
+    padding-bottom: 1.5em;
+    margin: 0;
+    overflow: auto;
+    border-right: 3px solid #f8f8f8;
+    background-color: white;
+  }
+
+  #toc .toclevel1 {
+    margin-top: 0.5em;
+  }
+
+  #toc .toclevel2 {
+    margin-top: 0.25em;
+    display: list-item;
+    color: #aaaaaa;
+  }
+
+  #toctitle {
+    margin-top: 0.5em;
+  }
+}
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install(2);
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>Pl_Editor</h1>
+<span id="author">The KiCad Team</span><br>
+<div id="toc">
+  <div id="toctitle">目次</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p><em>リファレンスマニュアル</em></p></div>
+<div class="paragraph" id="copyright"><p><strong>著作権</strong></p></div>
+<div class="paragraph"><p>このドキュメントは以下の貢献者により著作権所有 &#169; 2015 されています。あなたは、GNU General Public License (
+<a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html</a> ) のバージョン 3 以降、あるいはクリエイティブ・コモンズ・ライセンス (
+<a href="http://creativecommons.org/licenses/by/3.0/">http://creativecommons.org/licenses/by/3.0/</a> ) のバージョン 3.0
+以降のいずれかの条件の下で、配布または変更することができます。</p></div>
+<div class="paragraph" id="contributors"><p>*貢献者*</p></div>
+<div class="paragraph"><p>Jean-Pierre Charras.</p></div>
+<div class="paragraph" id="translation"><p><strong>翻訳</strong></p></div>
+<div class="paragraph"><p>starfort &lt;starfort AT nifty.com&gt;, 2015.
+kinichiro &lt;kinichiro.inoguchi AT gmail.com&gt;, 2015.
+yoneken &lt;yoneken AT kicad.jp&gt;, 2011-2015.</p></div>
+<div class="paragraph" id="feedback"><p><strong>フィードバック</strong></p></div>
+<div class="paragraph"><p>バグ報告や提案はこちらへお知らせください:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+KiCad のドキュメントについて : <a href="https://github.com/KiCad/kicad-doc/issues">https://github.com/KiCad/kicad-doc/issues</a>
+</p>
+</li>
+<li>
+<p>
+KiCad ソフトウェアについて : <a href="https://bugs.launchpad.net/kicad">https://bugs.launchpad.net/kicad</a>
+</p>
+</li>
+<li>
+<p>
+KiCad ソフトウェアの国際化について : <a href="https://github.com/KiCad/kicad-i18n/issues">https://github.com/KiCad/kicad-i18n/issues</a>
+</p>
+</li>
+</ul></div>
+<div class="paragraph" id="publication_date_and_software_version"><p><strong>発行日とソフトウェアのバージョン</strong></p></div>
+<div class="paragraph"><p>2015年5月23日</p></div>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="introduction-to-pl_editor">1. <strong>Pl_Editor</strong> について</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Pl_Editor はタイトルブロックや図枠を作成／編集するためのページレイアウトエディタです。</p></div>
+<div class="paragraph"><p>このタイトルブロックや図形（ロゴなど）をまとめて図枠として定義しており、ここではこれらをまとめて ”ページレイアウト” と呼びます。</p></div>
+<div class="paragraph"><p>基本的なページレイアウトの要素は、次のものとなります：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>線(Line)</strong>
+</p>
+</li>
+<li>
+<p>
+<strong>矩形(Rect)</strong>
+</p>
+</li>
+<li>
+<p>
+<strong>テキスト(Text)</strong> （EeschemaやPcbnewの実際の図面で日付やページ番号に自動的に置換えられる書式指定文字を含む）
+</p>
+</li>
+<li>
+<p>
+<strong>重畳された多角形(Poly)</strong> （主にロゴや特別な図形を配置するためのもの）
+</p>
+</li>
+<li>
+<p>
+<strong>ビットマップ(Bitmap)</strong> 。
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">警告</div>
+</td>
+<td class="content">注意：ビットマップ(Bitmap)は一部の出力形式（PDFとPS）でのみプロットできます。それ以外の出力形式では、ただの四角形として出力されます。</td>
+</tr></table>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+* これら要素は繰り返し配置が可能です。またテキスト(Text)と重畳された多角形(Poly)は回転させることができます。
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="pl_editor-files">2. Pl_Editor のファイル</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="input-file-and-default-title-block">2.1. 読み込み可能なファイルと標準のタイトルブロック</h3>
+<div class="paragraph"><p>Pl_Editorで利用できるのは、*.kicad_wks 拡張子のファイルです。(kicad worksheet)</p></div>
+<div class="paragraph"><p>ファイルの読み込み前は、KiCad内部の標準ページレイアウトが表示されます。</p></div>
+</div>
+<div class="sect2">
+<h3 id="output-file">2.2. 出力ファイル</h3>
+<div class="paragraph"><p>ページレイアウトファイルはKiCadで広く使用されているS式形式の *.kicad_wks 拡張子のファイルとして出力されます。</p></div>
+<div class="paragraph"><p>このファイルは、EeschemaやPcbnewで図枠として使用することが出来ます。</p></div>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="theory-of-operations">3. 動作の詳細</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="basic-page-layout-items-properties">3.1. 基本的な要素の設定</h3>
+<div class="paragraph"><p>基本的なページレイアウトの要素は、次のものとなります：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>線(Line)</strong>
+</p>
+</li>
+<li>
+<p>
+<strong>矩形(Rect)</strong>
+</p>
+</li>
+<li>
+<p>
+<strong>テキスト(Text)</strong> （EeschemaやPcbnewの実際の図面で日付やページ番号に自動的に置換えられる書式指定文字を含む）
+</p>
+</li>
+<li>
+<p>
+<strong>重畳された多角形(Poly)</strong> （主にロゴや特別な図形を配置するためのもの）
+  これら重畳された多角形(Poly)は <strong>Bitmap2Component</strong> によって生成されます。
+  PL_Editor でこのような図形は作成できません。
+</p>
+</li>
+<li>
+<p>
+<strong>ビットマップ(Bitmap)</strong> （ロゴを配置するための）
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">警告</div>
+</td>
+<td class="content">ビットマップ(Bitmap)は一部の出力形式（PDFとPS）でのみプロットできます。</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>また：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>テキスト(Text)</strong> と <strong>重畳された多角形(Poly)</strong> は、位置を指定しての回転表示が可能です。
+</p>
+</li>
+<li>
+<p>
+<strong>線(Line)</strong> （多数のセグメントから成る）と <strong>矩形(Rect)</strong> は始点/終点の2点の指定となります。
+  これらは回転できません。(セグメントに対して無効です）
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>基本的な要素は、繰り返し配置が可能です。</p></div>
+<div class="paragraph"><p>テキスト(Text)については内容をインクリメントしながらの繰り返し配置も可能です。（テキスト(Text)が1文字のアルファベット、または一桁の数値のみ）</p></div>
+</div>
+<div class="sect2">
+<h3 id="coordinates-definition">3.2. 座標系の設定</h3>
+<div class="paragraph"><p>始点/終点などの座標は、常にページの指定した角を基準にした座標系で指定されます。</p></div>
+<div class="paragraph"><p><strong>これにより、ページサイズが変わってもレイアウトを保持することが可能となります。</strong></p></div>
+</div>
+<div class="sect2">
+<h3 id="reference-corners-and-coordinates">3.3. ページの角（カド）と座標系</h3>
+<div class="paragraph"><p><span class="image">
+<img src="images/ja/page_property_1.png" alt="images/ja/page_property_1.png">
+</span></p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+用紙サイズが変更された場合も、それぞれの要素は基準となるページの角との関係を保ちます。
+</p>
+</li>
+<li>
+<p>
+通常、タイトルブロックは用紙サイズに依らずにページの右下へ表示されます。これは要素を作成した際に右下の角を原点として設定している為です。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>矩形(Rect)や線(Line)は、それぞれ原点となる角を指定した2点の座標指定で指定されます。</p></div>
+<div style="page-break-after:always"></div>
+</div>
+<div class="sect2">
+<h3 id="rotation">3.4. 回転</h3>
+<div class="paragraph"><p>一点を基準とする要素（テキスト(Text)と重畳された多角形(Poly)）は回転することができます。</p></div>
+<div class="paragraph"><p>通常時 ： 回転 ＝ 0°</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/text_noriented.png" alt="images/ja/text_noriented.png">
+</div>
+</div>
+<div class="paragraph"><p>回転指定： 回転 = 20°/ 10°</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/text_rotated.png" alt="images/ja/text_rotated.png">
+</div>
+</div>
+<div style="page-break-after:always"></div>
+</div>
+<div class="sect2">
+<h3 id="repeat-option">3.5. 繰り返し設定</h3>
+<div class="paragraph"><p>要素は繰り返して配置を行うことが出来ます。</p></div>
+<div class="paragraph"><p>これはグリッド線やグリッドのラベルを作成する際に便利な機能です。</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/page_property_2.png" alt="scaledwidth="95%"">
+</div>
+</div>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="texts-and-formats">4. テキスト(Text)と書式指定</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="format-symbols">4.1. 書式指定文字</h3>
+<div class="paragraph"><p>テキスト(Text)中には、下記に示すような単純な書式指定文字を含めることが可能です。</p></div>
+<div class="paragraph"><p>EeschemaやPcbnewで作成された図面上では、これらの書式指定文字は実際の値に自動的に置換されます。</p></div>
+<div class="paragraph"><p>これらは(プログラム言語の)printf関数と似ています。</p></div>
+<div class="paragraph"><p>書式指定文字は、 <strong>%</strong> 記号＋１文字で定義されています。</p></div>
+<div class="paragraph"><p><strong>%C</strong> 形式は一つの数字を引数に持ちます（コメント識別子）</p></div>
+<div class="paragraph"><p>書式指定文字を下記に示します：</p></div>
+<div class="paragraph"><p><strong>%% = %記号1文字に置換えられます</strong></p></div>
+<div class="paragraph"><p><strong>%K = KiCad のバージョン</strong></p></div>
+<div class="paragraph"><p><strong>%Z = 用紙サイズ名 (A4, USLetter など)</strong></p></div>
+<div class="paragraph"><p><strong>%Y = 会社名</strong></p></div>
+<div class="paragraph"><p><strong>%D = 日付</strong></p></div>
+<div class="paragraph"><p><strong>%R = リビジョン</strong></p></div>
+<div class="paragraph"><p><strong>%S = ページ番号</strong></p></div>
+<div class="paragraph"><p><strong>%N = 全体のページ枚数</strong></p></div>
+<div class="paragraph"><p><strong>%Cx = コメント (xはコメントを指定する0～9の値となります)</strong></p></div>
+<div class="paragraph"><p><strong>%F = ファイル名</strong></p></div>
+<div class="paragraph"><p><strong>%P = ページのパス (Eeschemaのシートのフルネーム)</strong></p></div>
+<div class="paragraph"><p><strong>%T = タイトル</strong></p></div>
+<div class="paragraph"><p>例:</p></div>
+<div class="paragraph"><p>"Size: %Z" と指定した場合、 実際の図面上では "Size: A4" や “Size: USLetter" と表示されます。</p></div>
+<div style="page-break-after:always"></div>
+<div class="paragraph"><p>ユーザ表示モード ： <span class="image">
+<img src="images/icons/pagelayout_normal_view_mode.png" alt="images/icons/pagelayout_normal_view_mode.png">
+</span> ボタンが押された場合。
+Eeschema や Pcbnew で表示されるように、置換可能な文字列が実際の値に置き換えて表示されます。</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/show_fields_data.png" alt="images/ja/show_fields_data.png">
+</div>
+</div>
+<div class="paragraph"><p>"ネイティブ" 表示モード ： <span class="image">
+<img src="images/icons/pagelayout_special_view_mode.png" alt="images/icons/pagelayout_special_view_mode.png">
+</span>
+ボタンが押された場合。 Pl_Editor で指定された書式指定文字をそのまま表示します。</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/show_fields_codes.png" alt="images/ja/show_fields_codes.png">
+</div>
+</div>
+<div style="page-break-after:always"></div>
+</div>
+<div class="sect2">
+<h3 id="multi-line-texts">4.2. 複数行のテキスト(Text):</h3>
+<div class="paragraph"><p>テキスト(Text)は複数行とすることが可能です。</p></div>
+<div class="paragraph"><p>ここでは、2通りの改行方法を説明します：</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+"\n" （改行コード）を挿入（主にKiCadのページ設定ダイアログで使用します）
+</p>
+</li>
+<li>
+<p>
+Pl_Editorのデザインウィンドウで直接改行する方法
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>下記に例を示します：</p></div>
+<div class="paragraph"><p>セットアップ</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/options_multi_line.png" alt="images/ja/options_multi_line.png">
+</div>
+</div>
+<div class="paragraph"><p>出力</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/multi_line.png" alt="images/ja/multi_line.png">
+</div>
+</div>
+<div style="page-break-after:always"></div>
+</div>
+<div class="sect2">
+<h3 id="multi-line-texts-in-page-setup-dialog">4.3. ページ設定ダイアログでの改行：</h3>
+<div class="paragraph"><p>ページ設定ダイアログでは、複数行のテキスト(Text)がそのままの形では入力できません。</p></div>
+<div class="paragraph"><p>そこで <strong>“\n”</strong> （改行コード）を挿入した位置で、強制的に改行させることができます。</p></div>
+<div class="paragraph"><p>例えば、”コメント2”の欄へ2行に渡るテキスト(Text)を入力する例が下記となります：</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/ja/insert_newline_code.png" alt="images/ja/insert_newline_code.png">
+</span></p></div>
+<div class="paragraph"><p>実際の図面上では、下記のように表示されます：</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/ja/multi_line_2.png" alt="images/ja/multi_line_2.png">
+</span></p></div>
+<div class="paragraph"><p>しかし、もし本当にテキスト中に <strong>"\n"</strong> を入れたい場合は、 <strong>"\\n"</strong> と入力します。</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/ja/insert_slashnewline_code.png" alt="images/ja/insert_slashnewline_code.png">
+</span></p></div>
+<div class="paragraph"><p>この場合、実際の図面上では、下記のように表示されます：</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/ja/multi_line_3.png" alt="images/ja/multi_line_3.png">
+</span></p></div>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="constraints">5. 制限の設定</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="page-1-constraint">5.1. 1ページ目の設定</h3>
+<div class="paragraph"><p>Eeschemaでは複数ページの回路図を扱うことが出来ます。</p></div>
+<div class="paragraph"><p>通常、図枠の要素は全てのページに表示されます。</p></div>
+<div class="paragraph"><p>しかし、1ページ目のみに表示させたい、あるいは1ページ目以外のページにのみ表示させたい場合があります。
+これらは、プロパティ内の”１ページ目の設定”から設定することが可能です：</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/ja/display_options.png" alt="images/ja/display_options.png">
+</span></p></div>
+<div class="paragraph"><p>1ページ目の設定</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+なし：ページ番号による表示制限はありません。
+</p>
+</li>
+<li>
+<p>
+１ページ目のみ： 要素は1ページ目のみに表示されます。
+</p>
+</li>
+<li>
+<p>
+１ページ目には適用しない：要素は1ページ目には表示されず、2ページ目以降の全てのページに表示されます。
+</p>
+</li>
+</ul></div>
+<div style="page-break-after:always"></div>
+</div>
+<div class="sect2">
+<h3 id="text-full-size-constraint">5.2. テキスト(Text)サイズの制限</h3>
+<div class="paragraph"><p><span class="image">
+<img src="images/ja/constraint_options.png" alt="images/ja/constraint_options.png">
+</span></p></div>
+<div class="paragraph"><p>テキスト(Text)については、下記の2つのパラメータを設定することができます：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+最大Xサイズ(mm)
+</p>
+</li>
+<li>
+<p>
+最大Yサイズ(mm)
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>これらは外形枠（バウンディングボックス）を定義します</p></div>
+<div class="paragraph"><p>これらのパラメータが0でない場合、実際のテキスト(Text)の長さと高さが入力値により制限されます。もしテキスト(Text)の幅や高さが制限値を超えた場合は、入力された制限値に合うように変形されます。</p></div>
+<div class="paragraph"><p>入力されたテキスト(Text)が幅や高さの制限値以下の場合には、テキスト(Text)は変形されずにそのまま表示されます。</p></div>
+<div class="paragraph"><p>制限を設定しない場合。最大 X サイズ(mm) = 0.0  最大 Y サイズ(mm) = 0.0</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/ja/constraints_none.png" alt="images/ja/constraints_none.png">
+</span></p></div>
+<div class="paragraph"><p>同じテキスト(Text) について、制限を設ける場合。最大 X サイズ(mm) = 40.0  最大 Y サイズ(mm) = 0.0</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/ja/constraints_defined.png" alt="images/ja/constraints_defined.png">
+</span></p></div>
+<div style="page-break-after:always"></div>
+<div class="paragraph"><p>複数行のテキスト(Text)も、同様に制限させることが出来ます：</p></div>
+<div class="paragraph"><p>セットアップ</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/ja/constraint_options.png" alt="images/ja/constraint_options.png">
+</span></p></div>
+<div class="paragraph"><p>出力</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/ja/block_constraints.png" alt="images/ja/block_constraints.png">
+</span></p></div>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="invoking-pl_editor">6. Pl_Editorの起動</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Pl_Editorはコマンドラインか、またはKiCadマネージャから起動することが出来ます。</p></div>
+<div class="paragraph"><p>コマンドラインから起動する場合、 <span class="monospaced">pl_editor &lt;*.kicad_wksファイルパス&gt;</span> として呼び出してください。</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="pl_editor-commands">7. Pl_Editorのコマンド</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="main-screen">7.1. メイン画面</h3>
+<div class="paragraph"><p>Pl_Editorのメイン画面を下記に示します：</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/main_window.png" alt="images/ja/main_window.png">
+</div>
+</div>
+<div class="paragraph"><p>画面左には要素の一覧が表示されています。</p></div>
+<div class="paragraph"><p>また、画面右には要素のプロパティが表示されています。</p></div>
+<div style="page-break-after:always"></div>
+</div>
+<div class="sect2">
+<h3 id="main-window-toolbar">7.2. メインウィンドウのツールバー</h3>
+<div class="paragraph"><p><span class="image">
+<img src="images/ja/main_toolbar.png" alt="images/ja/main_toolbar.png">
+</span></p></div>
+<div class="paragraph"><p>画面上部に表示されているツールバーから、下記のコマンドを呼び出すことが出来ます：</p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:28%;">
+<col style="width:72%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/pagelayout_new.png" alt="images/icons/pagelayout_new.png">
+</span>
+新規の空の図枠を作成します。</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/pagelayout_load.png" alt="images/icons/pagelayout_load.png">
+</span>
+.kicad_wksファイルの図枠をロードします。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/save.png" alt="images/icons/save.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.kicad_wksファイルへ図枠を保存します。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/sheetset.png" alt="images/icons/sheetset.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">用紙サイズや向き、
+各種コメントを設定する、ページ設定ダイアログを表示します。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/print_button.png" alt="images/icons/print_button.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">現在のページを印刷します。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/delete.png" alt="images/icons/delete.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">選択されている要素を削除します。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/undo.png" alt="images/icons/undo.png">
+</span> <span class="image">
+<img src="images/icons/redo.png" alt="images/icons/redo.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">元に戻す/やり直しのツールです。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/zoom_in.png" alt="images/icons/zoom_in.png">
+</span> <span class="image">
+<img src="images/icons/zoom_out.png" alt="images/icons/zoom_out.png">
+</span>
+ <span class="image">
+<img src="images/icons/zoom_redraw.png" alt="images/icons/zoom_redraw.png">
+</span> <span class="image">
+<img src="images/icons/zoom_fit_in_page.png" alt="images/icons/zoom_fit_in_page.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">表示の拡大/縮小/再描画/画面全体を表示します。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/pagelayout_normal_view_mode.png" alt="images/icons/pagelayout_normal_view_mode.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">ユーザーモードで図枠を表示します。テキスト(Text)はEeschemaやPcbnewで
+表示させた時と同じように、各種書式指定文字が置換されて表示されます。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/pagelayout_special_view_mode.png" alt="images/icons/pagelayout_special_view_mode.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">ネイティブモードで図枠を表示します。
+書式指定文字はそのままの形で画面表示されます。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/ja/set_base_corner.png" alt="images/ja/set_base_corner.png" width="70%">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">用紙の原点の配置を設定します。設定時のマウスカーソルの座標は、画面下部のステータスバーに表示されます。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/ja/set_current_page.png" alt="images/ja/set_current_page.png" width="85%">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">画面表示が、1ページ目の図面/または2ページ目以降の図面で表示されます。</p>
+<p class="tableblock">これは、1ページ目のみ別のレイアウトを指定した際に切り替えて使用します。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="commands-in-drawing-area-draw-panel">7.3. 描画エリア(描画パネル)でのコマンド</h3>
+<div class="sect3">
+<h4 id="keyboard-commands">7.3.1. キーボードショートカット</h4>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:20%;">
+<col style="width:80%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">F1</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">拡大</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">F2</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">縮小</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">F3</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">画面の再描画</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">F4</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">現在のカーソル位置の描画を画面中央へ移動させます</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Home</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">画面全体を表示</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">スペースキー</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">dx/dy 表示座標をカーソル位置でゼロリセットします。
+（dx/dy座標は画面下部ステータスバーに表示されます）</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">→（右矢印）</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">カーソルを1グリッド分右へ移動します。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">←（左矢印）</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">カーソルを1グリッド分左へ移動します。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">↑（上矢印）</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">カーソルを1グリッド分上へ移動します。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">↓（下矢印）</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">カーソルを1グリッド分下へ移動します。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="mouse-commands">7.3.2. マウス操作</h4>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:32%;">
+<col style="width:68%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">ホイール</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">現在のカーソル位置を中心に拡大/縮小</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Ctrl + ホイール</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">左右方向へスクロール</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Shift + ホイール</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">上下方向へスクロール</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">右クリック</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">コンテキストメニューの表示</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="context-menu">7.3.3. コンテキストメニュー</h4>
+<div class="paragraph"><p>(右クリックメニュー)</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+線の追加
+</p>
+</li>
+<li>
+<p>
+矩形を追加
+</p>
+</li>
+<li>
+<p>
+テキスト入力
+</p>
+</li>
+<li>
+<p>
+図枠ファイルを追加
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>これらは要素を追加するための基本的なコマンドです。</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+中央/ズームイン/ズームアウト/ビューの再描画/自動ズーム/ズームの選択
+</p>
+</li>
+<li>
+<p>
+グリッドの選択
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">注</div>
+</td>
+<td class="content">
+<div class="paragraph"><p><em>“図枠ファイルを追加”</em> は、図面上にロゴを追加するために使用されることを意図しています。</p></div>
+<div class="paragraph"><p>通常、ロゴは大量の頂点を必要とするため手作業で作成することは困難です。しかし、Bitmap2Componentプログラムで作成したファイルを読み込むことでロゴを簡単に使用できます。</p></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="status-bar-information">7.4. ステータスバー</h3>
+<div class="paragraph"><p>ステータスバーは、Pl_Editorの画面下部へ配置されており、各種情報が表示されています。</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/pl_status_bar.png" alt="images/ja/pl_status_bar.png">
+</div>
+</div>
+<div class="paragraph"><p>座標系は、 <strong>常に原点として設定された角</strong> を <strong>基準</strong> とした座標が表示されています。</p></div>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="left-window">8. 画面左ウィンドウ(デザインツリー)</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>画面左には、要素の一覧が表示されています。</p></div>
+<div class="paragraph"><p>一覧から左クリックで要素をひとつ選択する事ができ、右クリックでコンテキストメニューを表示することが出来ます。</p></div>
+<div class="paragraph"><p>右クリックのメニューでは、要素の追加/削除の基本操作を行うことが出来ます。</p></div>
+<div class="paragraph"><p><strong>&#8594; 左クリックで選択された要素は、画面上で色が変化します。</strong>.</p></div>
+<div class="paragraph"><p>画面左のデザインツリーで text10 を選択すると、対応する要素が黄色で表示されます。</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/project_tree.png" alt="images/ja/project_tree.png">
+</div>
+</div>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="right-window">9. 画面右ウィンドウ</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>(編集ウィンドウ)</p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:50%;">
+<col style="width:50%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/ja/property_none.png" alt="images/ja/property_none.png" width="50%">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/ja/property_main.png" alt="images/ja/property_main.png" width="50%">
+</span></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>画面右に表示されている編集ウィンドウでは、選択された要素のプロパティを編集することが出来ます。</p></div>
+<div style="page-break-after:always"></div>
+<div class="paragraph"><p>編集できる設定は、選択された要素の種類によって異なります：</p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:50%;">
+<col style="width:50%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">線(Line)/矩形(Rect)の設定</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">テキスト(Text)の設定</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/ja/property_line.png" alt="images/ja/property_line.png" width="50%">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/ja/property_text.png" alt="images/ja/property_text.png" width="50%">
+</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">重畳された多角形(Poly)の設定</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">ビットマップ(Bitmap)の設定</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/ja/property_polyline.png" alt="images/ja/property_polyline.png" width="50%">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/ja/property_bitmap.png" alt="images/ja/property_bitmap.png" width="50%">
+</span></p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="interactive-edition">10. 編集作業</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="item-selection">10.1. 要素の選択</h3>
+<div class="paragraph"><p>要素を選択するには、下記の３通りの方法があります：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+デザインツリー(画面左ウィンドウ)より、対象の要素を選択する
+</p>
+</li>
+<li>
+<p>
+対象の要素の上で左クリックする
+</p>
+</li>
+<li>
+<p>
+対象の要素の上で右クリックする（要素が選択されると同時に、メニューが表示されます）
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>選択された要素は、黄色で描画されます。</p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:50%;">
+<col style="width:50%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/edit_line.png" alt="images/edit_line.png" width="70%">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">始点（<span class="image">
+<img src="images/edit_line_start.png" alt="images/edit_line_start.png">
+</span>）
+と終点 （<span class="image">
+<img src="images/edit_line_end.png" alt="images/edit_line_end.png">
+</span>）
+が強調表示されます。</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>要素を右クリックした場合、下記のようなメニューが表示されます。</p></div>
+<div class="paragraph"><p>メニュー内容は、クリックされた位置により変化します：</p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:34%;">
+<col style="width:33%;">
+<col style="width:33%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/ja/context_line_move_start.png" alt="images/ja/context_line_move_start.png" width="50%">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/ja/context_line_move_end.png" alt="images/ja/context_line_move_end.png" width="50%">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/ja/context_line_move.png" alt="images/ja/context_line_move.png" width="50%">
+</span></p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after:always"></div>
+<div class="paragraph"><p>クリックした位置に複数の要素があり選択対象が不明な場合、下記のようなダイアログが表示されます。対象を一覧から選択し、OKをクリックしてください：</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/dialog_select_element.png" alt="images/ja/dialog_select_element.png">
+</div>
+</div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:50%;">
+<col style="width:50%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/drag_element.png" alt="images/drag_element.png" width="70%">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">線(Line)や矩形(Rect)の始点/終点を右クリックし、メニューより”始点を移動”または
+”終点を移動”を選択することで、始点/終点を移動させることが出来ます。</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after:always"></div>
+</div>
+<div class="sect2">
+<h3 id="item-creation">10.2. 要素の作成</h3>
+<div class="paragraph"><p>新規の要素を追加したい場合、画面左のデザインツリーまたは描画エリアで右クリックします。</p></div>
+<div class="paragraph"><p>コンテキストメニューが表示されます：</p></div>
+<div class="paragraph"><p>デザインツリーでの右クリックメニュー</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/context_createnew.png" alt="images/ja/context_createnew.png">
+</div>
+</div>
+<div class="paragraph"><p>描画エリアでの右クリックメニュー</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/context_createnew2.png" alt="images/ja/context_createnew2.png">
+</div>
+</div>
+<div class="paragraph"><p>線(Line)や矩形(Rect)、テキスト(Text)の追加は、メニューの該当するコマンドを選択することで作成できます。</p></div>
+<div class="paragraph"><p>ロゴについては、Bitmap2Componentプログラムでファイルを作成しなければなりません。</p></div>
+<div class="paragraph"><p>ロゴ（重畳された多角形(Poly)）は、”図枠ファイルを追加”コマンドより挿入します。</p></div>
+<div style="page-break-after:always"></div>
+</div>
+<div class="sect2">
+<h3 id="adding-lines-rectangles-and-texts">10.3. 線(Line)/矩形(Rect)/テキスト(Text)の追加</h3>
+<div class="paragraph"><p>右クリックメニューより各要素を追加すると、下記のようなウィンドウが表示されます：</p></div>
+<div class="paragraph"><p>線(Line)/矩形(Rect)の追加</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/dialog_newline.png" alt="images/ja/dialog_newline.png">
+</div>
+</div>
+<div class="paragraph"><p>テキスト (Text) の追加</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ja/dialog_newtext.png" alt="images/ja/dialog_newtext.png">
+</div>
+</div>
+<div class="paragraph"><p>始点/終点座標や、座標系原点の設定はこのウィンドウより行います。</p></div>
+<div class="paragraph"><p>これら設定は、後から画面右側の編集ウィンドウから再設定することが可能です。また始点/終点位置などは要素をマウス操作などで移動することによっても変更されます。</p></div>
+<div class="paragraph"><p>多くの場合、始点/終点の座標系原点の設定は同じになります。</p></div>
+<div class="paragraph"><p>座標原点の設定が始点/終点で異なる場合、作成後にこれら設定を変更すると図形が位置や形状が大きく変形することがあります。</p></div>
+<div class="paragraph"><p>テキスト(Text)や小さな図形などでは、要素作成後に右クリックメニューより要素を移動し位置を調整する方が便利な場合があります。</p></div>
+</div>
+<div class="sect2">
+<h3 id="adding-logos">10.4. ロゴの追加</h3>
+<div class="paragraph"><p>重畳された多角形(Poly)としてのロゴ（ベクトル線化された画像ロゴ）を挿入する場合、最初にBitmap2Componentプログラムによりロゴファイルを生成しておく必要があります。</p></div>
+<div class="paragraph"><p>Bitmap2Component プログラムは、図枠ファイル形式で作成され、 <strong>”図枠ファイルを追加”</strong> コマンドによりデザインに取り込みます。</p></div>
+<div class="paragraph"><p>Bitmap2Component プログラムは、画像ファイルを一つの重畳された多角形(Poly)へと変換し、図枠ファイル形式で出力します。</p></div>
+<div class="paragraph"><p><em> このコマンドでは、全ての図枠ファイル形式のファイルを取り込み、現在のレイアウトにマージさせることが可能です。 </em></p></div>
+<div class="paragraph"><p>一度ロゴを取り込んだ後、移動や編集ウィンドウによるパラメータの編集が可能です。</p></div>
+</div>
+<div class="sect2">
+<h3 id="adding-image-bitmaps">10.5. ビットマップ(Bitmap)の追加</h3>
+<div class="paragraph"><p>多くの形式（PNG, JPEG, BMPなど）の画像ファイルを挿入することができます。</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+追加された画像ファイルは、300PPI(Pixel/Inch)として設定されます。
+</p>
+</li>
+<li>
+<p>
+この設定は、編集ウィンドウで変更することが可能です。（画面右）
+</p>
+</li>
+<li>
+<p>
+実際のサイズは、このパラメータに依存します。
+</p>
+</li>
+<li>
+<p>
+高解像度の画像ファイルを使用すると、図面ファイル等のファイルサイズの肥大化、描画／プロット時間の増大を招くことにご注意ください。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>ビットマップ(Bitmap)は、繰り返しの設定ができますが、 <strong>回転はできません</strong> 。</p></div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr></div>
+<div id="footer">
+<div id="footer-text">
+2017-08-24 22:24:12 BST 更新
+</div>
+</div>
+</body>
+</html>

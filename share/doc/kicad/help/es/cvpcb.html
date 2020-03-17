@@ -1,0 +1,2134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="AsciiDoc 8.6.8">
+<title>CvPcb</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #777777;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+tt {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+.monospaced {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+/*
+ * Theme specific overrides of the preceding (asciidoc.css) CSS.
+ *
+ */
+body {
+  font-family: Garamond, Georgia, serif;
+  font-size: 17px;
+  color: #3E4349;
+  line-height: 1.3em;
+}
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Garmond, Georgia, serif;
+  font-weight: normal;
+  border-bottom-width: 0;
+  color: #3E4349;
+}
+div.title, caption.title { color: #596673; font-weight: bold; }
+h1 { font-size: 240%; }
+h2 { font-size: 180%; }
+h3 { font-size: 150%; }
+h4 { font-size: 130%; }
+h5 { font-size: 115%; }
+h6 { font-size: 100%; }
+#header h1 { margin-top: 0; }
+#toc {
+  color: #444444;
+  line-height: 1.5;
+  padding-top: 1.5em;
+}
+#toctitle {
+  font-size: 20px;
+}
+#toc a {
+    border-bottom: 1px dotted #999999;
+    color: #444444 !important;
+    text-decoration: none !important;
+}
+#toc a:hover {
+    border-bottom: 1px solid #6D4100;
+    color: #6D4100 !important;
+    text-decoration: none !important;
+}
+div.toclevel1 { margin-top: 0.2em; font-size: 16px; }
+div.toclevel2 { margin-top: 0.15em; font-size: 14px; }
+em, dt, td.hdlist1 { color: black; }
+strong { color: #3E4349; }
+a { color: #004B6B; text-decoration: none; border-bottom: 1px dotted #004B6B; }
+a:visited { color: #615FA0; border-bottom: 1px dotted #615FA0; }
+a:hover { color: #6D4100; border-bottom: 1px solid #6D4100; }
+div.tableblock > table, table.tableblock { border: 3px solid #E8E8E8; }
+th.tableblock, td.tableblock { border: 1px solid #E8E8E8; }
+ul > li > * { color: #3E4349; }
+pre, tt, .monospaced { font-family: Consolas,Menlo,'Deja Vu Sans Mono','Bitstream Vera Sans Mono',monospace; }
+tt, .monospaced { font-size: 0.9em; color: black;
+}
+div.exampleblock > div.content, div.sidebarblock > div.content, div.listingblock > div.content { border-width: 0 0 0 3px; border-color: #E8E8E8; }
+div.verseblock { border-left-width: 0; margin-left: 3em; }
+div.quoteblock { border-left-width: 3px; margin-left: 0; margin-right: 0;}
+div.admonitionblock td.content { border-left: 3px solid #E8E8E8; }
+
+
+@media screen {
+  body {
+    max-width: 50em; /* approximately 80 characters wide */
+    margin-left: 16em;
+  }
+
+  #toc {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 13em;
+    padding: 0.5em;
+    padding-bottom: 1.5em;
+    margin: 0;
+    overflow: auto;
+    border-right: 3px solid #f8f8f8;
+    background-color: white;
+  }
+
+  #toc .toclevel1 {
+    margin-top: 0.5em;
+  }
+
+  #toc .toclevel2 {
+    margin-top: 0.25em;
+    display: list-item;
+    color: #aaaaaa;
+  }
+
+  #toctitle {
+    margin-top: 0.5em;
+  }
+}
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install(2);
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>CvPcb</h1>
+<span id="author">The KiCad Team</span><br>
+<div id="toc">
+  <div id="toctitle">Tabla de contenidos</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p><em>Manual de referencia</em></p></div>
+<div class="paragraph" id="copyright"><p><strong>Copyright</strong></p></div>
+<div class="paragraph"><p>Este documento está protegido por Copyright &#169; 2010 a 2015 de sus autores,
+mencionados a continuación. Puede distribuirlo y/o modificarlo bajo los
+términos de la GNU General Public License
+(<a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html</a>), versión 3 o posterior, o la Creative
+Commons Attribution License (http : //creativecommons.org/licenses/by/3.0/),
+versión 3.0 o posterior.</p></div>
+<div class="paragraph"><p>Todas las marcas mencionadas en esta guía pertenecen a sus legítimos
+propietarios.</p></div>
+<div class="paragraph" id="contributors"><p><strong>Contribuidores</strong></p></div>
+<div class="paragraph"><p>Jean-Pierre Charras, Fabrizio Tappero, Wayne Stambaugh.</p></div>
+<div class="paragraph" id="translation"><p><strong>Traducción</strong></p></div>
+<div class="paragraph"><p>Antonio Morales &lt;<a href="mailto:antonio1010.mr@gmail.com">antonio1010.mr@gmail.com</a>&gt;, 2015</p></div>
+<div class="paragraph" id="feedback"><p><strong>Realimentación</strong></p></div>
+<div class="paragraph"><p>Por favor dirija cualquier reporte de fallo, sugerencia o nuevas versiones
+a:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Acerca de la documentación de KiCad:
+  <a href="https://github.com/KiCad/kicad-doc/issues">https://github.com/KiCad/kicad-doc/issues</a>
+</p>
+</li>
+<li>
+<p>
+Acerca del software KiCad: <a href="https://bugs.launchpad.net/kicad">https://bugs.launchpad.net/kicad</a>
+</p>
+</li>
+<li>
+<p>
+Acerca del software KiCad i18n: <a href="https://github.com/KiCad/kicad-i18n/issues">https://github.com/KiCad/kicad-i18n/issues</a>
+</p>
+</li>
+</ul></div>
+<div class="paragraph" id="publication_date_and_software_version"><p><strong>Fecha de publicación y versión del software</strong></p></div>
+<div class="paragraph"><p>Publicado el 22 de Mayo de 2015.</p></div>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_introduccion_a_cvpcb">1. Introducción a CvPcb</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Cvpcb es una herramienta que le permite asociar los componentes de su
+esquema con las huellas de los componentes utilizados para trazar la placa
+de circuito impreso. Esta asociación se añade al archivo de netlist creado
+por el programa de generación de  esquema Eeschema.</p></div>
+<div class="paragraph"><p>El archivo netlist generado por Eeschema especifica qué huella de la placa
+de circuito impreso está asociada con cada componente en el esquema sólo
+cuando se inicializa el campo huella dentro del componente.</p></div>
+<div class="paragraph"><p>Este es el caso cuando las huellas de componentes están asociados durante la
+generación del esquema mediante el establecimiento de campo huella del
+componente, o ya se encuentra asignado en la biblioteca de símbolos de
+componentes al cargar el símbolo.</p></div>
+<div class="paragraph"><p>Cvpcb proporciona un método adecuado de asociar huellas a los componentes
+durante la generación del esquema. Proporciona filtrado de la lista de
+huellas, visualización de las huellas y visualización del modelo 3D del
+componentes para ayudar a garantizarle que cada componente tiene asociada la
+huella correcta.</p></div>
+<div class="paragraph"><p>Los componentes pueden asignarse a sus correspondientes huellas manual o
+automáticamente mediante la creación de archivos de equivalencia (archivos
+.equ). Los archivos de equivalencia son tablas de referencia que asocian
+cada componente con su huella.</p></div>
+<div class="paragraph"><p>Este enfoque interactivo es más simple y menos propenso a errores que
+asociar directamente las huellas en el editor de esquemas.</p></div>
+<div class="paragraph"><p>Cvpcb le permite ver la lista de las huellas disponibles y mostrarlas en la
+pantalla para asegurarse de que está asociando la huella correcta.</p></div>
+<div class="paragraph"><p><strong>Puede ejecutarse sólo desde Eeschema</strong>, desde la barra de herramientas superior, bien cuando
+Eeschema se inicia desde el gestor del proyecto en KiCad o cuando Eeschema es
+ejecutado como una aplicación independiente.</p></div>
+<div class="paragraph"><p>Ejecutar CvPcb desde Eeschema lanzado desde el Administrador de KiCad
+generalmente es mejor porque:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Cvpcb necesita el archivo de configuración del proyecto para conocer que
+  bibliotecas de componentes cargar.
+</p>
+</li>
+<li>
+<p>
+Cvpcb inicializa los campos huella de los componentes del proyecto de
+  esquema actual. Esto es posible sólo si el archivo del proyecto se encuentra
+  en la misma ruta que el esquema abierto.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Ejecutando CvPcb desde Eeschema lanzado desde el gestor del proyecto de
+KiCad asegura automáticamente todo esto.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Aviso</div>
+</td>
+<td class="content">En realidad <strong>puede</strong> lanzar CvPcb desde una sesión de Eeschema independiente
+aunque, pero tenga en cuenta que cualquier esquema abierto que no tenga un
+archivo de proyecto en la misma ruta puede estar perdiendo componentes dado
+que las bibliotecas que faltan no se mostrarán en CvPcb. Si no hay ningún
+archivo fp-lib-table en la misma ruta que el esquema abierto, ninguna
+biblioteca de componentes específica del proyecto tampoco estará disponible.</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_caracteristicas_de_cvpcb">2. Características de CvPcb</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_asociacion_manual_o_automatica">2.1. Asociación Manual o Automática</h3>
+<div class="paragraph"><p>CvPcb permite la asignación interactiva (manual) así como la asignación
+automática vía archivos equivalentes.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ejecutando_cvpcb">3. Ejecutando CvPcb</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><strong>CvPcb solo es llamado desde el programa de generación de esquemas Eeschema</strong>, por la herramienta:</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/icons/run-cvpcb.png" alt="run cvpcb">
+</span></p></div>
+<div class="paragraph"><p>Eeschema pasa automáticamente los datos correctos a CvPcb (lista de
+componentes y huellas). No hay que hacer ninguna actualización (salvo que
+existan nuevos componentes que no hayan sido anotados), simplemente ejecute
+CvPcb.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_comandos_de_cvpcb">4. Comandos de CvPcb</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_ventana_principal">4.1. Ventana Principal</h3>
+<div class="paragraph"><p>La siguiente imagen muestra la ventana principal de CvPcb.</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/en/cvpcb_main_window.png" alt="images/en/cvpcb_main_window.png">
+</div>
+</div>
+<div class="paragraph"><p>El panel izquierdo contiene la lista con los nombres de los archivos de
+bibliotecas de huellas asociados al proyecto disponibles. El panel central
+contiene la lista de componentes cargados desde el archivo netlist. El panel
+de la derecha contiene la lista de huellas disponibles cargadas desde las
+bibliotecas de componentes del proyecto. El panel de componentes estará
+vacío si ningún archivo netlist se ha cargado y el panel de huellas puede
+estar también vacío si no se encuentran bibliotecas de componentes.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_barra_de_herramientas_de_la_ventana_principal">4.2. Barra de herramientas de la ventana principal</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/cvpcb_main_toolbar.png" alt="images/cvpcb_main_toolbar.png">
+</div>
+</div>
+<div class="paragraph"><p>La barra de herramientas superior le permite un fácil acceso a los
+siguientes comandos:</p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:80%;
+">
+<col style="width:10%;">
+<col style="width:90%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/save.png" alt="images/icons/save.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Transfiere la asociación de huellas actual a Eeschema (El contenido de los campos de huellas).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/config.png" alt="images/icons/config.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Llama al menú de configuración de CvPcb.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/show_footprint.png" alt="images/icons/show_footprint.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Muestra la huella del componente seleccionado en el panel de huellas.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/left.png" alt="images/icons/left.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Selecciona automáticamente el componente previo en la lista sin una huella asociada.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/right.png" alt="images/icons/right.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Selecciona automáticamente el componente siguiente en la lista sin una huella asociada.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/auto_association.png" alt="images/icons/auto_association.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Asocia automáticamente huellas a los componentes usando un fichero de equivalencias.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/delete_association.png" alt="images/icons/delete_association.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Borra todas las asignaciones de huellas.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/datasheet.png" alt="images/icons/datasheet.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Abre el fichero pdf de documentación para la huella seleccionada usando el visor de pdf por defecto.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/filter_component.png" alt="images/icons/filter_component.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Habilita o deshabilita el filtrado para limitar la lista de huellas al filtro de huella del componente seleccionado.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/filter_pincount.png" alt="images/icons/filter_pincount.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Habilita o deshabilita el filtrado para limitar la lista de huellas usando en función del número de pines del componente seleccionado.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/filter_library.png" alt="images/icons/filter_library.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Habilita o deshabilita el filtrado para limitar la lista de huellas usando la biblioteca de huellas actualmente seleccionada..</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_comandos_del_teclado_para_la_ventana_principal">4.3. Comandos del teclado para la ventana principal</h3>
+<div class="paragraph"><p>La siguiente tabla muestra los comandos del teclado para la ventana
+principal.</p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:80%;
+">
+<col style="width:15%;">
+<col style="width:85%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Flecha derecha / Tab</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Activa el siguiente panel a la derecha del panel actualmente activado.
+Rota al primer panel si el último panel se encuentra activo actualmente.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Flecha Izquierda</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Activa el siguiente panel a la izquierda del panel actualmente activado.
+Rota al ultimo panel si el primer panel se encuentra activo actualmente.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Flecha arriba</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Selecciona el elemento anterior dentro de la lista seleccionada.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Flecha abajo</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Selecciona el siguiente elemento dentro de la lista seleccionada.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Página Arriba</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Selecciona el elemento una página hacia arriba de la lista
+seleccionada</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Página Abajo</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Selecciona el elemento una página hacia abajo de la lista
+seleccionada</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Home</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Selecciona el primer elemento de la lista seleccionada.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Fin</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Selecciona el último elemento de la lista seleccionada.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_configuracion_de_cvpcb">4.4. Configuración de CvPcb</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/en/cvpcb_preference_menu.png" alt="images/en/cvpcb_preference_menu.png">
+</div>
+</div>
+<div class="paragraph"><p>Cvpcb puede cerrarse automáticamente después de guardar el archivo de
+asociación de huellas, o no.</p></div>
+<div class="paragraph"><p>Seleccionando la entrada &#8220;Bibliotecas&#8221; dentro del menú &#8220;Preferencias&#8221; se
+muestra la ventana de configuración de las bibliotecas.</p></div>
+<div class="paragraph"><p>Dependiendo de la versión CvPcb, hay 2 métodos diferentes para administrar
+las bibliotecas:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+La administración de formatos antiguos, usando ficheros *.mod y una lista de
+  bibliotecas de ficheros.
+</p>
+</li>
+<li>
+<p>
+El nuevo formato &#8220;Pretty&#8221;, usando un fichero por huella. Utiliza una lista
+  de carpetas. Cada carpeta (con nombre de la carpeta *.pretty ) es una
+  biblioteca. Al usar este nuevo método de gestión de bibliotecas, también
+  puede utilizar bibliotecas nativas provenientes de GEDA/GPCB o incluso
+  archivos de formato Eagle XML.
+</p>
+</li>
+</ul></div>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_gestion_de_bibliotecas_de_huellas">5. Gestión de Bibliotecas de Huellas</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_nota_importante">5.1. Nota importante:</h3>
+<div class="paragraph"><p><strong><em>Esta Sección sólo es relevante para las versiones KiCad a partir de diciembre de 2013</em></strong></p></div>
+</div>
+<div class="sect2">
+<h3 id="_tablas_de_bibliotecas_de_huellas">5.2. Tablas de Bibliotecas de Huellas</h3>
+<div class="paragraph"><p>Desde diciembre de 2013, Pcbnew y CvPcb utilizan una nueva herramienta de
+gestión de bibliotecas basado en <strong><em>tablas de bibliotecas de huellas</em></strong> que
+permite el <strong>uso directo de bibliotecas de componentes</strong> desde</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Bibliotecas de componentes KiCad Antiguas (archivos .MOD)
+</p>
+</li>
+<li>
+<p>
+Nuevas bibliotecas de componentes de KiCad <em>.pretty</em> (en el disco local)
+  (carpetas con extensión .pretty, que contienen archivos .kicad_mod)
+</p>
+</li>
+<li>
+<p>
+Nuevas bibliotecas de componentes de KiCad <em>.pretty</em> (en nuestro servidor
+  Github, u otro servidor de Github)
+</p>
+</li>
+<li>
+<p>
+Bibliotecas GEDA (carpetas que contienen archivos .fp)
+</p>
+</li>
+<li>
+<p>
+Bibliotecas de componentes de Eagle
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Nota</div>
+</td>
+<td class="content">
+<div class="ulist"><ul>
+<li>
+<p>
+Solamente puede escribir bibliotecas de huellas de KiCad tipo <em>.pretty</em>
+  compuestas por carpetas en su disco local (y los archivos .kicad_mod dentro
+  de estas carpetas).
+</p>
+</li>
+<li>
+<p>
+Todos los demás formatos son de sólo lectura.
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+<div style="page-break-after:always"></div>
+<div class="paragraph"><p>La siguiente imagen muestra la ventana de edición de las tablas de
+bibliotecas de huellas que puede abrirse mediante la entrada &#8220;Bibliotecas
+de Huellas&#8221; del menú &#8220;Preferencias&#8221;</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/en/lib_table.png" alt="lib table dlg">
+</div>
+</div>
+<div class="paragraph"><p>La tabla de bibliotecas de huellas se utiliza para asignar una biblioteca de
+huellas, de cualquiera de los tipos soportado, a un alias. <strong>Este alias se
+utiliza para buscar las huellas</strong> en lugar del método anterior, que dependía
+de la ruta para la búsqueda de las bibliotecas.</p></div>
+<div class="paragraph"><p>Esto permite a CvPcb acceder a huellas con el mismo nombre en diferentes
+bibliotecas, asegurando que la huella correcta se carga desde la biblioteca
+adecuada. También permite a CvPcb soportar la carga desde bibliotecas de
+diferentes editores de PCB como Eagle y GEDA.</p></div>
+<div class="sect3">
+<h4 id="_tabla_de_bibliotecas_de_huellas_global">5.2.1. Tabla de Bibliotecas de Huellas Global</h4>
+<div class="paragraph"><p>La tabla de bibliotecas de huellas global contiene la lista de las
+bibliotecas que están siempre disponibles sin importar que archivo de
+proyecto este cargado en ese momento. La tabla se guarda en el fichero
+fp-lib-table en la carpeta de instalación de KiCad. La ubicación de esta
+carpeta es dependiente del sistema operativo utilizado.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_tabla_de_bibliotecas_de_huellas_especifica_del_proyecto">5.2.2. Tabla de bibliotecas de huellas especifica del proyecto</h4>
+<div class="paragraph"><p>La tabla de bibliotecas de huellas especifica del proyecto contiene la lista
+de las bibliotecas que están disponibles específicamente para el archivo de
+proyecto cargado en ese momento. La tabla de bibliotecas de huellas
+especifica del proyecto sólo puede editarse cuando se carga junto con el
+archivo netlist proyecto. Si no hay ningún archivo de proyecto cargado o no
+hay ningún archivo de tabla de la bibliotecas de huellas en la ruta del
+proyecto, se crea una tabla vacía que puede ser editada y guardada más tarde
+junto con el archivo de asignación de huellas.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_configuracion_inicial">5.2.3. Configuración Inicial</h4>
+<div class="paragraph"><p>La primera vez Pcbnew o CvPcb se ejecuta y no se encuentra la tabla global
+de huellas <strong>fp-lib-table</strong>  en la carpeta de inicio del usuario, Pcbnew o
+CvPcb intentarán copiar el archivo de la tabla de huellas predeterminado
+fp-lib-table almacenado en el carpeta de plantillas de KiCad al archivo
+fp-lib-table en la carpeta de inicio del usuario.</p></div>
+<div class="paragraph"><p>Si fp-lib-table no se puede encontrar, una tabla de bibliotecas de huellas
+vacía se creará en la carpeta de inicio del usuario. Si esto ocurre, el
+usuario puede copiar fp-lib-table manualmente o configurar la tabla a mano.</p></div>
+<div class="paragraph"><p>La tabla de bibliotecas de huellas predeterminada incluye muchas de las
+bibliotecas de huellas estándar que se instalan como parte de KiCad.</p></div>
+<div class="paragraph"><p>Obviamente, la <strong>primera cosa</strong> a realizar es modificar esta tabla
+(añadiendo/eliminando entradas) de acuerdo a sus requisitos y las
+bibliotecas que necesite para todos sus proyectos.</p></div>
+<div class="paragraph"><p>(La carga de demasiadas bibliotecas consume tiempo)</p></div>
+</div>
+<div class="sect3">
+<h4 id="_anadiendo_entradas_a_la_tabla">5.2.4. Añadiendo Entradas a la Tabla</h4>
+<div class="paragraph"><p>Para utilizar una biblioteca de huellas, primero debe agregarse a la tabla,
+ya sea a la global o a la específica del proyecto. La tabla específica de
+proyecto sólo es aplicable cuando esta abierto un fichero netlist.</p></div>
+<div class="paragraph"><p><strong>Cada biblioteca debe tener un alias único.</strong></p></div>
+<div class="paragraph"><p>Éste no tiene por que estar relacionado en modo alguno con el nombre de
+archivo de la biblioteca o su ruta. El carácter dos puntos : no se puede
+utilizar en cualquier lugar del alias. Cada entrada de la biblioteca debe
+tener una ruta válida y/o nombre de archivo dependiendo del tipo de
+biblioteca. Las rutas pueden ser definidos como absolutas, relativas o por
+sustitución de variable del entorno (véase la sección siguiente).</p></div>
+<div class="paragraph"><p>El tipo de biblioteca adecuado debe seleccionarse para que la biblioteca
+pueda ser leída correctamente. KiCad soporta actualmente la lectura de
+formatos KiCad Antigua, bibliotecas de componentes KiCad Pretty, Eagle y
+GEDA.</p></div>
+<div class="paragraph"><p>También hay un campo descripción para agregar una descripción de la entrada
+de la biblioteca. El campo opción no se utiliza en este momento por lo que
+la adición de opciones no tendrá efecto cuando cargue las bibliotecas.</p></div>
+<div class="paragraph"><p>Tenga en cuenta que no puede tener alias de biblioteca duplicados en la
+misma tabla. Sin embargo, puede tener un alias de biblioteca concreto tanto
+en la tabla de bibliotecas global como en la especifica del proyecto.
+La entrada de la tabla específica de proyecto tendrá prioridad sobre la
+entrada de la tabla global cuando existan nombres duplicados. Cuando las
+entradas se definen en la tabla específica del proyecto, un archivo
+fp-lib-table conteniendo estas entradas se guardará en la carpeta del
+fichero netlist abierto actualmente.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_sustitucion_de_variables_del_entorno">5.2.5. Sustitución de Variables del Entorno</h4>
+<div class="paragraph"><p>Una de las características más potentes de las tablas de bibliotecas de
+huellas es la sustitución de variables del entorno. Esto le permite definir
+rutas personalizadas, donde se almacenan sus bibliotecas, en variables del
+entorno. La sustitución de las variables del entorno se consigue mediante la
+sintaxis <span class="monospaced">${ENV_VAR_NAME}</span> en la ruta de la biblioteca de huellas.</p></div>
+<div class="paragraph"><p>Por defecto, en tiempo de ejecución KiCad define <strong>dos variables del
+entorno</strong>:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+La variable del entorno <strong><span class="monospaced">KIPRJMOD</span></strong>. Ésta apunta siempre el directorio
+  actual del proyecto y no se puede modificar.
+</p>
+</li>
+<li>
+<p>
+La variable del entorno <strong><span class="monospaced">KISYSMOD</span></strong>. Que apunta a donde se encuentran
+  instaladas las librerías de componentes por defecto que se instalaron con
+  KiCad.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Puede anular <span class="monospaced">KISYSMOD</span> definiendo usted mismo, en preferencias/Configurar
+Rutas, la ruta que apunta a sus propias bibliotecas en lugar de las
+bibliotecas por defecto de KiCad</p></div>
+<div class="paragraph"><p>Cuando se carga un archivo netlist, CvPcb define <span class="monospaced">KIPRJMOD</span> utilizando la
+ruta del archivo (la ruta del proyecto).</p></div>
+<div class="paragraph"><p>Pcbnew también define esta variable del entorno al cargar un archivo de
+placa.</p></div>
+<div class="paragraph"><p>Esto le permite almacenar las bibliotecas en la ruta del proyecto sin tener
+que definir la ruta absoluta (lo que no siempre es conocida) a la biblioteca
+en la tabla de bibliotecas de huellas especificas del proyecto.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_usando_el_plugin_para_github">5.2.6. Usando el Plugin para GitHub</h4>
+<div class="paragraph"><p>El de GitHub es un plugin especial que proporciona una interfaz para acceso
+de sólo lectura a un repositorio GitHub remoto consistente en un directorio
+.pretty (Pretty es el nombre del formato de archivo de huellas para KiCad)
+de huellas, y opcionalmente proporciona soporte para &#8220;Copiar Al Escribir&#8221;
+(CAE) huellas leídas desde el repositorio de GitHub y guardarlas
+localmente. Por tanto, el plugin para &#8220;Git Hub&#8221; es para <strong>acceso de sólo
+lectura a bibliotecas de componentes remotas tipo Pretty en</strong>
+<a href="https://github.com/">https://github.com</a>. Para agregar una entrada de GitHub
+a la tabla de bibliotecas de huellas la &#8220;Ruta de las Bibliotecas&#8221; en la
+fila de la tabla de bibliotecas de huellas debe ajustarse a una URL de
+GitHub válida.</p></div>
+<div class="paragraph"><p>Por ejemplo:</p></div>
+<div class="paragraph"><p><a href="https://github.com/liftoff-sr/pretty_footprints">https://github.com/liftoff-sr/pretty_footprints</a></p></div>
+<div class="paragraph"><p>o</p></div>
+<div class="paragraph"><p><a href="https://github.com/KiCad">https://github.com/KiCad</a></p></div>
+<div class="paragraph"><p>Por lo general las URLs de GitHub tienen la forma:</p></div>
+<div class="paragraph"><p><a href="https://github.com/nombre_de_usuario/nombre_del_repositorio">https://github.com/nombre_de_usuario/nombre_del_repositorio</a></p></div>
+<div class="paragraph"><p>El &#8220;Tipo de Plugin&#8221; se debe ajustarse a &#8220;Github&#8221;. Para habilitar la
+caracteristica de &#8220;Copiar Al Escribir&#8221; la opción
+<strong>allow_pretty_writing_to_this_dir</strong> se debe agregarse a los ajustes de
+&#8220;opciones&#8221; de la entrada en la tabla bibliotecas de huellas. Esta opción
+es la &#8220;ruta de la biblioteca&#8221; para el almacenamiento local de las copias
+modificadas de las huellas leídas desde el repositorio GitHub. Las huellas
+guardadas en esta ruta se combinan con las de solo lectura del repositorio
+de GitHub para crear la biblioteca de huella. Si esta opción no se
+especifica, entonces la biblioteca GitHub es de sólo lectura. Si la opción
+está presente para una biblioteca GitHub, entonces cualquier escritura en
+esta biblioteca híbrida irá al directorio *.pretty locale. Tenga en cuenta
+que la parte residente en github.com de esta biblioteca híbrida es siempre
+de sólo lectura, lo que significa que no se puede borrar nada ni modificar
+ninguna huella en el repositorio de GitHub especificado directamente. El
+tipo de biblioteca agregada sigue siendo de tipo &#8220;Github&#8221; a todos los
+efectos, pero consiste en una parte local de lectura/escritura y una remota
+de solo lestura.</p></div>
+<div class="paragraph"><p>La siguiente tabla muestra una entrada de la tabla de bibliotecas de huellas
+sin la opción <strong>allow_pretty_writing_to_this_dir</strong>:</p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:9%;">
+<col style="width:37%;">
+<col style="width:8%;">
+<col style="width:37%;">
+<col style="width:9%;">
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" >Nickname </th>
+<th class="tableblock halign-left valign-top" >Library Path </th>
+<th class="tableblock halign-left valign-top" >Plugin Type </th>
+<th class="tableblock halign-left valign-top" >Options </th>
+<th class="tableblock halign-left valign-top" >Descript.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">github</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="https://github.com/liftoff-sr/pretty_footprints">https://github.com/liftoff-sr/pretty_footprints</a></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Github</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Liftoff&#8217;s GH footprints</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>La siguiente tabla muestra una entrada de tabla bibliotecas de huellas con
+la opción CAE especificada. Observe el uso de la variable del entorno
+${HOME} sólo como ejemplo. El directorio github.pretty es alojado en la
+ruta ${HOME}/pretty/. Cada vez que utilice la opción
+<strong>allow_pretty_writing_to_this_dir</strong>, tendrá que crear ese directorio
+manualmente con antelación y éste debe terminar con la extensión <strong>.pretty</strong>.</p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:9%;">
+<col style="width:37%;">
+<col style="width:8%;">
+<col style="width:37%;">
+<col style="width:9%;">
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" >Nickname </th>
+<th class="tableblock halign-left valign-top" >Library Path </th>
+<th class="tableblock halign-left valign-top" >Plugin Type </th>
+<th class="tableblock halign-left valign-top" >Options </th>
+<th class="tableblock halign-left valign-top" >Descript.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">github</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="https://github.com/liftoff-sr/pretty_footprints">https://github.com/liftoff-sr/pretty_footprints</a></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Github</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">allow_pretty_writing_to_this_dir= ${HOME}/pretty/github.pretty</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Liftoff&#8217;s GH footprints</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>La carga de huellas siempre dará prioridad a las huellas locales que se
+encuentran en la ruta dada por la opción
+<strong>allow_pretty_writing_to_this_dir</strong>. Una vez que haya guardado una huella al
+directorio local de la biblioteca CAE guardando una huella desde el editor
+de huellas, no se actualizaran las modificaciones de ésta en el repositorio
+de GitHub si existe una huella con el mismo nombre en la copia local.</p></div>
+<div class="paragraph"><p>Mantenga siempre un directorio *.pretty local distinto para cada biblioteca
+de GitHub, nunca los combine referenciandolos al mismo directorio local mas
+de una vez.</p></div>
+<div class="paragraph"><p>Además, no utilice el mismo directorio CAE (*.pretty) en una entrada de la
+tabla bibliotecas de huellas. Esto probablemente crearía un desastre.</p></div>
+<div class="paragraph"><p>El valor de la opción <strong>allow_pretty_writing_to_this_dir</strong> ampliará cualquier
+variable del entorno usando la notación ${} para crear la ruta de acceso
+de la misma manera que en el ajuste de la &#8220;Ruta de la biblioteca&#8221;.</p></div>
+<div class="paragraph"><p>¿Cuál es el interés de CAE? El de acelerar el intercambio de huellas.</p></div>
+<div class="paragraph"><p>Si envía por correo electrónico periódicamente modificaciones en las huellas
+.pretty CAE al mantenedor del repositorio en GitHub, puede ayudar a
+actualizar la copia en GitHub. Envíe simplemente por correo electrónico los
+archivos *.kicad_mod individuales que se encuentran en sus  directorios CAE
+al mantenedor del repositorio GitHub. Después de haber recibido la
+confirmación de que se han fusionado los cambios, puede eliminar el archivo
+CAE y la huella actualizada de la parte de solo lectura de la biblioteca  de
+GitHub se descargará y actualizará. El objetivo debe ser mantener el
+conjunto de archivos CAE lo más pequeño posible, contribuyendo con
+frecuencia a las copias principales compartidas en
+<a href="https://github.com/">https://github.com</a>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_uso_de_patrones">5.2.7. Uso de Patrones</h4>
+<div class="paragraph"><p>Las bibliotecas de huellas se pueden definir tanto globalmente como
+específicamente para el proyecto cargado en ese momento. Librerías de
+componentes definidos en la tabla global del usuario están siempre
+disponibles y se almacenan en el archivo fp-lib-table en la carpeta de
+inicio del usuario.</p></div>
+<div class="paragraph"><p>Las bibliotecas de huellas globales siempre son accesibles incluso cuando no
+hay ningún archivo netlist abierto.</p></div>
+<div class="paragraph"><p>La tabla de huellas especificas del proyecto está activa sólo para el
+archivo netlist abierto en ese momento.</p></div>
+<div class="paragraph"><p>La tabla de bibliotecas de huellas específica del proyecto se guarda en el
+archivo fp-lib-table en la ruta del archivo netlist abierto
+actualmente. Usted es libre de definir las bibliotecas en cualquier tabla.</p></div>
+<div class="paragraph"><p>Existen ventajas y desventajas de cada método. Puede definir todas sus
+bibliotecas en la tabla global de lo que significa que siempre estarán
+disponibles cuando las necesite. La desventaja de esto es que puede tener
+que buscar a través de una gran cantidad de bibliotecas para encontrar la
+huella que busca. Puede definir todas las bibliotecas de forma específica
+para proyecto.</p></div>
+<div class="paragraph"><p>La ventaja de esto es que usted sólo tendrá que definir las bibliotecas que
+realmente necesita para el proyecto lo que reduce la búsquedas posteriores.</p></div>
+<div class="paragraph"><p>La desventaja es que siempre tiene que recordar agregar cada biblioteca de
+huellas que necesite para cada proyecto. También puede definir bibliotecas
+de huellas tanto global como para el proyecto concreto.</p></div>
+<div class="paragraph"><p>Un patrón de uso sería definir las bibliotecas más utilizados a nivel global
+y la bibliotecas que sólo se requieran para el proyecto en la tabla de
+bibliotecas específica del proyecto. No existe ninguna restricción sobre
+cómo definir sus bibliotecas.</p></div>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_usando_el_asistente_para_tablas_de_huellas">5.3. Usando el Asistente para Tablas de Huellas</h3>
+<div class="paragraph"><p>Un asistente para agregar bibliotecas de huellas a la tabla de huellas está
+disponible en la <em>Ventana de edición de tablas de huellas</em>.</p></div>
+<div class="paragraph"><p>Tenga en cuenta también que las bibliotecas pueden ser de cualquier tipo de
+biblioteca de huellas soportado por KiCad.</p></div>
+<div class="paragraph"><p>Se puede añadir bibliotecas &#8220;locales&#8221; o bibliotecas de un repositorio de
+Github.</p></div>
+<div class="paragraph"><p>Cuando las bibliotecas están en un repositorio de Github, pueden ser
+añadidas como bibliotecas remotas, o <strong>descargadas y añadidas como
+<em>bibliotecas locales</em></strong>.</p></div>
+<div class="paragraph"><p>Aquí se muestra, la opción de bibliotecas locales seleccionada.</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/en/fplib_wizard_locallibstartpage.png" alt="fplib wizard locallibstartpage">
+</div>
+</div>
+<div class="paragraph"><p>Aquí, se selecciona la opción bibliotecas remotas.</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/en/fplib_wizard_startpage_github.png" alt="fplib wizard startpage_github">
+</div>
+</div>
+<div class="paragraph"><p>Dependiendo de la opción seleccionada, una de estas páginas se mostrará,
+para seleccionar una lista de bibliotecas:</p></div>
+<div class="paragraph"><p>En este caso, se ha seleccionado la opción de bibliotecas locales.</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/en/fplib_wizard_locallibselection.png" alt="fplib wizard local lib selection">
+</div>
+</div>
+<div class="paragraph"><p>Aquí, se seleccionó la opción de bibliotecas remotas.</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/en/fplib_wizard_githubselection.png" alt="fplib wizard github selection">
+</div>
+</div>
+<div class="paragraph"><p>Después de seleccionar un conjunto de bibliotecas, la página siguiente
+valida la elección:</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/en/fplib_wizard_validate.png" alt="fplib wizard validate">
+</div>
+</div>
+<div class="paragraph"><p>Si algunas bibliotecas seleccionadas es incorrecta (no admitida, no es una
+biblioteca de huellas &#8230;) será marcada como &#8220;no válida&#8221;.</p></div>
+<div class="paragraph"><p>La última opción es la tabla de la bibliotecas de huellas a la que
+incorporar las nuevas bibliotecas:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+La tabla goblal
+</p>
+</li>
+<li>
+<p>
+La tabla local (tabla especifica del proyecto)
+</p>
+</li>
+</ul></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/en/fplib_wizard_chooseflt.png" alt="fplib wizard chooseflt">
+</div>
+</div>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_visualizacion_de_la_huella_actual">6. Visualización de la Huella actual</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_el_comando_ver_huella">6.1. El comando ver huella</h3>
+<div class="paragraph"><p>El comando ver huella muestra la huella seleccionada actualmente en la
+ventana de <em>lista de huellas</em>. Se puede mostrar un modelo 3D del componente
+si este ha sido creado y asignado a la huella. A continuación se muestra la
+ventana del visor de huellas.</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/en/footprint_view.png" alt="images/en/footprint_view.png">
+</div>
+</div>
+<div class="sect3">
+<h4 id="_informacion_de_la_barra_de_estado">6.1.1. Información de la barra de estado</h4>
+<div class="paragraph"><p>La barra de estado se encuentra en la parte inferior de la ventana principal
+de CvPcb y proporciona información útil para el usuario. La siguiente tabla
+define los contenidos de cada panel en la barra de estado.</p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:80%;
+">
+<col style="width:20%;">
+<col style="width:80%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Left</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Component count: total, unassigned</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Middle</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Filter list of the selected component</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Right</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Filtering mode and count of available footprints</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_atajos_del_teclado">6.1.2. Atajos del teclado</h4>
+<table class="tableblock frame-all grid-all"
+style="
+width:80%;
+">
+<col style="width:20%;">
+<col style="width:80%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">F1</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Acercar vista</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">F2</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Alejar vista</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">F3</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Refrescar vista</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">F4</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Centra la vista actual en la posición del puntero del raton</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Home</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Ajusta la vista para encajar la huella en la vista actual</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Barra Espaciadora</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Ajusta la posición actual del ratón como el punto inicial de las coordenadas relativas</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Flecha Derecha</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Mueve el cursor una posición a la derecha sobre la rejilla</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Flecha Izquierda</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Mueve el cursor una posición a la izquierda sobre la rejilla</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Flecha Arriba</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Mueve el cursor una posición hacia arriba sobre la rejilla</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Flecha Abajo</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Mueve el cursor una posición hacia la derecha sobre la rejilla</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_acciones_del_raton">6.1.3. Acciones del ratón</h4>
+<table class="tableblock frame-all grid-all"
+style="
+width:80%;
+">
+<col style="width:32%;">
+<col style="width:68%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Rueda del ratón</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Amplia o aleja la vista sobre la posición del puntero del ratón</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Ctrl + Rueda del ratón</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Desplaza a derecha e izquierda</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Shift + Rueda del ratón</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Desplaza arriba y abajo</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Clic Derecho</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Abre el menú contextual</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_menu_contextual">6.1.4. Menú Contextual</h4>
+<div class="paragraph"><p>Se muestra haciendo clic derecho con el ratón:</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/en/context_menu.png" alt="images/en/context_menu.png">
+</div>
+</div>
+<table class="tableblock frame-all grid-all"
+style="
+width:80%;
+">
+<col style="width:44%;">
+<col style="width:56%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Selección del Zoom (Select Zoom)</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Selecciona directamente el nivel de zoom entre varios valores.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Selección de la rejilla (Grid Select)</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Selecciona directamente el paso de la rejilla entre varios valores.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_barra_de_herramientas_horizontal">6.1.5. Barra de herramientas Horizontal</h4>
+<table class="tableblock frame-all grid-all"
+style="
+width:90%;
+">
+<col style="width:10%;">
+<col style="width:90%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/display_options.png" alt="images/icons/display_options.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Muestra la ventana de opciones de visualización</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/zoom_in.png" alt="images/icons/zoom_in.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Aproxima la vista</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/zoom_out.png" alt="images/icons/zoom_out.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Aleja la vista</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/zoom_redraw.png" alt="images/icons/zoom_redraw.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Refresca la vista</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/zoom_fit_in_page.png" alt="images/icons/zoom_fit_in_page.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Ajusta la vista para encajar la huella en la ventana</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/open_3d_model_view.png" alt="images/icons/open_3d_model_view.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Abre el visor de modelos 3D</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_barra_de_herramientas_vertical">6.1.6. Barra de herramientas vertical</h4>
+<table class="tableblock frame-all grid-all"
+style="
+width:90%;
+">
+<col style="width:10%;">
+<col style="width:90%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/toggle_grid.png" alt="images/icons/toggle_grid.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Muestra u oculta la rejilla</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/coordination_system.png" alt="images/icons/coordination_system.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Muestra las coordenadas en notación polar o cartesiana</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/unit_inch.png" alt="images/icons/unit_inch.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Muestra las coordenadas en pulgadas</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/unit_mm.png" alt="images/icons/unit_mm.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Muestra las coordenadas en milímetros</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/pointer_style.png" alt="images/icons/pointer_style.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Conmuta el estilo del puntero</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/toggle_pads_sketch.png" alt="images/icons/toggle_pads_sketch.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Conmuta la visualización de los pads entre modo boceto y modo normal</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/toggle_text_sketch.png" alt="images/icons/toggle_text_sketch.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Conmuta la visualización del texto entre modo boceto y modo normal</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/toggle_edge_sketch.png" alt="images/icons/toggle_edge_sketch.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Conmuta la visualización de los bordes entre modo boceto y modo normal</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_visualizando_el_modelo_3d_actual">6.2. Visualizando el modelo 3D actual</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/en/3d_window.png" alt="images/en/3d_window.png">
+</div>
+</div>
+<div class="sect3">
+<h4 id="_acciones_del_raton_2">6.2.1. Acciones del ratón</h4>
+<table class="tableblock frame-all grid-all"
+style="
+width:90%;
+">
+<col style="width:32%;">
+<col style="width:68%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Rueda del ratón</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Amplia o aleja la vista sobre la posición del puntero del ratón</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Ctrl + Rueda del ratón</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Desplaza a derecha e izquierda</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Shift + Rueda del ratón</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Desplaza arriba y abajo</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_barra_de_herramientas_horizontal_2">6.2.2. Barra de herramientas Horizontal</h4>
+<table class="tableblock frame-all grid-all"
+style="
+width:90%;
+">
+<col style="width:10%;">
+<col style="width:90%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/import3d.png" alt="images/icons/import3d.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Recarga en modelo 3D</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/copy_to_clipboard.png" alt="images/icons/copy_to_clipboard.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Copia la vista 3D al portapapeles</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/read_setup.png" alt="images/icons/read_setup.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Ajusta las opciones del visor 3D</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/zoom_in.png" alt="images/icons/zoom_in.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Acerca la vista</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/zoom_out.png" alt="images/icons/zoom_out.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Aleja la vista</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/zoom_redraw.png" alt="images/icons/zoom_redraw.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Refresca la vista</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/zoom_fit_in_page.png" alt="images/icons/zoom_fit_in_page.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Ajusta la vista para encajar la huella en la ventana</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/rotate_back_x.png" alt="images/icons/rotate_back_x.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Rotar hacia atrás sobre el eje X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/rotate_forw_x.png" alt="images/icons/rotate_forw_x.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Rotar hacia adelante sobre el eje X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/rotate_back_y.png" alt="images/icons/rotate_back_y.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Rotar hacia atrás sobre el eje Y</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/rotate_forw_y.png" alt="images/icons/rotate_forw_y.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Rotar hacia adelante sobre el eje Y</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/rotate_back_z.png" alt="images/icons/rotate_back_z.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Rotar hacia atrás sobre el eje Z</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/rotate_forw_z.png" alt="images/icons/rotate_forw_z.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Rotar hacia adelante sobre el eje Z</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/left.png" alt="images/icons/left.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Desplazar a la izquierda</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/right.png" alt="images/icons/right.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Desplazar a la derecha</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/up.png" alt="images/icons/up.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Desplazar hacia arriba</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/down.png" alt="images/icons/down.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Desplazar hacia abajo</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/toggle_ortho.png" alt="images/icons/toggle_ortho.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Activa/desactiva el modo de proyección ortográfica</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_usando_cvpcb_para_asociar_componentes_con_huellas">7. Usando CvPcb para asociar componentes con huellas</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_asociacion_manual_de_huellas_a_componentes">7.1. Asociación manual de huellas a componentes</h3>
+<div class="paragraph"><p>Para asociar manualmente una huella con un componente primero seleccione un
+componente en el panel de componentes. A continuación, seleccione una huella
+en el panel de huellas haciendo doble clic con el botón izquierdo del ratón
+sobre el nombre de la huella deseada. El siguiente componente no asignado en
+la lista de componentes se selecciona automáticamente. Para cambiar la
+huella de un componente actúe de la misma manera.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_filtrando_la_lista_de_huellas">7.2. Filtrando la lista de huellas</h3>
+<div class="paragraph"><p>Cuando selecciona un componente y/o biblioteca y una o más de las opciones
+de filtrado están activas, la lista de huellas mostrada en CvPcb se filtra
+en consecuencia.</p></div>
+<div class="paragraph"><p>Los iconos <span class="image">
+<img src="images/icons/filter_component.png" alt="images/icons/filter_component.png">
+</span>
+<span class="image">
+<img src="images/icons/filter_pincount.png" alt="images/icons/filter_pincount.png">
+</span>
+<span class="image">
+<img src="images/icons/filter_library.png" alt="images/icons/filter_library.png">
+</span> habilita y deshabilitan las
+características de filtrado. Cuando el filtrado no está activo, se muestra
+la lista de huella completa.</p></div>
+<div class="paragraph"><p>Sin filtrado:</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/en/filter_none.png" alt="images/en/filter_none.png">
+</div>
+</div>
+<div class="paragraph"><p>Filtrado por lista de filtros de huella asignados al componente
+seleccionado. Los filtros de componentes se indican en el panel central de
+la barra de estado en la parte inferior de la ventana principal.</p></div>
+<div class="paragraph"><p>Filtrada por el filtro de huella del componente seleccionado:</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/en/filter_comp.png" alt="images/en/filter_comp.png">
+</div>
+</div>
+<div class="paragraph"><p>En el editor de bibliotecas de componentes en Eeschema, se creó la lista de
+huellas utilizando la pestaña filtro de huella de la ventana de propiedades
+del componente como se muestra a continuación.</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/en/eeschema_filter.png" alt="images/en/eeschema_filter.png">
+</div>
+</div>
+<div class="paragraph"><p>Filtrado por el número de pines del componente seleccionado:</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/en/filter_pincount.png" alt="images/en/filter_pincount.png">
+</div>
+</div>
+<div class="paragraph"><p>Filtrado por la biblioteca seleccionada.</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/en/filter_library.png" alt="images/en/filter_library.png">
+</div>
+</div>
+<div class="paragraph"><p>Los filtros se pueden combinar para formar un filtrado más complejo y ayudar
+a reducir el número de huellas en el panel de huellas.</p></div>
+<div class="paragraph"><p>Filtrado por el número de pines del componente seleccionado y el filtro de
+componente:</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/en/filter_comp_and_pincount.png" alt="images/en/filter_comp_and_pincount.png">
+</div>
+</div>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_asociacion_automatica">8. Asociación Automática</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_ficheros_de_equivalencia">8.1. Ficheros de equivalencia</h3>
+<div class="paragraph"><p>Archivos de equivalencia permiten la asignación automática de huellas a los
+componentes.</p></div>
+<div class="paragraph"><p>Estos contienen una lista con el nombre de la huella correspondiente de
+acuerdo con el nombre (<em>campo valor</em>) del componente. Estos archivos
+suelen tener la extensión de archivo <strong>.equ</strong>.</p></div>
+<div class="paragraph"><p>Son archivos de texto plano y pueden ser editadas usando cualquier editor de
+texto plano. Deben ser creados por el usuario.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_formatos_de_los_archivos_de_equivalencia">8.2. Formatos de los Archivos de Equivalencia</h3>
+<div class="paragraph"><p>Los archivos de equivalencia consisten en una línea por cada
+componente. Cada línea tiene la siguiente estructura:</p></div>
+<div class="paragraph"><p><strong>&#8216;valor del componente&#8217; &#8216;nombre de huella&#8217;</strong></p></div>
+<div class="paragraph"><p>Cada nombre debe ser único marcado con el carácter ' y los nombres de los
+componentes y de la huella debe estar separados por uno o más espacios.</p></div>
+<div class="paragraph"><p><em>Ejemplo:</em></p></div>
+<div class="paragraph"><p>Si el componente U3 es circuito 14011 y su huella es 14DIP300, la línea es:</p></div>
+<div class="paragraph"><p><span class="monospaced">&#8216;14011&#8217; &#8216;14DIP300&#8217;</span></p></div>
+<div class="paragraph"><p>Cualquier línea que comience por <strong>#</strong> es un comentario.</p></div>
+<div class="paragraph"><p>Aquí se muestra un ejemplo de archivo de equivalencia:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>#integrated circuits (smd):
+'74LV14' 'SO14E'
+'74HCT541M' 'SO20L'
+'EL7242C' 'SO8E'
+'DS1302N' 'SO8E'
+'XRC3064' 'VQFP44'
+'LM324N' 'S014E'
+'LT3430' 'SSOP17'
+'LM358' 'SO8E'
+'LTC1878' 'MSOP8'
+'24LC512I/SM' 'SO8E'
+'LM2903M' 'SO8E'
+'LT1129_SO8' 'SO8E'
+'LT1129CS8-3.3' 'SO8E'
+'LT1129CS8' 'SO8E'
+'LM358M' 'SO8E'
+'TL7702BID' 'SO8E'
+'TL7702BCD' 'SO8E'
+'U2270B' 'SO16E'
+#Xilinx
+'XC3S400PQ208' 'PQFP208'
+'XCR3128-VQ100' 'VQFP100'
+'XCF08P' 'BGA48'
+
+#upro
+'MCF5213-LQFP100' 'VQFP100'
+
+#regulators
+'LP2985LV' 'SOT23-5'</pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_asociacion_automatica_de_huellas_a_componentes">8.3. Asociación Automática de huellas a componentes</h3>
+<div class="paragraph"><p>Haga clic en el botón de asociación automática de huellas en la barra de
+herramientas superior para procesar un archivo de equivalencia.</p></div>
+<div class="paragraph"><p><em>Todos los componentes que tengan por su valor en la fichero de equivalencia
+seleccionado (*.equ) tendrán su huella automáticamente asignada.</em></p></div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr></div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-08-24 22:01:17 BST
+</div>
+</div>
+</body>
+</html>

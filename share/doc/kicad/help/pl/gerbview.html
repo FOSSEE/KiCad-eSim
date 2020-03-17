@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="AsciiDoc 8.6.8">
+<title>GerbView</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #777777;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+tt {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+.monospaced {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+/*
+ * Theme specific overrides of the preceding (asciidoc.css) CSS.
+ *
+ */
+body {
+  font-family: Garamond, Georgia, serif;
+  font-size: 17px;
+  color: #3E4349;
+  line-height: 1.3em;
+}
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Garmond, Georgia, serif;
+  font-weight: normal;
+  border-bottom-width: 0;
+  color: #3E4349;
+}
+div.title, caption.title { color: #596673; font-weight: bold; }
+h1 { font-size: 240%; }
+h2 { font-size: 180%; }
+h3 { font-size: 150%; }
+h4 { font-size: 130%; }
+h5 { font-size: 115%; }
+h6 { font-size: 100%; }
+#header h1 { margin-top: 0; }
+#toc {
+  color: #444444;
+  line-height: 1.5;
+  padding-top: 1.5em;
+}
+#toctitle {
+  font-size: 20px;
+}
+#toc a {
+    border-bottom: 1px dotted #999999;
+    color: #444444 !important;
+    text-decoration: none !important;
+}
+#toc a:hover {
+    border-bottom: 1px solid #6D4100;
+    color: #6D4100 !important;
+    text-decoration: none !important;
+}
+div.toclevel1 { margin-top: 0.2em; font-size: 16px; }
+div.toclevel2 { margin-top: 0.15em; font-size: 14px; }
+em, dt, td.hdlist1 { color: black; }
+strong { color: #3E4349; }
+a { color: #004B6B; text-decoration: none; border-bottom: 1px dotted #004B6B; }
+a:visited { color: #615FA0; border-bottom: 1px dotted #615FA0; }
+a:hover { color: #6D4100; border-bottom: 1px solid #6D4100; }
+div.tableblock > table, table.tableblock { border: 3px solid #E8E8E8; }
+th.tableblock, td.tableblock { border: 1px solid #E8E8E8; }
+ul > li > * { color: #3E4349; }
+pre, tt, .monospaced { font-family: Consolas,Menlo,'Deja Vu Sans Mono','Bitstream Vera Sans Mono',monospace; }
+tt, .monospaced { font-size: 0.9em; color: black;
+}
+div.exampleblock > div.content, div.sidebarblock > div.content, div.listingblock > div.content { border-width: 0 0 0 3px; border-color: #E8E8E8; }
+div.verseblock { border-left-width: 0; margin-left: 3em; }
+div.quoteblock { border-left-width: 3px; margin-left: 0; margin-right: 0;}
+div.admonitionblock td.content { border-left: 3px solid #E8E8E8; }
+
+
+@media screen {
+  body {
+    max-width: 50em; /* approximately 80 characters wide */
+    margin-left: 16em;
+  }
+
+  #toc {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 13em;
+    padding: 0.5em;
+    padding-bottom: 1.5em;
+    margin: 0;
+    overflow: auto;
+    border-right: 3px solid #f8f8f8;
+    background-color: white;
+  }
+
+  #toc .toclevel1 {
+    margin-top: 0.5em;
+  }
+
+  #toc .toclevel2 {
+    margin-top: 0.25em;
+    display: list-item;
+    color: #aaaaaa;
+  }
+
+  #toctitle {
+    margin-top: 0.5em;
+  }
+}
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install(2);
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>GerbView</h1>
+<span id="author">The KiCad Team</span><br>
+<div id="toc">
+  <div id="toctitle">Spis Treści</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p><em>Podręcznik użytkownika</em></p></div>
+<div class="paragraph" id="copyright"><p><strong>Prawa autorskie</strong></p></div>
+<div class="paragraph"><p>Copyright &#169; 2010-2016. Ten dokument jest chroniony prawem autorskim. Lista
+autorów znajduje się poniżej. Możesz go rozpowszechniać oraz modyfikować na
+zasadach określonych w General Public License
+(<a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html</a>), wersja 3 lub późniejsza, albo
+określonych w Creative Commons Attribution License
+(<a href="http://creativecommons.org/licenses/by/3.0/">http://creativecommons.org/licenses/by/3.0/</a>), wersja 3.0 lub późniejsza.</p></div>
+<div class="paragraph"><p>Wszystkie znaki towarowe użyte w tym dokumencie należą do ich właścicieli.</p></div>
+<div class="paragraph" id="contributors"><p><strong>Współtwórcy</strong></p></div>
+<div class="paragraph"><p>Zespół programu KiCad.</p></div>
+<div class="paragraph" id="translation"><p><strong>Tłumaczenie</strong></p></div>
+<div class="paragraph"><p>Kerusey Karyu &lt;<a href="mailto:keruseykaryu@o2.pl">keruseykaryu@o2.pl</a>&gt;, 2014-2016.</p></div>
+<div class="paragraph" id="feedback"><p><strong>Kontakt</strong></p></div>
+<div class="paragraph"><p>Wszelkie zauważone błędy, sugestie lub nowe wersje dotyczące tego dokumentu
+prosimy kierować do:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+W sprawie dokumentacji: <a href="https://github.com/KiCad/kicad-doc/issues">https://github.com/KiCad/kicad-doc/issues</a>
+</p>
+</li>
+<li>
+<p>
+W sprawie oprogramowania: <a href="https://bugs.launchpad.net/kicad">https://bugs.launchpad.net/kicad</a>
+</p>
+</li>
+<li>
+<p>
+W sprawie tłumaczeń interfejsu użytkownika (i18n):
+  <a href="https://github.com/KiCad/kicad-i18n/issues">https://github.com/KiCad/kicad-i18n/issues</a>
+</p>
+</li>
+</ul></div>
+<div class="paragraph" id="publication_date_and_software_version"><p><strong>Data publikacji i wersja oprogramowania</strong></p></div>
+<div class="paragraph"><p>Opublikowane 4 Lutego 2015.</p></div>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_wprowadzenie_do_gerbview">1. Wprowadzenie do GerbView</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>GerbView to przeglądarka plików Gerber (w formacie RS274X) oraz plików
+wierceń (w formacie Excellon).</p></div>
+<div class="paragraph"><p>Pozwala na wyświetlenie do 32 plików (Gerber i/lub wierceń) jednocześnie.</p></div>
+<div class="paragraph"><p>Pliki mogą być wyświetlane z użyciem trybu transparentnego lub w formie
+stosu warstw.</p></div>
+<div class="paragraph"><p>By uzyskać więcej informacji na temat formatu plików Gerber należy
+przeczytać
+<a href="http://www.ucamco.com/files/downloads/file/81/the_gerber_file_format_specification.pdf">Specyfikację
+formatu plików Gerber</a>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ekran_gowny">2. Ekran główny</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="images/pl/gerbview_main_screen.png" alt="gerbview_main_screen_png">
+</div>
+</div>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_top_toolbar">3. Top toolbar</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="images/pl/gerbview_top_toolbar.png" alt="gerbview_top_toolbar_png">
+</div>
+</div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:41%;">
+<col style="width:59%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/gerbview_clear_layers.png" alt="gerbview_clear_layers_png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Wyczyszczenie wszystkich warstw</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/gerber_file.png" alt="gerber_file_png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Wczytywanie plików Gerber</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/gerbview_drill_file.png" alt="gerbview_drill_file_png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Wczytywanie plików wierceń (w formacie Excellon wygenerowanych przez Pcbnew)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/sheetset.png" alt="sheetset_png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Ustawia rozmiar strony dla polecenia wydruku oraz pokazuje/ukrywa granice strony</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/print_button.png" alt="print_button_png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Otwiera okno dialogowe drukowania</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/zoom_in.png" alt="zoom_in_png">
+</span> <span class="image">
+<img src="images/icons/zoom_out.png" alt="zoom_out_png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Powiększanie i pomniejszanie wiodku</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/zoom_redraw.png" alt="zoom_redraw_png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Przerysowanie widoku</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/zoom_fit_in_page.png" alt="zoom_fit_in_page_png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Dopasowywanie powiększenia do okna</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/pl/gerbview_top_layer.png" alt="gerbview_top_layer_png" width="70%">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Wybór aktywnej warstwy</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/pl/gerbview_top_dcode.png" alt="gerbview_top_dcode_png" width="70%">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Wybór aktywnego D-kodu (podświetla elementy, które używają aktywnego D-kodu)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/gerbview_top_info.png" alt="gerbview_top_info_png" width="70%">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Wyświetla informacje pliku Gerber załadowanego na aktywną warstwę</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lewy_pasek_narzedzi">4. Lewy pasek narzędzi</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:10%;">
+<col style="width:5%;">
+<col style="width:85%;">
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-middle" rowspan="10" ><p class="tableblock"><span class="image">
+<img src="images/gerbview_left_toolbar.png" alt="gerbview_left_toolbar_png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/grid.png" alt="grid_png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Włącza lub wyłącza wyświetlanie siatki</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/polar_coord.png" alt="polar_coord_png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Włącza lub wyłącza wyświetlanie współrzędnych polarnych</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/unit_inch.png" alt="unit_inch_png">
+</span> <span class="image">
+<img src="images/icons/unit_mm.png" alt="unit_mm_png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Wybór pomiędzy jednostkami w milimetrach lub calach</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/cursor_shape.png" alt="cursor_shape_png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Wybór kształtu kursora</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/pad_sketch.png" alt="pad_sketch_png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Wybór trybu wyświetlania (pełny lub zarys) dla elementów błyskowych</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/track_sketch.png" alt="track_sketch_png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Wybór trybu wyświetlania (pełny lub zarys) dla linii</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/opt_show_polygon.png" alt="opt_show_polygon_png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Wybór trybu wyświetlania (pełny lub zarys) dla wypełnień</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/gerbview_show_negative_objects.png" alt="gerbview_show_negative_objects_png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Pokazywanie obiektów negatywowych w kolorach cieni</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/show_dcodenumber.png" alt="show_dcodenumber_png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Pokazuje / ukrywa wartości D-kodów (dla elementów używających D-kodów)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/gbr_select_mode0.png" alt="gbr_select_mode0_png">
+</span>
+ <span class="image">
+<img src="images/icons/gbr_select_mode1.png" alt="gbr_select_mode1_png">
+</span>
+ <span class="image">
+<img src="images/icons/gbr_select_mode2.png" alt="gbr_select_mode2_png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Wybór trybu wyświetlania warstw używany w programie Gerbview</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_polecenia_menu">5. Polecenia menu</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_menu_plik">5.1. Menu plik</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/pl/gerbview_file_menu.png" alt="gerbview_file_menu_png">
+</div>
+</div>
+<div class="paragraph"><p>Możliwe jest wczytanie zarówno plików Gerber oraz plików wierceń do programu
+Gerbview by móc wyświetlić je razem. Jest również dodatkowa możliwość
+eksportu zestawu tych plików do Pcbnew. Poprzednio (bardzo dawno) była
+również możliwość wczytywania plików z definicjami D-kodów, lecz obecnie ich
+znaczenie jest marginalne i ta funkcja nie jest już dostępna.</p></div>
+<div class="sect3">
+<h4 id="_eksport_do_pcbnew">5.1.1. Eksport do Pcbnew</h4>
+<div class="paragraph"><p>Gerbview posiada ograniczoną możliwość eksportowania gotowego zestawu plików
+Gerber do Pcbnew.</p></div>
+<div class="paragraph"><p>Końcowy rezultat zależny jest od ilości użytych funkcji formatu RS 274X w
+plikach Gerber.</p></div>
+<div class="paragraph"><p>Format RS 274X posiada funkcje zorientowane rastrowo, które nie mogą być
+skonwertowane (głównie wszystkie odnoszące się do obiektów negatywowych).</p></div>
+<div class="paragraph"><p>Elementy błyskowe są konwertowane na przelotki.</p></div>
+<div class="paragraph"><p>Elementy liniowe są konwertowane na ścieżki (lub grafikę przy wybraniu
+docelowej warstwy technicznej)</p></div>
+<div class="paragraph"><p>W związku z powyższym, użyteczność plików skonwertowanych jest zależna od
+sposobu wygenerowania plików Gerber przez narzędzie do projektowania PCB.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_menu_ustawienia">5.2. Menu Ustawienia</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/pl/gerbview_preferences_menu.png" alt="gerbview_preferences_menu_png">
+</div>
+</div>
+<div class="paragraph"><p>Umożliwia dostęp do edytora skrótów klawiszowych oraz pewnych opcji
+związanych z wyświetlaniem.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_menu_rozne">5.3. Menu Różne</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/pl/gerbview_misc_menu.png" alt="gerbview_misc_menu_png">
+</div>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>Lista D-Kodów</strong> pokazuje D-kody jakie zostały użyte oraz niektóre z ich
+  parametrów.
+</p>
+</li>
+<li>
+<p>
+<strong>Pokaż źródło</strong> pokazuje zawartość pliku Gerber z aktywnej warstwy w edytorze
+  tekstu.
+</p>
+</li>
+<li>
+<p>
+<strong>Wyczyść warstwę</strong> kasuje zawartość aktywnej warstwy.
+</p>
+</li>
+</ul></div>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_panel_zarzadzania_warstwami">6. Panel zarządzania warstwami</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Panel zarządzania warstwami ma dwa zasadnicze zadania:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Wybór aktywnej warstwy
+</p>
+</li>
+<li>
+<p>
+Pokazywanie/Ukrywanie poszczególnych warstw
+</p>
+</li>
+</ul></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/pl/gerbview_layer_manager.png" alt="gerbview_layer_manager_png">
+</div>
+</div>
+<div class="paragraph"><p>Aktywna warstwa jest rysowana po pozostałych warstwach.</p></div>
+<div class="paragraph"><p>Podczas wczytywania nowego pliku docelową warstwą jest warstwa aktywna (nowe
+dane zastępują stare dane na tej warstwie)</p></div>
+<div class="paragraph"><p>Uwaga:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Kliknięcie lewym klawiszem na linii: Wybiera aktualną warstwę
+</p>
+</li>
+<li>
+<p>
+Kliknięcie prawym klawiszem w okolicy menadżera warstw: pokazuje/ukrywa
+  wszystkie warstwy
+</p>
+</li>
+<li>
+<p>
+Kliknięcie środkowym klawiszem (na znacznikach koloru): wybiera kolor
+  wybranej warstwy.
+</p>
+</li>
+</ul></div>
+<div style="page-break-after:always"></div>
+<div class="sect2">
+<h3 id="_tryby_wyswietlania_warstw">6.1. Tryby wyświetlania warstw</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Tryb RAW <span class="image">
+<img src="images/icons/gbr_select_mode0.png" alt="gbr_select_mode0_png">
+</span>
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Każdy plik Gerber i każdy element w plikach jest rysowany w kolejności w
+jakiej załadowane zostały pliki.</p></div>
+<div class="paragraph"><p>Jednakże, <strong>warstwa aktywna</strong> w danym momencie jest rysowania jako ostatnia.</p></div>
+<div class="paragraph"><p>Gdy w plikach Gerber będą elementy negatywowe (rysowane na czarno) będą
+widoczne artefakty na obecnie rysowanych warstwach.</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/pl/gerbview_mode_raw_stack.png" alt="gerbview_mode_raw_stack_png">
+</div>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Tryb Nakładkowy
+  <span class="image">
+<img src="images/icons/gbr_select_mode1.png" alt="gbr_select_mode1_png">
+</span>
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Każdy plik Gerber jest rysowany w kolejności w jakiej został załadowany.</p></div>
+<div class="paragraph"><p><strong>Aktywna warstwa</strong> jest jednak rysowana jako ostatnia.</p></div>
+<div class="paragraph"><p>Gdy w plikach Gerber będą elementy negatywowe (rysowane na czarno) nie
+będzie widać artefaktów na obecnie rysowanych warstwach, ponieważ tryb ten
+rysuje każdy z plików w lokalnym buforze przed pokazaniem warstwy na
+ekranie. Elementy negatywowe nie będą tworzyć żadnych artefaktów.</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/pl/gerbview_mode_raw_stack.png" alt="gerbview_mode_raw_stack_png">
+</div>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Tryb Transparentny mode
+  <span class="image">
+<img src="images/icons/gbr_select_mode2.png" alt="gbr_select_mode2_png">
+</span>
+</p>
+</li>
+</ul></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/pl/gerbview_mode_transparency.png" alt="gerbview_mode_transparency_png">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_efekt_wyboru_aktualnej_warstwy_podczas_wyswietlania">6.2. Efekt wyboru aktualnej warstwy podczas wyświetlania</h3>
+<div class="paragraph"><p>Efekt ten jest widoczny tylko w trybie RAW lub Nakładkowym.</p></div>
+<div class="paragraph"><p>Warstwa 1 (zielona) jest rysowana po warstwie 2</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/pl/gerbview_layer_select_1.png" alt="gerbview_layer_select_1_png">
+</div>
+</div>
+<div class="paragraph"><p>Warstwa 2 (niebieska) jest rysowana po warstwie 1</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/pl/gerbview_layer_select_2.png" alt="gerbview_layer_select_2_png">
+</div>
+</div>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_drukowanie_warstw">7. Drukowanie warstw</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_dostep_do_polecenia_drukowania">7.1. Dostęp do polecenia drukowania</h3>
+<div class="paragraph"><p>By wydrukować warstwy, należy użyć narzędzia Drukuj dostępnego spod ikony
+<span class="image">
+<img src="images/icons/print_button.png" alt="print_button_png">
+</span> lub odpowiadającej mu
+opcji z menu Plik.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Uwaga</div>
+</td>
+<td class="content">
+<div class="paragraph"><p>Należy upewnić się, czy elementy znajdują się w obszarze wydruku. (Użyj
+narzędzia <span class="image">
+<img src="images/icons/sheetset.png" alt="sheetset_png">
+</span> by wybrać odpowiedni
+format strony.</p></div>
+<div class="paragraph"><p>Nie należy jednak zapominać, iż fotoplotery używają zwykle dużego pola
+roboczego, znacznie przekraczającego rozmiar strony używany w drukarkach).</p></div>
+<div class="paragraph"><p>Przesunięcie wszystkich warstw (za pomocą operacji blokowych) może być zatem
+konieczne.</p></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_polecenie_przesuwania_blokow">7.2. Polecenie przesuwania bloków</h3>
+<div class="paragraph"><p>Można przesuwać elementy zaznaczając je (przeciągając z wciśniętym lewym
+klawiszem) oraz przesuwać zaznaczone obszary na ekranie.</p></div>
+<div class="paragraph"><p>Klikając lewym klawiszem można umieścić zaznaczony obszar w innym miejscu.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr></div>
+<div id="footer">
+<div id="footer-text">
+Ostatnio zmodyfikowany 2017-08-24 22:09:50 BST
+</div>
+</div>
+</body>
+</html>

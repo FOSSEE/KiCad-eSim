@@ -1,0 +1,3203 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="AsciiDoc 8.6.8">
+<title>Getting Started in KiCad</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #777777;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+tt {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+.monospaced {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+/*
+ * Theme specific overrides of the preceding (asciidoc.css) CSS.
+ *
+ */
+body {
+  font-family: Garamond, Georgia, serif;
+  font-size: 17px;
+  color: #3E4349;
+  line-height: 1.3em;
+}
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Garmond, Georgia, serif;
+  font-weight: normal;
+  border-bottom-width: 0;
+  color: #3E4349;
+}
+div.title, caption.title { color: #596673; font-weight: bold; }
+h1 { font-size: 240%; }
+h2 { font-size: 180%; }
+h3 { font-size: 150%; }
+h4 { font-size: 130%; }
+h5 { font-size: 115%; }
+h6 { font-size: 100%; }
+#header h1 { margin-top: 0; }
+#toc {
+  color: #444444;
+  line-height: 1.5;
+  padding-top: 1.5em;
+}
+#toctitle {
+  font-size: 20px;
+}
+#toc a {
+    border-bottom: 1px dotted #999999;
+    color: #444444 !important;
+    text-decoration: none !important;
+}
+#toc a:hover {
+    border-bottom: 1px solid #6D4100;
+    color: #6D4100 !important;
+    text-decoration: none !important;
+}
+div.toclevel1 { margin-top: 0.2em; font-size: 16px; }
+div.toclevel2 { margin-top: 0.15em; font-size: 14px; }
+em, dt, td.hdlist1 { color: black; }
+strong { color: #3E4349; }
+a { color: #004B6B; text-decoration: none; border-bottom: 1px dotted #004B6B; }
+a:visited { color: #615FA0; border-bottom: 1px dotted #615FA0; }
+a:hover { color: #6D4100; border-bottom: 1px solid #6D4100; }
+div.tableblock > table, table.tableblock { border: 3px solid #E8E8E8; }
+th.tableblock, td.tableblock { border: 1px solid #E8E8E8; }
+ul > li > * { color: #3E4349; }
+pre, tt, .monospaced { font-family: Consolas,Menlo,'Deja Vu Sans Mono','Bitstream Vera Sans Mono',monospace; }
+tt, .monospaced { font-size: 0.9em; color: black;
+}
+div.exampleblock > div.content, div.sidebarblock > div.content, div.listingblock > div.content { border-width: 0 0 0 3px; border-color: #E8E8E8; }
+div.verseblock { border-left-width: 0; margin-left: 3em; }
+div.quoteblock { border-left-width: 3px; margin-left: 0; margin-right: 0;}
+div.admonitionblock td.content { border-left: 3px solid #E8E8E8; }
+
+
+@media screen {
+  body {
+    max-width: 50em; /* approximately 80 characters wide */
+    margin-left: 16em;
+  }
+
+  #toc {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 13em;
+    padding: 0.5em;
+    padding-bottom: 1.5em;
+    margin: 0;
+    overflow: auto;
+    border-right: 3px solid #f8f8f8;
+    background-color: white;
+  }
+
+  #toc .toclevel1 {
+    margin-top: 0.5em;
+  }
+
+  #toc .toclevel2 {
+    margin-top: 0.25em;
+    display: list-item;
+    color: #aaaaaa;
+  }
+
+  #toctitle {
+    margin-top: 0.5em;
+  }
+}
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install(2);
+/*]]>*/
+</script>
+</head>
+<body class="book">
+<div id="header">
+<h1>Getting Started in KiCad</h1>
+<span id="author">The KiCad Team</span><br>
+<div id="toc">
+  <div id="toctitle">Inhoudsopgave</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p><em>Essential and concise guide to mastering KiCad for the successful
+development of sophisticated electronic printed circuit boards.</em></p></div>
+<div class="paragraph" id="copyright"><p><strong>Copyright</strong></p></div>
+<div class="paragraph"><p>This document is Copyright &#169; 2010-2015 by its contributors as listed
+below. You may distribute it and/or modify it under the terms of either the
+GNU General Public License (<a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html</a>), version 3
+or later, or the Creative Commons Attribution License
+(<a href="http://creativecommons.org/licenses/by/3.0/">http://creativecommons.org/licenses/by/3.0/</a>), version 3.0 or later.</p></div>
+<div class="paragraph"><p>All trademarks within this guide belong to their legitimate owners.</p></div>
+<div class="paragraph" id="contributors"><p><strong>Contributors</strong></p></div>
+<div class="paragraph"><p>David Jahshan, Phil Hutchinson, Fabrizio Tappero, Christina Jarron, Melroy
+van den Berg.</p></div>
+<div class="paragraph" id="translation"><p><strong>translation</strong></p></div>
+<div class="paragraph"><p>Melroy van den Berg &lt;<a href="mailto:webmaster1989@gmail.com">webmaster1989@gmail.com</a>&gt;, 2015.</p></div>
+<div class="paragraph" id="feedback"><p><strong>Feedback</strong></p></div>
+<div class="paragraph"><p>Please direct any bug reports, suggestions or new versions to here:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+About KiCad document: <a href="https://github.com/KiCad/kicad-doc/issues">https://github.com/KiCad/kicad-doc/issues</a>
+</p>
+</li>
+<li>
+<p>
+About KiCad software: <a href="https://bugs.launchpad.net/kicad">https://bugs.launchpad.net/kicad</a>
+</p>
+</li>
+<li>
+<p>
+About KiCad software i18n: <a href="https://github.com/KiCad/kicad-i18n/issues">https://github.com/KiCad/kicad-i18n/issues</a>
+</p>
+</li>
+</ul></div>
+<div class="paragraph" id="publication_date"><p><strong>Publication date</strong></p></div>
+<div class="paragraph"><p>2015, May 16.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="introduction-to-kicad">1. Introduction to KiCad</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>KiCad is an open-source software tool for the creation of electronic
+schematic diagrams and PCB artwork. Beneath its singular surface, KiCad
+incorporates an elegant ensemble of the following stand-alone software
+tools:</p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:33%;">
+<col style="width:33%;">
+<col style="width:33%;">
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" >Program name</th>
+<th class="tableblock halign-left valign-top" >Description</th>
+<th class="tableblock halign-left valign-top" >File extension</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">KiCad</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Project manager</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="monospaced">*.pro</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Eeschema</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Schematic editor (both schematic and component)</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="monospaced">*.sch, *.lib, *.net</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">CvPcb</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Footprint selector</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="monospaced">*.net</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Pcbnew</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Circuit board board editor</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="monospaced">*.kicad_pcb</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">GerbView</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Gerber viewer</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">All the usual gerbers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Bitmap2Component</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Convert bitmap images to components or footprints</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="monospaced">*.lib, *.kicad_mod, *.kicad_wks</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">PCB Calculator</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Calculator for components, track width, electrical spacing, color codes, and more&#8230;</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">None</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Pl Editor</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Page layout editor</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="monospaced">*.kicad_wks</span></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Opmerking</div>
+</td>
+<td class="content">The file extension list is not complete and only contains a subset of the
+files that KiCad works with that is useful for the basic understanding of
+which files are used for each KiCad unique application.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>KiCad can be considered mature enough to be used for the successful
+development and maintenance of complex electronic boards.</p></div>
+<div class="paragraph"><p>KiCad does not present any board-size limitation and it can easily handle up
+to 32 copper layers, up to 14 technical layers and up to 4 auxiliary
+layers.  KiCad can create all the files necessary for building printed
+boards, Gerber files for photo-plotters, drilling files, component location
+files and a lot more.</p></div>
+<div class="paragraph"><p>Being open source (GPL licensed), KiCad represents the ideal tool for
+projects oriented towards the creation of electronic hardware with an
+open-source flavour.</p></div>
+<div class="paragraph"><p>On the Internet, the home of KiCad is:</p></div>
+<div class="paragraph"><p><a href="http://www.kicad-pcb.org/">http://www.kicad-pcb.org/</a></p></div>
+<div class="sect2">
+<h3 id="download-and-install-kicad">1.1. Download and install KiCad</h3>
+<div class="paragraph"><p>KiCad runs on GNU/Linux, Apple OS X and Windows.  You can find the most up
+to date instructions and download links at:</p></div>
+<div class="paragraph"><p><a href="http://www.kicad-pcb.org/download/">http://www.kicad-pcb.org/download/</a></p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Belangrijk</div>
+</td>
+<td class="content">KiCad stable releases occur periodically per the
+<a href="http://ci.kicad-pcb.org/job/kicad-doxygen/ws/Documentation/doxygen/html/md_Documentation_development_stable-release-policy.html">KiCad
+Stable Release Policy</a>.  New features are continually being added to the
+development branch.  If you would like to take advantage of these new
+features and help out by testing them, please download the latest nightly
+build package for your platform.  Nightly builds may introduce bugs but it
+is the goal of the KiCad Development Team to keep the development branch as
+usable as possible during new feature development.</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="under-linux">1.2. Under GNU/Linux</h3>
+<div class="paragraph"><div class="title">Stable builds</div><p>Stable releases of KiCad can be found in most distribution&#8217;s package
+managers as kicad and kicad-doc. If your distribution does not provide
+latest stable version, please follow the instruction for unstable builds and
+select and install the latest stable version.</p></div>
+<div class="paragraph"><div class="title">Unstable (nightly development) builds</div><p>Unstable builds are built from the most recent source code. They can
+sometimes have bugs that cause file corruption, generate bad gerbers, etc,
+but are generally stable and have the latest features.</p></div>
+<div class="paragraph"><p>Under Ubuntu, the easiest way to install an unstable nightly build of KiCad
+is via <em>PPA</em> and <em>Aptitude</em>. Type the following into your Terminal:</p></div>
+<div class="quoteblock">
+<div class="content">
+<div class="paragraph"><p>sudo add-apt-repository ppa:js-reynaud/ppa-kicad</p></div>
+<div class="paragraph"><p>sudo aptitude update &amp;&amp; sudo aptitude safe-upgrade</p></div>
+<div class="paragraph"><p>sudo aptitude install kicad kicad-doc-en</p></div>
+</div>
+<div class="attribution">
+</div></div>
+<div class="paragraph"><p>Under Fedora the easiest way to install an unstable nightly build is via
+<em>copr</em>.  To install KiCad via copr type the following in to copr:</p></div>
+<div class="quoteblock">
+<div class="content">
+<div class="paragraph"><p>sudo dnf copr enable mangelajo/kicad</p></div>
+<div class="paragraph"><p>sudo dnf install kicad</p></div>
+</div>
+<div class="attribution">
+</div></div>
+<div class="paragraph"><p>Alternatively, you can download and install a pre-compiled version of KiCad,
+or directly download the source code, compile and install KiCad.</p></div>
+</div>
+<div class="sect2">
+<h3 id="under-apple-os-x">1.3. Under Apple OS X</h3>
+<div class="paragraph"><div class="title">Stable builds</div><p>Stable builds of KiCad for OS X can be found at:
+<a href="http://downloads.kicad-pcb.org/osx/stable/">http://downloads.kicad-pcb.org/osx/stable/</a></p></div>
+<div class="paragraph"><div class="title">Unstable (nightly development) builds</div><p>Unstable builds are built from the most recent source code. They can
+sometimes have bugs that cause file corruption, generate bad gerbers, etc,
+but are generally stable and have the latest features.</p></div>
+<div class="paragraph"><p>Unstable nightly development builds can be found at:
+<a href="http://downloads.kicad-pcb.org/osx/">http://downloads.kicad-pcb.org/osx/</a></p></div>
+</div>
+<div class="sect2">
+<h3 id="under-Windows">1.4. Under Windows</h3>
+<div class="paragraph"><div class="title">Stable builds</div><p>Stable builds of KiCad for Windows can be found at:
+<a href="http://downloads.kicad-pcb.org/windows/stable/">http://downloads.kicad-pcb.org/windows/stable/</a></p></div>
+<div class="paragraph"><div class="title">Unstable (nightly development) builds</div><p>Unstable builds are built from the most recent source code. They can
+sometimes have bugs that cause file corruption, generate bad gerbers, etc,
+but are generally stable and have the latest features.</p></div>
+<div class="paragraph"><p>For Windows you can find nightly development builds at:
+<a href="http://downloads.kicad-pcb.org/windows/">http://downloads.kicad-pcb.org/windows/</a></p></div>
+</div>
+<div class="sect2">
+<h3 id="support">1.5. Support</h3>
+<div class="paragraph"><p>If you have ideas, remarks or questions, or if you just need help:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Visit the <a href="https://forum.kicad.info/">Forum</a>
+</p>
+</li>
+<li>
+<p>
+Join the <a href="http://webchat.freenode.net/?channels=kicad">#kicad IRC channel</a> on
+  Freenode
+</p>
+</li>
+<li>
+<p>
+Watch <a href="http://www.kicad-pcb.org/help/tutorials/">Tutorials</a>
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="kicad-work-flow">2. KiCad Workflow</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Despite its similarities with other PCB software tools, KiCad is
+characterised by an interesting work-flow in which schematic components and
+footprints are actually two separate entities. This is often the subject of
+discussion on Internet forums.</p></div>
+<div class="sect2">
+<h3 id="kicad-work-flow-overview">2.1. KiCad Workflow overview</h3>
+<div class="paragraph"><p>The KiCad work-flow is comprised of two main tasks: making the schematic and
+laying out the board. Both a component library and a footprint library are
+necessary for these two tasks. KiCad has plenty of both.  Just in case that
+is not enough, KiCad also has the tools necessary to make new ones.</p></div>
+<div class="paragraph"><p>In the picture below, you see a flowchart representing the KiCad work-flow.
+The picture explains which steps you need to take, in which order.  When
+applicable, the icon is added as well for convenience.</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/kicad_flowchart.png" alt="KiCad Flowchart">
+</div>
+</div>
+<div class="paragraph"><p>For more information about creating a component, see the section of this
+document titled <a href="#make-schematic-components-in-kicad">Make schematic components in KiCad</a>. And for more information about how to create a new
+footprint, see the section of this document titled
+<a href="#make-component-footprints">Make component footprints</a>.</p></div>
+<div class="paragraph"><p>On the following site:</p></div>
+<div class="paragraph"><p><a href="http://kicad.rohrbacher.net/quicklib.php">http://kicad.rohrbacher.net/quicklib.php</a></p></div>
+<div class="paragraph"><p>You will find an example of use of a tool that allows you to quickly create
+KiCad library components. For more information about quicklib, refer to the
+section of this document titled
+<a href="#make-schematic-components-with-quicklib">Make Schematic Components With quicklib</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="forward-and-backward-annotation">2.2. Forward and backward annotation</h3>
+<div class="paragraph"><p>Once an electronic schematic has been fully drawn, the next step is to
+transfer it to a PCB following the KiCad work-flow. Once the board layout
+process has been partially or completely done, additional components or nets
+might need to be added, parts moved around and much more. This can be done
+in two ways: Backward Annotation and Forward Annotation.</p></div>
+<div class="paragraph"><p>Backward Annotation is the process of sending a PCB layout change back to
+its corresponding schematic. Some do not consider this particular feature
+especially useful.</p></div>
+<div class="paragraph"><p>Forward Annotation is the process of sending schematic changes to a
+corresponding PCB layout. This is a fundamental feature because you do not
+really want to re-do the layout of the whole PCB every time you make a
+modification to your schematic. Forward Annotation is discussed in the
+section titled <a href="#forward-annotation-in-kicad">Forward Annotation</a>.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="draw-electronic-schematics">3. Draw electronic schematics</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>In this section we are going to learn how to draw an electronic schematic
+using KiCad.</p></div>
+<div class="sect2">
+<h3 id="using-eeschema">3.1. Using Eeschema</h3>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Under Windows run kicad.exe. Under Linux type <em>kicad</em> in your Terminal. You
+    are now in the main window of the KiCad project manager.  From here you have
+    access to eight stand-alone software tools: <em>Eeschema</em>, <em>Schematic
+    Library Editor</em>, <em>Pcbnew</em>, <em>PCB Footprint Editor</em>, <em>GerbView</em>,
+    <em>Bitmap2Component</em>, <em>PCB Calculator</em> and <em>Pl Editor</em>. Refer to the
+    work-flow chart to give you an idea how the main tools are used.
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/kicad_main_window.png" alt="KiCad Main Window">
+</div>
+</div>
+</li>
+<li>
+<p>
+Create a new project: <strong>File</strong> &#8594; <strong>New Project</strong> &#8594; <strong>New Project</strong>.  Name
+    the project file <em>tutorial1</em>. The project file will automatically take the
+    extension ".pro". KiCad prompts to create a dedicated directory, click "Yes"
+    to confirm. All your project files will be saved here.
+</p>
+</li>
+<li>
+<p>
+Let&#8217;s begin by creating a schematic. Start the schematic editor
+    <em>Eeschema</em>, <span class="image">
+<img src="images/icons/eeschema.png" alt="Eeschema">
+</span>. It is the first
+    button from the left.
+</p>
+</li>
+<li>
+<p>
+Click on the <em>Page Settings</em> icon <span class="image">
+<img src="images/icons/sheetset.png" alt="Sheet     settings icon">
+</span> on the top toolbar. Set the Page Size as <em>A4</em> and enter the
+    Title as <em>Tutorial 1</em>. You will see that more information can be entered
+    here if necessary. Click OK. This information will populate the schematic
+    sheet at the bottom right corner. Use the mouse wheel to zoom in.  Save the
+    whole schematic project: <strong>File</strong> &#8594; <strong>Save Schematic Project</strong>
+</p>
+</li>
+<li>
+<p>
+We will now place our first component. Click on the <em>Place component</em> icon
+    <span class="image">
+<img src="images/icons/add_component.png" alt="Add component Icon">
+</span> in the right
+    toolbar. The same functionality is achieved by pressing the <em>Place
+    component</em> shortcut key (<em>a</em>).
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Opmerking</div>
+</td>
+<td class="content">You can see a list of all available shortcut keys by pressing the <em>?</em> key.</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+Click on the middle of your schematic sheet. A <em>Choose Component</em> window
+    will appear on the screen.  We&#8217;re going to place a resistor. Search / filter
+    on the <em>R</em> of <strong>R</strong>esistor.  You may notice the <em>device</em> heading above the
+    Resistor. This <em>device</em> heading is the name of the library where the
+    component is located, which is quite a generic and useful library.
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/choose_component.png" alt="Choose Component">
+</div>
+</div>
+</li>
+<li>
+<p>
+Double click on it. This will close the <em>Choose Component</em> window.  Place
+    the component in the schematic sheet by clicking where you want it to be.
+</p>
+</li>
+<li>
+<p>
+Click on the magnifier icon to zoom in on the component.  Alternatively, use
+    the mouse wheel to zoom in and zoom out. Press the wheel (central)  mouse
+    button to pan horizontally and vertically.
+</p>
+</li>
+<li>
+<p>
+Try to hover the mouse over the component <em>R</em> and press the r key. The
+    component should rotate. You do not need to actually click on the component
+    to rotate it.
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Opmerking</div>
+</td>
+<td class="content">If your mouse was also over the <em>Field Reference</em> (<em>R</em>) or the <em>Field Value</em>
+(<em>R?</em>), a menu will appear. You will see these <em>Clarify Selection</em> menu
+often in KiCad, they allow working on objects that are on top of each
+other. In this case, tell KiCad you want to perform the action on the
+<em>Component &#8230;R&#8230;</em>.</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+Right click in the middle of the component and select <strong>Edit Component</strong> &#8594;
+    <strong>Value</strong>. You can achieve the same result by hovering over the component
+    and pressing the v key. Alternatively, the e key will take you to the more
+    general Edit window. Notice how the right-click menu below shows shortcut
+    keys for all available actions.
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/edit_component_dropdown.png" alt="Edit component menu">
+</div>
+</div>
+</li>
+<li>
+<p>
+The Component value window will appear. Replace the current value <em>R</em> with
+    <em>1 k</em>. Click OK.
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Opmerking</div>
+</td>
+<td class="content">Do not change the Reference field (R?), this will be done automatically
+later on. The value inside the resistor should now be <em>1 k</em>.</td>
+</tr></table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/resistor_value.png" alt="Resistor Value">
+</div>
+</div>
+</li>
+<li>
+<p>
+To place another resistor, simply click where you want the resistor to
+    appear. The Component Selection window will appear again.
+</p>
+</li>
+<li>
+<p>
+The resistor you previously chose is now in your history list, appearing as
+    <em>R</em>. Click OK and place the component.
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/component_history.png" alt="Component history">
+</div>
+</div>
+</li>
+<li>
+<p>
+In case you make a mistake and want to delete a component, right click on
+    the component and click <em>Delete Component</em>. This will remove the component
+    from the schematic. Alternatively, you can hover over the component you want
+    to delete and press the del key.
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Opmerking</div>
+</td>
+<td class="content">You can edit any default shortcut key by going to <strong>Preferences</strong> &#8594; <strong>Hotkeys</strong>
+&#8594; <strong>Edit hotkeys</strong>. Any modification will be saved immediately.</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+You can also duplicate a component already on your schematic sheet by
+    hovering over it and pressing the c key. Click where you want to place the
+    new duplicated component.
+</p>
+</li>
+<li>
+<p>
+Right click on the second resistor. Select <em>Drag Component</em>.  Reposition the
+    component and left click to drop. The same functionality can be achieved by
+    hovering over the component and by pressing the g key. Use the r key to
+    rotate the component. The x key and the y key will flip the component.
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Opmerking</div>
+</td>
+<td class="content"><strong>Right-Click</strong> &#8594; <strong>Move component</strong> (equivalent to the m key
+option) is also a valuable option for moving anything around, but it
+is better to use this only for component labels and components yet to
+be connected. We will see later on why this is the case.</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+Edit the second resistor by hovering over it and pressing the v key.
+    Replace <em>R</em> with <em>100</em>. You can undo any of your editing actions with the
+    ctrl+z key.
+</p>
+</li>
+<li>
+<p>
+Change the grid size. You have probably noticed that on the schematic sheet
+    all components are snapped onto a large pitch grid. You can easily change
+    the size of the grid by <strong>Right-Click</strong> &#8594; <strong>Grid select</strong>. <em>In general, it
+    is recommended to use a grid of 50.0 mils for the schematic sheet</em>.
+</p>
+</li>
+<li>
+<p>
+We are going to add a component from a library that isn&#8217;t configured in the
+    default project. In the menu, choose <strong>Preferences</strong> &#8594; <strong>Component
+    Libraries</strong> and click the <strong>Add</strong> button for <strong>Component library files</strong>.
+</p>
+</li>
+<li>
+<p>
+You need to find where the official KiCad libraries are installed on your
+    computer. Look for a <span class="monospaced">library</span> directory containing a hundred of <span class="monospaced">.dcm</span> and
+    <span class="monospaced">.lib</span> files. Try in <span class="monospaced">C:\Program Files (x86)\KiCad\share\</span> (Windows) and
+    <span class="monospaced">/usr/share/kicad/library/</span> (Linux). When you have found the directory,
+    choose and add the <em>microchip_pic12mcu</em> library and close the window.
+</p>
+</li>
+<li>
+<p>
+Repeat the add-component steps, however this time select the
+    <em>microchip_pic12mcu</em> library instead of the <em>device</em> library and pick the
+    <em>PIC12C508A-I/SN</em> component.
+</p>
+</li>
+<li>
+<p>
+Hover the mouse over the microcontroller component. Press the y key or the x
+    key on the keyboard. Notice how the component is flipped over its x axis or
+    its y axis. Press the key again to return it to its original orientation.
+</p>
+</li>
+<li>
+<p>
+Repeat the add-component steps, this time choosing the <em>device</em> library and
+    picking the <em>LED</em> component from it.
+</p>
+</li>
+<li>
+<p>
+Organise all components on your schematic sheet as shown below.
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_010.png" alt="gsik_tutorial1_010_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+We now need to create the schematic component <em>MYCONN3</em> for our 3-pin
+    connector. You can jump to the section titled
+    <a href="#make-schematic-components-in-kicad">Make Schematic Components in KiCad</a> to
+    learn how to make this component from scratch and then return to this
+    section to continue with the board.
+</p>
+</li>
+<li>
+<p>
+You can now place the freshly made component. Press the <em>a</em> key and pick the
+    <em>MYCONN3</em> component in the <em>myLib</em> library.
+</p>
+</li>
+<li>
+<p>
+The component identifier <em>J?</em> will appear under the <em>MYCONN3</em> label.  If you
+    want to change its position, right click on <em>J?</em> and click on <em>Move Field</em>
+    (equivalent to the m key option). It might be helpful to zoom in
+    before/while doing this. Reposition <em>J?</em> under the component as shown
+    below. Labels can be moved around as many times as you please.
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_myconn3_s.png" alt="gsik_myconn3_s_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+It is time to place the power and ground symbols. Click on the <em>Place a
+    power port</em> button <span class="image">
+<img src="images/icons/add_power.png" alt="add_power_png">
+</span> on the
+    right toolbar. Alternatively, press the <em>p</em> key. In the component selection
+    window, scroll down and select <em>VCC</em> from the <em>power</em> library.  Click OK.
+</p>
+</li>
+<li>
+<p>
+Click above the pin of the 1 k resistor to place the VCC part. Click on the
+    area above the microcontroller <em>VDD</em>. In the <em>Component Selection history</em>
+    section select <em>VCC</em> and place it next to the VDD pin. Repeat the add
+    process again and place a VCC part above the VCC pin of <em>MYCONN3</em>.
+</p>
+</li>
+<li>
+<p>
+Repeat the add-pin steps but this time select the GND part. Place a GND part
+    under the GND pin of <em>MYCONN3</em>. Place another GND symbol on the right of the
+    VSS pin of the microcontroller. Your schematic should now look something
+    like this:
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_020.png" alt="gsik_tutorial1_020_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+Next, we will wire all our components. Click on the <em>Place wire</em> icon
+    <span class="image">
+<img src="images/icons/add_line.png" alt="Place wire">
+</span> on the right toolbar.
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Opmerking</div>
+</td>
+<td class="content">Be careful not to pick <em>Place a bus</em>, which appears directly beneath this
+button but has thicker lines. The section <a href="#bus-connections-in-kicad">Bus Connections in KiCad</a> will explain how to use a bus section.</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+Click on the little circle at the end of pin 7 of the microcontroller and
+    then click on the little circle on pin 2 of the LED.  You can zoom in while
+    you are placing the connection.
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Opmerking</div>
+</td>
+<td class="content">If you want to reposition wired components, it is important to use the g key
+(grab) option and not the m key (move) option. Using the grab option will
+keep the wires connected. Review step 24 in case you have forgotten how to
+move a component.</td>
+</tr></table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_030.png" alt="gsik_tutorial1_030_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+Repeat this process and wire up all the other components as shown below. To
+    terminate a wire just double-click. When wiring up the VCC and GND symbols,
+    the wire should touch the bottom of the VCC symbol and the middle top of the
+    GND symbol. See the screenshot below.
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_040.png" alt="gsik_tutorial1_040_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+We will now consider an alternative way of making a connection using
+    labels. Pick a net labelling tool by clicking on the <em>Place net name</em> icon
+    <span class="image">
+<img src="images/icons/add_line_label.png" alt="add_line_label_png">
+</span> on the right
+    toolbar. You can also use the l key.
+</p>
+</li>
+<li>
+<p>
+Click in the middle of the wire connected to pin 6 of the
+    microcontroller. Name this label <em>INPUT</em>.
+</p>
+</li>
+<li>
+<p>
+Follow the same procedure and place another label on line on the right of
+    the 100 ohm resistor. Also name it <em>INPUT</em>. The two labels, having the same
+    name, create an invisible connection between pin 6 of the PIC and the 100
+    ohm resistor. This is a useful technique when connecting wires in a complex
+    design where drawing the lines would make the whole schematic messier. To
+    place a label you do not necessarily need a wire, you can simply attach the
+    label to a pin.
+</p>
+</li>
+<li>
+<p>
+Labels can also be used to simply label wires for informative
+    purposes. Place a label on pin 7 of the PIC. Enter the name <em>uCtoLED</em>.  Name
+    the wire between the resistor and the LED as <em>LEDtoR</em>. Name the wire between
+    <em>MYCONN3</em> and the resistor as <em>INPUTtoR</em>.
+</p>
+</li>
+<li>
+<p>
+You do not have to label the VCC and GND lines because the labels are
+    implied from the power objects they are connected to.
+</p>
+</li>
+<li>
+<p>
+Below you can see what the final result should look like.
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_050.png" alt="gsik_tutorial1_050_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+Let&#8217;s now deal with unconnected wires. Any pin or wire that is not connected
+    will generate a warning when checked by KiCad. To avoid these warnings you
+    can either instruct the program that the unconnected wires are deliberate or
+    manually flag each unconnected wire or pin as unconnected.
+</p>
+</li>
+<li>
+<p>
+Click on the <em>Place no connect flag</em> icon
+    <span class="image">
+<img src="images/icons/noconn.png" alt="noconn_png">
+</span> on the right toolbar. Click on
+    pins 2, 3, 4 and 5. An X will appear to signify that the lack of a wire
+    connection is intentional.
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_060.png" alt="gsik_tutorial1_060_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+Some components have power pins that are invisible. You can make them
+    visible by clicking on the <em>Show hidden pins</em> icon
+    <span class="image">
+<img src="images/icons/hidden_pin.png" alt="hidden_pin_png">
+</span> on the left
+    toolbar. Hidden power pins get automatically connected if VCC and GND naming
+    is respected. Generally speaking, you should try not to make hidden power
+    pins.
+</p>
+</li>
+<li>
+<p>
+It is now necessary to add a <em>Power Flag</em> to indicate to KiCad that power
+    comes in from somewhere. Press the a key, select <em>List All</em>, double click on
+    the <em>power</em> library and search for <em>PWR_FLAG</em>. Place two of them. Connect
+    them to a GND pin and to VCC as shown below.
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_070.png" alt="gsik_tutorial1_070_png">
+</div>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Opmerking</div>
+</td>
+<td class="content">This will avoid the classic schematic checking warning: Warning Pin power_in
+not driven (Net xx)</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+Sometimes it is good to write comments here and there. To add comments on
+    the schematic use the <em>Place graphic text (comment)</em> icon
+    <span class="image">
+<img src="images/icons/add_text.png" alt="add_text_png">
+</span> on the right toolbar.
+</p>
+</li>
+<li>
+<p>
+All components now need to have unique identifiers. In fact, many of our
+    components are still named <em>R?</em> or <em>J?</em>. Identifier assignation can be done
+    automatically by clicking on the <em>Annotate schematic</em> icon
+    <span class="image">
+<img src="images/icons/annotate.png" alt="annotate_png">
+</span> on the top toolbar.
+</p>
+</li>
+<li>
+<p>
+In the Annotate Schematic window, select <em>Use the entire schematic</em> and
+    click on the <em>Annotation</em> button. Click OK in the confirmation message and
+    then click <em>Close</em>. Notice how all the <em>?</em> have been replaced with
+    numbers. Each identifier is now unique. In our example, they have been named
+    <em>R1</em>, <em>R2</em>, <em>U1</em>, <em>D1</em> and <em>J1</em>.
+</p>
+</li>
+<li>
+<p>
+We will now check our schematic for errors. Click on the <em>Perform electrical
+    rules check</em> icon <span class="image">
+<img src="images/icons/erc.png" alt="erc_png">
+</span> on the top
+    toolbar. Click on the <em>Run</em> button. A report informing you of any errors or
+    warnings such as disconnected wires is generated. You should have 0 Errors
+    and 0 Warnings. In case of errors or warnings, a small green arrow will
+    appear on the schematic in the position where the error or the warning is
+    located. Check <em>Create ERC file report</em> and press the <em>Run</em> button again to
+    receive more information about the errors.
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Opmerking</div>
+</td>
+<td class="content">If you have a warning with "No default editor found you must choose it", try
+setting the path to <span class="monospaced">c:\windows\notepad.exe</span> (windows) or <span class="monospaced">/usr/bin/gedit</span>
+(Linux).</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+The schematic is now finished. We can now create a Netlist file to which we
+    will add the footprint of each component. Click on the <em>Generate netlist</em>
+    icon <span class="image">
+<img src="images/icons/netlist.png" alt="netlist_png">
+</span> on the top toolbar. Click
+    on the <em>Generate</em> button and save under the default file name.
+</p>
+</li>
+<li>
+<p>
+After generating the Netlist file, click on the <em>Run Cvpcb</em> icon
+    <span class="image">
+<img src="images/icons/cvpcb.png" alt="cvpcb_png">
+</span> on the top toolbar. If a missing
+    file error window pops up, just ignore it and click OK.
+</p>
+</li>
+<li>
+<p>
+<em>Cvpcb</em> allows you to link all the components in your schematic with
+    footprints in the KiCad library. The pane on the center shows all the
+    components used in your schematic. Here select <em>D1</em>. In the pane on the
+    right you have all the available footprints, here scroll down to
+    <em>LEDs:LED-5MM</em> and double click on it.
+</p>
+</li>
+<li>
+<p>
+It is possible that the pane on the right shows only a selected subgroup of
+    available footprints. This is because KiCad is trying to suggest to you a
+    subset of suitable footprints. Click on the icons
+    <span class="image">
+<img src="images/icons/module_filtered_list.png" alt="module_filtered_list_png">
+</span>,
+    <span class="image">
+<img src="images/icons/module_pin_filtered_list.png" alt="module_pin_filtered_list_png">
+</span>
+    and <span class="image">
+<img src="images/icons/module_library_list.png" alt="module_library_list_png">
+</span> to
+    enable or disable these filters.
+</p>
+</li>
+<li>
+<p>
+For <em>IC1</em> select the <em>Housings_DIP:DIP-8_W7.62mm</em> footprint.  For <em>J1</em>
+    select the <em>Connect:Banana_Jack_3Pin</em> footprint.  For <em>R1</em> and <em>R2</em> select
+    the <em>Discret:R1</em> footprint.
+</p>
+</li>
+<li>
+<p>
+If you are interested in knowing what the footprint you are choosing looks
+    like, you have two options. You can click on the <em>View selected footprint</em>
+    icon <span class="image">
+<img src="images/icons/show_footprint.png" alt="show_footprint_png">
+</span> for a preview
+    of the current footprint. Alternatively, click on the <em>Display footprint
+    list documentation</em> icon <span class="image">
+<img src="images/icons/datasheet.png" alt="datasheet_png">
+</span> and
+    you will get a multi-page PDF document with all available footprints. You
+    can print it out and check your components to make sure that the dimensions
+    match.
+</p>
+</li>
+<li>
+<p>
+You are done. You can now update your netlist file with all the associated
+    footprints. Click on <strong>File</strong> &#8594; <strong>Save As</strong>. The default name <em>tutorial1.net</em>
+    is fine, click save. Otherwise you can use the icon
+    <span class="image">
+<img src="images/icons/save.png" alt="Save icon">
+</span>.  Your netlist file has now been
+    updated with all the footprints. Note that if you are missing the footprint
+    of any device, you will need to make your own footprints. This will be
+    explained in a later section of this document.
+</p>
+</li>
+<li>
+<p>
+You can close <em>Cvpcb</em> and go back to the <em>Eeschema</em> schematic editor. Save
+    the project by clicking on <strong>File</strong> &#8594; <strong>Save Whole Schematic Project</strong>. Close
+    the schematic editor.
+</p>
+</li>
+<li>
+<p>
+Switch to the KiCad project manager.
+</p>
+</li>
+<li>
+<p>
+The netlist file describes all components and their respective pin
+    connections. The netlist file is actually a text file that you can easily
+    inspect, edit or script.
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Opmerking</div>
+</td>
+<td class="content">Library files (<em>*.lib</em>) are text files too and they are also easily
+editable or scriptable.</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+To create a Bill Of Materials (BOM), go to the <em>Eeschema</em> schematic editor
+    and click on the <em>Bill of materials</em> icon
+    <span class="image">
+<img src="images/icons/bom.png" alt="bom_png">
+</span> on the top toolbar.  By default there is
+    no plugin active. You add one, by clicking on <strong>Add Plugin</strong> button. Select
+    the *.xsl file you want to use, in this case, we select <em>bom2csv.xsl</em>.
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Opmerking</div>
+</td>
+<td class="content">
+<div class="paragraph"><p>The *.xsl file is located in <em>plugins</em> directory of the KiCad
+installation, which is located at: /usr/lib/kicad/plugins/.</p></div>
+<div class="paragraph"><p>Or get the file via:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>wget https://raw.githubusercontent.com/KiCad/kicad-source-mirror/master/eeschema/plugins/bom2csv.xsl</pre>
+</div></div>
+</td>
+</tr></table>
+</div>
+<div class="listingblock">
+<div class="title">KiCad automatically generates the command, for example:</div>
+<div class="content monospaced">
+<pre>xsltproc -o "%O" "/home/&lt;user&gt;/kicad/eeschema/plugins/bom2csv.xsl" "%I"</pre>
+</div></div>
+<div class="listingblock">
+<div class="title">You may want to add the extension, so change this command line to:</div>
+<div class="content monospaced">
+<pre>xsltproc -o "%O.csv" "/home/&lt;user&gt;/kicad/eeschema/plugins/bom2csv.xsl" "%I"</pre>
+</div></div>
+<div class="paragraph"><p>Press Help button for more info.</p></div>
+</li>
+<li>
+<p>
+Now press <em>Generate</em>. The file (same name as your project) is located in
+    your project folder.  Open the <strong>*.csv</strong> file with LibreOffice Calc or
+    Excel. An import window will appear, press OK.
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>You are now ready to move to the PCB layout part, which is presented in the
+next section. However, before moving on let&#8217;s take a quick look at how to
+connect component pins using a bus line.</p></div>
+</div>
+<div class="sect2">
+<h3 id="bus-connections-in-kicad">3.2. Bus connections in KiCad</h3>
+<div class="paragraph"><p>Sometimes you might need to connect several sequential pins of component A
+with some other sequential pins of component B. In this case you have two
+options: the labelling method we already saw or the use of a bus
+connection. Let&#8217;s see how to do it.</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Let us suppose that you have three 4-pin connectors that you want to connect
+    together pin to pin. Use the label option (press the l key) to label pin 4
+    of the P4 part. Name this label <em>a1</em>. Now let&#8217;s press the Ins key to have
+    the same item automatically added on the pin below pin 4 (PIN 3). Notice how
+    the label is automatically renamed <em>a2</em>.
+</p>
+</li>
+<li>
+<p>
+Press the Ins Key two more times. The Ins key corresponds to the action
+    <em>Repeat last item</em> and it is an infinitely useful command that can make your
+    life a lot easier.
+</p>
+</li>
+<li>
+<p>
+Repeat the same labelling action on the two other connectors CONN_2 and
+    CONN_3 and you are done. If you proceed and make a PCB you will see that the
+    three connectors are connected to each other. Figure 2 shows the result of
+    what we described. For aesthetic purposes it is also possible to add a
+    series of <em>Place wire to bus entry</em> using the icon
+    <span class="image">
+<img src="images/icons/add_line2bus.png" alt="Place wire to bus entry">
+</span> and bus line
+    using the icon <span class="image">
+<img src="images/icons/add_bus2bus.png" alt="Place bus to bus entry">
+</span>,
+    as shown in Figure 3. Mind, however, that there will be no effect on the
+    PCB.
+</p>
+</li>
+<li>
+<p>
+It should be pointed out that the short wire attached to the pins in Figure
+    2 is not strictly necessary. In fact, the labels could have been applied
+    directly to the pins.
+</p>
+</li>
+<li>
+<p>
+Let&#8217;s take it one step further and suppose that you have a fourth connector
+    named CONN_4 and, for whatever reason, its labelling happens to be a little
+    different (b1, b2, b3, b4). Now we want to connect <em>Bus a</em> with <em>Bus b</em> in a
+    pin to pin manner. We want to do that without using pin labelling (which is
+    also possible) but by instead using labelling on the bus line, with one
+    label per bus.
+</p>
+</li>
+<li>
+<p>
+Connect and label CONN_4 using the labelling method explained before. Name
+    the pins b1, b2, b3 and b4. Connect the pin to a series of <em>Wire to bus
+    entry</em> using the icon <span class="image">
+<img src="images/icons/add_line2bus.png" alt="add_line2bus_png">
+</span>
+    and to a bus line using the icon
+    <span class="image">
+<img src="images/icons/add_bus.png" alt="add_bus_png">
+</span>. See Figure 4.
+</p>
+</li>
+<li>
+<p>
+Put a label (press the l key option) on the bus of CONN_4 and name it
+    <em>b[1..4]</em>.
+</p>
+</li>
+<li>
+<p>
+Put a label (press the l key option) on the previous a bus and name it
+    <em>a[1..4]</em>.
+</p>
+</li>
+<li>
+<p>
+What we can now do is connect bus a[1..4] with bus b[1..4] using a bus line
+    with the button <span class="image">
+<img src="images/icons/add_bus.png" alt="add_bus_png">
+</span>.
+</p>
+</li>
+<li>
+<p>
+By connecting the two buses together, pin a1 will be automatically connected
+    to pin b1, a2 will be connected to b2 and so on. Figure 4 shows what the
+    final result looks like.
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Opmerking</div>
+</td>
+<td class="content">The <em>Repeat last item</em> option accessible via the Ins key can be successfully
+used to repeat period item insertions. For instance, the short wires
+connected to all pins in Figure 2, Figure 3 and Figure 4 have been placed
+with this option.</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+The <em>Repeat last item</em> option accessible via the Ins key has also been
+    extensively used to place the many series of <em>Wire to bus entry</em> using the
+    icon <span class="image">
+<img src="images/icons/add_line2bus.png" alt="add_line2bus_png">
+</span>.
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_bus_connection.png" alt="gsik_bus_connection_png">
+</div>
+</div>
+</li>
+</ol></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="layout-printed-circuit-boards">4. Layout printed circuit boards</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>It is now time to use the netlist file you generated to lay out the PCB.
+This is done with the <em>Pcbnew</em> tool.</p></div>
+<div class="sect2">
+<h3 id="using-pdbnew">4.1. Using Pcbnew</h3>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+From the KiCad project manager, click on the <em>Pcbnew</em> icon
+    <span class="image">
+<img src="images/icons/pcbnew.png" alt="pcbnew_png">
+</span>. The <em>Pcbnew</em> window will open. If
+    you get an error message saying that a <em>*.kicad_pcb</em> file does not exist and
+    asks if you want to create it, just click Yes.
+</p>
+</li>
+<li>
+<p>
+Begin by entering some schematic information. Click on the <em>Page settings</em>
+    icon <span class="image">
+<img src="images/icons/sheetset.png" alt="sheetset_png">
+</span> on the top toolbar. Set
+    <em>paper size</em> as <em>A4</em> and <em>title</em> as <em>Tutorial1</em>.
+</p>
+</li>
+<li>
+<p>
+It is a good idea to start by setting the <strong>clearance</strong> and the <strong>minimum track
+    width</strong> to those required by your PCB manufacturer. In general you can set
+    the clearance to <em>0.25</em> and the minimum track width to <em>0.25</em>. Click on the
+    <strong>Design Rules</strong> &#8594; <strong>Design Rules</strong> menu. If it does not show already, click on
+    the <em>Net Classes Editor</em> tab. Change the <em>Clearance</em> field at the top of the
+    window to <em>0.25</em> and the <em>Track Width</em> field to <em>0.25</em> as shown
+    below. Measurements here are in mm.
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/design_rules.png" alt="Design Rules Window">
+</div>
+</div>
+</li>
+<li>
+<p>
+Click on the <em>Global Design Rules</em> tab and set <em>Min track width</em> to
+    0.25'. Click the OK button to commit your changes and close the Design Rules
+    Editor window.
+</p>
+</li>
+<li>
+<p>
+Now we will import the netlist file. Click on the <em>Read Netlist</em> icon
+    <span class="image">
+<img src="images/icons/netlist.png" alt="netlist_png">
+</span> on the top toolbar. Click on the
+    <em>Browse Netlist Files</em> button, select <em>tutorial1.net</em> in the File selection
+    dialogue, and click on <em>Read Current Netlist</em>. Then click the <em>Close</em>
+    button.
+</p>
+</li>
+<li>
+<p>
+All components should now be visible in the top left hand corner just above
+    the page. Scroll up if you cannot see them.
+</p>
+</li>
+<li>
+<p>
+Select all components with the mouse and move them to the middle of the
+    board. If necessary you can zoom in and out while you move the components.
+</p>
+</li>
+<li>
+<p>
+All components are connected via a thin group of wires called
+    <em>ratsnest</em>. Make sure that the <em>Hide board ratsnest</em> button
+    <span class="image">
+<img src="images/icons/general_ratsnest.png" alt="general_ratsnest_png">
+</span> is pressed. In
+    this way you can see the ratsnest linking all components.
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Opmerking</div>
+</td>
+<td class="content">The tool-tip is backwards; pressing this button actually displays the
+ratsnest.</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+You can move each component by hovering over it and pressing the g
+    key. Click where you want to place them. Move all components around until
+    you minimise the number of wire crossovers.
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Opmerking</div>
+</td>
+<td class="content">If instead of grabbing the components (with the g key ) you move them around
+using the m key you will later note that you lose the track connection (the
+same occurs in the schematic editor). Bottom line, always use the g key
+option.</td>
+</tr></table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_080.png" alt="gsik_tutorial1_080_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+If the ratsnest disappears or the screen gets messy, right click and click
+    <em>Redraw view</em>. Note how one pin of the 100 ohm resistor is connected to pin
+    6 of the PIC component. This is the result of the labelling method used to
+    connect pins. Labels are often preferred to actual wires because they make
+    the schematic much less messy.
+</p>
+</li>
+<li>
+<p>
+Now we will define the edge of the PCB. Select <em>Edge.Cuts</em> from the
+    drop-down menu in the top toolbar. Click on the <em>Add graphic line or
+    polygon</em> icon <span class="image">
+<img src="images/icons/add_dashed_line.png" alt="add_dashed_line_png">
+</span> on
+    the right toolbar. Trace around the edge of the board, clicking at each
+    corner, and remember to leave a small gap between the edge of the green and
+    the edge of the PCB.
+</p>
+</li>
+<li>
+<p>
+Next, connect up all the wires except GND. In fact, we will connect all GND
+    connections in one go using a ground plane placed on the bottom copper
+    (called <em>B.Cu</em>) of the board.
+</p>
+</li>
+<li>
+<p>
+Now we must choose which copper layer we want to work on. Select <em>F.Cu
+    (PgUp)</em> in the drop-down menu on the top toolbar. This is the front top
+    copper layer.
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/select_top_copper.png" alt="Select the Front top copper layer">
+</div>
+</div>
+</li>
+<li>
+<p>
+If you decide, for instance, to do a 4 layer PCB instead, go to <strong>Design
+    Rules</strong> &#8594; <strong>Layers Setup</strong> and change <em>Copper Layers</em> to 4. In the <em>Layers</em>
+    table you can name layers and decide what they can be used for.  Notice that
+    there are very useful presets that can be selected via the <em>Preset Layer
+    Groupings</em> menu.
+</p>
+</li>
+<li>
+<p>
+Click on the <em>Add Tracks and vias</em> icon
+    <span class="image">
+<img src="images/icons/add_tracks.png" alt="add_tracks_png">
+</span> on the right
+    toolbar. Click on pin 1 of <em>J1</em> and run a track to pad <em>R2</em>. Double-click to
+    set the point where the track will end. The width of this track will be the
+    default 0.250 mm. You can change the track width from the drop-down menu in
+    the top toolbar. Mind that by default you have only one track width
+    available.
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/pcbnew_select_track_width.png" alt="pcbnew_select_track_width_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+If you would like to add more track widths go to: <strong>Design Rules</strong> &#8594; <strong>Design
+    Rules</strong> &#8594; <strong>Global Design Rules</strong> tab and at the bottom right of this window
+    add any other width you would like to have available. You can then choose
+    the widths of the track from the drop-down menu while you lay out your
+    board. See the example below (inches).
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/custom_tracks_width.png" alt="custom_tracks_width_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+Alternatively, you can add a Net Class in which you specify a set of
+    options. Go to <strong>Design Rules</strong> &#8594; <strong>Design Rules</strong> &#8594; <strong>Net Classes Editor</strong> and
+    add a new class called <em>power</em>. Change the track width from 8 mil (indicated
+    as 0.0080) to 24 mil (indicated as 0.0240). Next, add everything but ground
+    to the <em>power</em> class (select <em>default</em> at left and <em>power</em> at right and use
+    the arrows).
+</p>
+</li>
+<li>
+<p>
+If you want to change the grid size, <strong>Right click</strong> &#8594; <strong>Grid Select</strong>. Be
+    sure to select the appropriate grid size before or after laying down the
+    components and connecting them together with tracks.
+</p>
+</li>
+<li>
+<p>
+Repeat this process until all wires, except pin 3 of J1, are connected. Your
+    board should look like the example below.
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_090.png" alt="gsik_tutorial1_090_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+Let&#8217;s now run a track on the other copper side of the PCB. Select <em>B.Cu</em> in
+    the drop-down menu on the top toolbar. Click on the <em>Add tracks and vias</em>
+    icon <span class="image">
+<img src="images/icons/add_tracks.png" alt="add_tracks_png">
+</span>. Draw a track between
+    pin 3 of J1 and pin 8 of U1. This is actually not necessary since we could
+    do this with the ground plane. Notice how the colour of the track has
+    changed.
+</p>
+</li>
+<li>
+<p>
+<strong>Go from pin A to pin B by changing layer</strong>. It is possible to
+    change the copper plane while you are running a track by placing a
+    via.  While you are running a track on the upper copper plane,
+    right click and select <em>Place Via</em> or simply press the v key. This
+    will take you to the bottom layer where you can complete your
+    track.
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/place_a_via.png" alt="place_a_via_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+When you want to inspect a particular connection you can click on the <em>Net
+    highlight</em> icon <span class="image">
+<img src="images/icons/net_highlight.png" alt="net_highlight_png">
+</span> on
+    the right toolbar.  Click on pin 3 of J1. The track itself and all pads
+    connected to it should become highlighted.
+</p>
+</li>
+<li>
+<p>
+Now we will make a ground plane that will be connected to all GND
+    pins. Click on the <em>Add Zones</em> icon
+    <span class="image">
+<img src="images/icons/add_zone.png" alt="add_zone_png">
+</span> on the right toolbar. We are
+    going to trace a rectangle around the board, so click where you want one of
+    the corners to be. In the dialogue that appears, set <em>Pad in Zone</em> to
+    <em>Thermal relief</em> and <em>Zone edges orient</em> to <em>H,V</em> and click OK.
+</p>
+</li>
+<li>
+<p>
+Trace around the outline of the board by clicking each corner in
+    rotation. Double-click to finish your rectangle. Right click inside the area
+    you have just traced. Click on <em>Fill or Refill All Zones</em>. The board should
+    fill in with green and look something like this:
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_tutorial1_100.png" alt="gsik_tutorial1_100_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+Run the design rules checker by clicking on the <em>Perform Design Rules Check</em>
+    icon <span class="image">
+<img src="images/icons/drc.png" alt="drc_png">
+</span> on the top toolbar.  Click on
+    <em>Start DRC</em>. There should be no errors. Click on <em>List Unconnected</em>. There
+    should be no unconnected track. Click OK to close the DRC Control dialogue.
+</p>
+</li>
+<li>
+<p>
+Save your file by clicking on <strong>File</strong> &#8594; <strong>Save</strong>. To admire your board in
+    3D, click on <strong>View</strong> &#8594; <strong>3D Viewer</strong>.
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/pcbnew_3d_viewer.png" alt="pcbnew_3d_viewer_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+You can drag your mouse around to rotate the PCB.
+</p>
+</li>
+<li>
+<p>
+Your board is complete. To send it off to a manufacturer you will need to
+    generate all Gerber files.
+</p>
+</li>
+</ol></div>
+</div>
+<div class="sect2">
+<h3 id="generate-gerber-files">4.2. Generate Gerber files</h3>
+<div class="paragraph"><p>Once your PCB is complete, you can generate Gerber files for each layer and
+send them to your favourite PCB manufacturer, who will make the board for
+you.</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+From KiCad, open the <em>Pcbnew</em> software tool and load your board file by
+    clicking on the icon
+    <span class="image">
+<img src="images/icons/open_document.png" alt="open_document_png">
+</span>.
+</p>
+</li>
+<li>
+<p>
+Click on <strong>File</strong> &#8594; <strong>Plot</strong>. Select <em>Gerber</em> as the <em>Plot Format</em> and select
+    the folder in which to put all Gerber files.  Proceed by clicking on the
+    <em>Plot</em> button.
+</p>
+</li>
+<li>
+<p>
+These are the layers you need to select for making a typical 2-layer PCB:
+</p>
+</li>
+</ol></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:20%;">
+<col style="width:20%;">
+<col style="width:20%;">
+<col style="width:20%;">
+<col style="width:20%;">
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" >Layer </th>
+<th class="tableblock halign-left valign-top" >KiCad Layer Name </th>
+<th class="tableblock halign-left valign-top" >Old KiCad Layer Name </th>
+<th class="tableblock halign-left valign-top" >Default Gerber Extension
+    </th>
+<th class="tableblock halign-left valign-top" >"Use Protel filename extensions" is enabled</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Bottom Layer</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">B.Cu</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Copper</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GBR</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GBL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Top Layer</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">F.Cu</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Component</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GBR</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GTL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Top Overlay</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">F.SilkS</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">SilkS_Cmp</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GBR</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GTO</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Bottom Solder Resist</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">B.Mask</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Mask_Cop</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GBR</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GBS</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Top Solder Resist</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">F.Mask</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Mask_Cmp</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GBR</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GTS</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Edges</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Edge.Cuts</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Edges_Pcb</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GBR</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">.GM1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="using-gerbview">4.3. Using GerbView</h3>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+To view all your Gerber files go to the KiCad project manager and click on
+    the <em>GerbView</em> icon.  On the drop-down menu select <em>Layer 1</em>. Click on
+    <strong>File</strong> &#8594; <strong>Load Gerber file</strong> or click on the icon
+    <span class="image">
+<img src="images/icons/gerber_file.png" alt="gerber_file_png">
+</span>. Load all generated
+    Gerber files one at a time. Note how they all get displayed one on top of
+    the other.
+</p>
+</li>
+<li>
+<p>
+Use the menu on the right to select/deselect which layer to show.  Carefully
+    inspect each layer before sending them for production.
+</p>
+</li>
+<li>
+<p>
+To generate the drill file, from <em>Pcbnew</em> go again to the <strong>File</strong> &#8594; <strong>Plot</strong>
+    option. Default settings should be fine.
+</p>
+</li>
+</ol></div>
+</div>
+<div class="sect2">
+<h3 id="automatically-route-with-freerouter">4.4. Automatically route with FreeRouter</h3>
+<div class="paragraph"><p>Routing a board by hand is quick and fun, however, for a board with lots of
+components you might want to use an autorouter. Remember that you should
+first route critical traces by hand and then set the autorouter to do the
+boring bits. Its work will only account for the unrouted traces. The
+autorouter we will use here is FreeRouter from <em>freerouting.net</em>.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Opmerking</div>
+</td>
+<td class="content">Freerouter is an open source java application, and it is needed to build by
+yourself to use with KiCad.  Source code of Freerouter can be found on this
+site: <a href="https://github.com/nikropht/FreeRouting">https://github.com/nikropht/FreeRouting</a></td>
+</tr></table>
+</div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+From <em>Pcbnew</em> click on <strong>File</strong> &#8594; <strong>Export</strong> &#8594; <strong>Specctra DSN</strong> or click on
+    <strong>Tools</strong> &#8594; <strong>FreeRoute</strong> &#8594; <strong>Export a Specctra Design (*.dsn) file</strong> and save
+    the file locally.  Launch FreeRouter and click on the <em>Open Your Own Design</em>
+    button, browse for the <em>dsn</em> file and load it.
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Opmerking</div>
+</td>
+<td class="content">The <strong>Tools</strong> &#8594; <strong>FreeRoute</strong> dialog has a nice help button that opens a file
+viewer with a little document inside named <strong>Freerouter Guidelines</strong>. Please
+follow these guidelines to use FreeRoute effectively.</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+FreeRouter has some features that KiCad does not currently have, both for
+    manual routing and for automatic routing. FreeRouter operates in two main
+    steps: first, routing the board and then optimising it. Full optimisation
+    can take a long time, however you can stop it at any time need be.
+</p>
+</li>
+<li>
+<p>
+You can start the automatic routing by clicking on the <em>Autorouter</em> button
+    on the top bar. The bottom bar gives you information about the on-going
+    routing process. If the <em>Pass</em> count gets above 30, your board probably can
+    not be autorouted with this router. Spread your components out more or
+    rotate them better and try again. The goal in rotation and position of parts
+    is to lower the number of crossed airlines in the ratsnest.
+</p>
+</li>
+<li>
+<p>
+Making a left-click on the mouse can stop the automatic routing and
+    automatically start the optimisation process. Another left-click will stop
+    the optimisation process. Unless you really need to stop, it is better to
+    let FreeRouter finish its job.
+</p>
+</li>
+<li>
+<p>
+Click on the <strong>File</strong> &#8594; <strong>Export Specctra Session File</strong> menu and save the
+    board file with the <em>.ses</em> extension. You do not really need to save the
+    FreeRouter rules file.
+</p>
+</li>
+<li>
+<p>
+Back to <em>Pcbnew</em>. You can import your freshly routed board by clicking on
+    the link <strong>Tools</strong> &#8594; <strong>FreeRoute</strong> and then on the icon <em>Back Import the
+    Spectra Session (.ses) File</em> and selecting your <em>.ses</em> file.
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>If there is any routed trace that you do not like, you can delete it and
+re-route it again, using the del key and the routing tool, which is the <em>Add
+tracks</em> icon <span class="image">
+<img src="images/icons/add_tracks.png" alt="Add Track icon">
+</span> on the right
+toolbar.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="forward-annotation-in-kicad">5. Forward annotation in KiCad</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Once you have completed your electronic schematic, the footprint assignment,
+the board layout and generated the Gerber files, you are ready to send
+everything to a PCB manufacturer so that your board can become reality.</p></div>
+<div class="paragraph"><p>Often, this linear work-flow turns out to be not so uni-directional. For
+instance, when you have to modify/extend a board for which you or others
+have already completed this work-flow, it is possible that you need to move
+components around, replace them with others, change footprints and much
+more. During this modification process, what you do not want to do is to
+re-route the whole board again from scratch. Instead, this is how you do it:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Let&#8217;s suppose that you want to replace a hypothetical connector CON1 with
+    CON2.
+</p>
+</li>
+<li>
+<p>
+You already have a completed schematic and a fully routed PCB.
+</p>
+</li>
+<li>
+<p>
+From KiCad, start <em>Eeschema</em>, make your modifications by deleting CON1 and
+    adding CON2. Save your schematic project with the icon
+    <span class="image">
+<img src="images/icons/save.png" alt="Save icon">
+</span> and c lick on the <em>Netlist
+    generation</em> icon <span class="image">
+<img src="images/icons/netlist.png" alt="netlist_png">
+</span> on the top
+    toolbar.
+</p>
+</li>
+<li>
+<p>
+Click on <em>Netlist</em> then on <em>save</em>. Save to the default file name.  You have
+    to rewrite the old one.
+</p>
+</li>
+<li>
+<p>
+Now assign a footprint to CON2. Click on the <em>Run Cvpcb</em> icon
+    <span class="image">
+<img src="images/icons/cvpcb.png" alt="cvpcb">
+</span> on the top toolbar. Assign the footprint
+    to the new device CON2. The rest of the components still have the previous
+    footprints assigned to them. Close <em>Cvpcb</em>.
+</p>
+</li>
+<li>
+<p>
+Back in the schematic editor, save the project by clicking on <em>File</em> &#8594;
+    <em>Save Whole Schematic Project</em>. Close the schematic editor.
+</p>
+</li>
+<li>
+<p>
+From the KiCad project manager, click on the <em>Pcbnew</em> icon. The <em>Pcbnew</em>
+    window will open.
+</p>
+</li>
+<li>
+<p>
+The old, already routed, board should automatically open. Let&#8217;s import the
+    new netlist file. Click on the <em>Read Netlist</em> icon
+    <span class="image">
+<img src="images/icons/netlist.png" alt="netlist_png">
+</span> on the top toolbar.
+</p>
+</li>
+<li>
+<p>
+Click on the <em>Browse Netlist Files</em> button, select the netlist file in the
+    file selection dialogue, and click on <em>Read Current Netlist</em>.  Then click
+    the <em>Close</em> button.
+</p>
+</li>
+<li>
+<p>
+At this point you should be able to see a layout with all previous
+    components already routed. On the top left corner you should see all
+    unrouted components, in our case the CON2. Select CON2 with the mouse.  Move
+    the component to the middle of the board.
+</p>
+</li>
+<li>
+<p>
+Place CON2 and route it. Once done, save and proceed with the Gerber file
+    generation as usual.
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>The process described here can easily be repeated as many times as you
+need. Beside the Forward Annotation method described above, there is another
+method known as Backward Annotation. This method allows you to make
+modifications to your already routed PCB from Pcbnew and updates those
+modifications in your schematic and netlist file. The Backward Annotation
+method, however, is not that useful and is therefore not described here.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="make-schematic-components-in-kicad">6. Make schematic components in KiCad</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Sometimes a component that you want to place on your schematic is not in a
+KiCad library. This is quite normal and there is no reason to worry. In this
+section we will see how a new schematic component can be quickly created
+with KiCad. Nevertheless, remember that you can always find KiCad components
+on the Internet. For instance from here:</p></div>
+<div class="paragraph"><p><a href="http://per.launay.free.fr/kicad/kicad_php/composant.php">http://per.launay.free.fr/kicad/kicad_php/composant.php</a></p></div>
+<div class="paragraph"><p>In KiCad, a component is a piece of text that starts with a <em>DEF</em> and ends
+with <em>ENDDEF</em>. One or more components are normally placed in a library file
+with the extension <em>.lib</em>. If you want to add components to a library file
+you can just use the cut and paste commands.</p></div>
+<div class="sect2">
+<h3 id="using-component-library-editor">6.1. Using Component Library Editor</h3>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+We can use the <em>Component Library Editor</em> (part of <em>Eeschema</em>)  to make
+    new components. In our project folder <em>tutorial1</em> let&#8217;s create a folder
+    named <em>library</em>. Inside we will put our new library file <em>myLib.lib</em> as soon
+    as we have created our new component.
+</p>
+</li>
+<li>
+<p>
+Now we can start creating our new component. From KiCad, start <em>Eeschema</em>,
+    click on the <em>Library Editor</em> icon
+    <span class="image">
+<img src="images/icons/libedit.png" alt="libedit_png">
+</span> and then click on the <em>New
+    component</em> icon <span class="image">
+<img src="images/icons/new_component.png" alt="new_component_png">
+</span>. The
+    Component Properties window will appear. Name the new component <em>MYCONN3</em>,
+    set the <em>Default reference designator</em> as <em>J</em>, and the <em>Number of parts per
+    package</em> as <em>1</em>. Click OK. If the warning appears just click yes.  At this
+    point the component is only made of its labels. Let&#8217;s add some pins. Click
+    on the <em>Add Pins</em> icon <span class="image">
+<img src="images/icons/pin.png" alt="pin_png">
+</span> on the right
+    toolbar. To place the pin, left click in the centre of the part editor sheet
+    just below the <em>MYCONN3</em> label.
+</p>
+</li>
+<li>
+<p>
+In the Pin Properties window that appears, set the pin name to <em>VCC</em>, set
+    the pin number to <em>1</em>, and the <em>Electrical type</em> to <em>Passive</em> then click OK.
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/pin_properties.png" alt="Pin Properties">
+</div>
+</div>
+</li>
+<li>
+<p>
+Place the pin by clicking on the location you would like it to go, right
+    below the <em>MYCONN3</em> label.
+</p>
+</li>
+<li>
+<p>
+Repeat the place-pin steps, this time <em>Pin name</em> should be <em>INPUT</em>, <em>Pin
+    number</em> should be <em>2</em>, and <em>Electrical Type</em> should be <em>Passive</em>.
+</p>
+</li>
+<li>
+<p>
+Repeat the place-pin steps, this time <em>Pin name</em> should be <em>GND</em>, <em>Pin
+    number</em> should be <em>3</em>, and <em>Electrical Type</em> should be <em>Passive</em>.  Arrange
+    the pins one on top of the other. The component label <em>MYCONN3</em> should be in
+    the centre of the page (where the blue lines cross).
+</p>
+</li>
+<li>
+<p>
+Next, draw the contour of the component. Click on the <em>Add rectangle</em> icon
+    <span class="image">
+<img src="images/icons/add_rectangle.png" alt="add_rectangle_png">
+</span>. We want to draw a
+    rectangle next to the pins, as shown below. To do this, click where you want
+    the top left corner of the rectangle to be (do not hold the mouse button
+    down). Click again where you want the bottom right corner of the rectangle
+    to be.
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_myconn3_l.png" alt="gsik_myconn3_l_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+If you want to fill the rectangle with yellow, set the fill colour to
+    <em>yellow 4</em> in <strong>Preferences</strong> &#8594; <strong>Select color scheme</strong>, then select the
+    rectangle in the editing screen and edit (E), selecting <em>Fill background</em>.
+</p>
+</li>
+<li>
+<p>
+Save the component in your library <em>myLib.lib</em>. Click on the <em>New Library</em>
+    icon <span class="image">
+<img src="images/icons/new_library.png" alt="new_library_png">
+</span>, navigate into
+    <em>tutorial1/library/</em> folder and save the new library file with the name
+    <em>myLib.lib</em>.
+</p>
+</li>
+<li>
+<p>
+Go to <strong>Preferences</strong> &#8594; <strong>Component Libraries</strong> and add both
+    <em>tutorial1/library/</em> in <em>User defined search path</em> and <em>myLib.lib in</em>
+    <em>Component library files</em>.
+</p>
+</li>
+<li>
+<p>
+Click on the <em>Select working library</em> icon
+    <span class="image">
+<img src="images/icons/library.png" alt="library_png">
+</span>. In the Select Library window
+    click on <em>myLib</em> and click OK. Notice how the heading of the window
+    indicates the library currently in use, which now should be <em>myLib</em>.
+</p>
+</li>
+<li>
+<p>
+Click on the <em>Update current component in current library</em> icon
+    <span class="image">
+<img src="images/icons/save_part_in_mem.png" alt="save_part_in_mem_png">
+</span> in the top
+    toolbar. Save all changes by clicking on the <em>Save current loaded library on
+    disk</em> icon <span class="image">
+<img src="images/icons/save_library.png" alt="save_library_png">
+</span> in the top
+    toolbar. Click <em>Yes</em> in any confirmation messages that appear.  The new
+    schematic component is now done and available in the library indicated in
+    the window title bar.
+</p>
+</li>
+<li>
+<p>
+You can now close the Component library editor window. You will return to
+    the schematic editor window. Your new component will now be available to you
+    from the library <em>myLib</em>.
+</p>
+</li>
+<li>
+<p>
+You can make any library <em>file.lib</em> file available to you by adding it to
+    the library path. From <em>Eeschema</em>, go to <strong>Preferences</strong> &#8594; <strong>Library</strong> and
+    add both the path to it in <em>User defined search path</em> and <em>file.lib</em> in
+    <em>Component library files</em>.
+</p>
+</li>
+</ol></div>
+</div>
+<div class="sect2">
+<h3 id="export-import-and-modify-library-components">6.2. Export, import and modify library components</h3>
+<div class="paragraph"><p>Instead of creating a library component from scratch it is sometimes easier
+to start from one already made and modify it. In this section we will see
+how to export a component from the KiCad standard library <em>device</em> to your
+own library <em>myOwnLib.lib</em> and then modify it.</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+From KiCad, start <em>Eeschema</em>, click on the <em>Library Editor</em> icon
+    <span class="image">
+<img src="images/icons/libedit.png" alt="libedit_png">
+</span>, click on the <em>Select working
+    library</em> icon <span class="image">
+<img src="images/icons/library.png" alt="library_png">
+</span> and choose the
+    library <em>device</em>. Click on <em>Load component to edit from the current lib</em>
+    icon <span class="image">
+<img src="images/icons/import_cmp_from_lib.png" alt="import_cmp_from_lib_png">
+</span> and
+    import the <em>RELAY_2RT</em>.
+</p>
+</li>
+<li>
+<p>
+Click on the <em>Export component</em> icon
+    <span class="image">
+<img src="images/icons/export.png" alt="export_png">
+</span>, navigate into the <em>library/</em>
+    folder and save the new library file with the name <em>myOwnLib.lib.</em>
+</p>
+</li>
+<li>
+<p>
+You can make this component and the whole library <em>myOwnLib.lib</em> available
+    to you by adding it to the library path. From <em>Eeschema</em>, go to
+    <strong>Preferences</strong> &#8594; <strong>Component Libraries</strong> and add both <em>library/</em> in <em>User
+    defined search path</em> and <em>myOwnLib.lib</em> in the <em>Component library
+    files</em>. Close the window.
+</p>
+</li>
+<li>
+<p>
+Click on the <em>Select working library</em> icon
+    <span class="image">
+<img src="images/icons/library.png" alt="library_png">
+</span>. In the Select Library window
+    click on <em>myOwnLib</em> and click OK. Notice how the heading of the window
+    indicates the library currently in use, it should be <em>myOwnLib</em>.
+</p>
+</li>
+<li>
+<p>
+Click on the <em>Load component to edit from the current lib</em> icon
+    <span class="image">
+<img src="images/icons/import_cmp_from_lib.png" alt="import_cmp_from_lib_png">
+</span> and
+    import the <em>RELAY_2RT</em>.
+</p>
+</li>
+<li>
+<p>
+You can now modify the component as you like. Hover over the label
+    <em>RELAY_2RT</em>, press the e key and rename it <em>MY_RELAY_2RT</em>.
+</p>
+</li>
+<li>
+<p>
+Click on <em>Update current component in current library</em> icon
+    <span class="image">
+<img src="images/icons/save_part_in_mem.png" alt="save_part_in_mem_png">
+</span> in the top
+    toolbar. Save all changes by clicking on the <em>Save current loaded library on
+    disk</em> icon <span class="image">
+<img src="images/icons/save_library.png" alt="save_library_png">
+</span> in the top
+    toolbar.
+</p>
+</li>
+</ol></div>
+</div>
+<div class="sect2">
+<h3 id="make-schematic-components-with-quicklib">6.3. Make schematic components with quicklib</h3>
+<div class="paragraph"><p>This section presents an alternative way of creating the schematic component
+for MYCONN3 (see <a href="#myconn3">MYCONN3</a> above) using the Internet tool
+<em>quicklib</em>.</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Head to the <em>quicklib</em> web page: <a href="http://kicad.rohrbacher.net/quicklib.php">http://kicad.rohrbacher.net/quicklib.php</a>
+</p>
+</li>
+<li>
+<p>
+Fill out the page with the following information: Component name: MYCONN3
+    Reference Prefix: J Pin Layout Style: SIL Pin Count, N: 3
+</p>
+</li>
+<li>
+<p>
+Click on the <em>Assign Pins</em> icon. Fill out the page with the following
+    information: Pin 1: VCC Pin 2: input Pin 3: GND.  Type : Passive for all 3
+    pins.
+</p>
+</li>
+<li>
+<p>
+Click on the icon <em>Preview it</em> and, if you are satisfied, click on the
+    <em>Build Library Component</em>. Download the file and rename it
+    <em>tutorial1/library/myQuickLib.lib.</em>. You are done!
+</p>
+</li>
+<li>
+<p>
+Have a look at it using KiCad. From the KiCad project manager, start
+    <em>Eeschema</em>, click on the <em>Library Editor</em> icon
+    <span class="image">
+<img src="images/icons/libedit.png" alt="libedit_png">
+</span>, click on the <em>Import Component</em>
+    icon <span class="image">
+<img src="images/icons/import.png" alt="import_png">
+</span>, navigate to
+    <em>tutorial1/library/</em> and select <em>myQuickLib.lib.</em>
+</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_myconn3_quicklib.png" alt="gsik_myconn3_quicklib_png">
+</div>
+</div>
+</li>
+<li>
+<p>
+You can make this component and the whole library <em>myQuickLib.lib</em> available
+    to you by adding it to the KiCad library path. From <em>Eeschema</em>, go to
+    <strong>Preferences</strong> &#8594; <strong>Component Libraries</strong> and add <em>library</em> in <em>User defined
+    search path</em> and <em>myQuickLib.lib</em> in <em>Component library files</em>.
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>As you might guess, this method of creating library components can be quite
+effective when you want to create components with a large pin count.</p></div>
+</div>
+<div class="sect2">
+<h3 id="make-a-high-pin-count-schematic-component">6.4. Make a high pin count schematic component</h3>
+<div class="paragraph"><p>In the section titled <em>Make Schematic Components in quicklib</em> we saw how to
+make a schematic component using the <em>quicklib</em> web-based tool.  However,
+you will occasionally find that you need to create a schematic component
+with a high number of pins (some hundreds of pins). In KiCad, this is not a
+very complicated task.</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Suppose that you want to create a schematic component for a device with 50
+    pins. It is common practise to draw it using multiple low pin-count
+    drawings, for example two drawings with 25 pins each. This component
+    representation allows for easy pin connection.
+</p>
+</li>
+<li>
+<p>
+The best way to create our component is to use <em>quicklib</em> to generate two
+    25-pin components separately, re-number their pins using a Python script and
+    finally merge the two by using copy and paste to make them into one single
+    DEF and ENDDEF component.
+</p>
+</li>
+<li>
+<p>
+You will find an example of a simple Python script below that can be used in
+    conjunction with an <em>in.txt</em> file and an <em>out.txt</em> file to re-number the
+    line: <span class="monospaced">X PIN1 1 -750 600 300 R 50 50 1 1 I</span> into <span class="monospaced">X PIN26 26 -750 600 300 R
+    50 50 1 1 I</span> this is done for all lines in the file <em>in.txt</em>.
+</p>
+</li>
+</ol></div>
+<div class="listingblock">
+<div class="title">Simple script</div>
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">#!/usr/bin/env python</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">''' simple script to manipulate KiCad component pins numbering'''</span></span>
+<span style="font-weight: bold"><span style="color: #000080">import</span></span> sys<span style="color: #990000">,</span> re
+<span style="font-weight: bold"><span style="color: #0000FF">try</span></span><span style="color: #990000">:</span>
+    fin<span style="color: #990000">=</span><span style="font-weight: bold"><span style="color: #000000">open</span></span><span style="color: #990000">(</span>sys<span style="color: #990000">.</span>argv<span style="color: #990000">[</span><span style="color: #993399">1</span><span style="color: #990000">],</span><span style="color: #FF0000">'r'</span><span style="color: #990000">)</span>
+    fout<span style="color: #990000">=</span><span style="font-weight: bold"><span style="color: #000000">open</span></span><span style="color: #990000">(</span>sys<span style="color: #990000">.</span>argv<span style="color: #990000">[</span><span style="color: #993399">2</span><span style="color: #990000">],</span><span style="color: #FF0000">'w'</span><span style="color: #990000">)</span>
+<span style="font-weight: bold"><span style="color: #0000FF">except</span></span><span style="color: #990000">:</span>
+    <span style="font-weight: bold"><span style="color: #0000FF">print</span></span> <span style="color: #FF0000">"oh, wrong use of this app, try:"</span><span style="color: #990000">,</span> sys<span style="color: #990000">.</span>argv<span style="color: #990000">[</span><span style="color: #993399">0</span><span style="color: #990000">],</span> <span style="color: #FF0000">"in.txt out.txt"</span>
+    sys<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">exit</span></span><span style="color: #990000">()</span>
+<span style="font-weight: bold"><span style="color: #0000FF">for</span></span> ln <span style="font-weight: bold"><span style="color: #0000FF">in</span></span> fin<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">readlines</span></span><span style="color: #990000">():</span>
+    obj<span style="color: #990000">=</span>re<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">search</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"(X PIN)(\d*)(\s)(\d*)(\s.*)"</span><span style="color: #990000">,</span>ln<span style="color: #990000">)</span>
+<span style="font-weight: bold"><span style="color: #0000FF">if</span></span> obj<span style="color: #990000">:</span>
+    num <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">(</span>obj<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">group</span></span><span style="color: #990000">(</span><span style="color: #993399">2</span><span style="color: #990000">))+</span><span style="color: #993399">25</span>
+    ln<span style="color: #990000">=</span>obj<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">group</span></span><span style="color: #990000">(</span><span style="color: #993399">1</span><span style="color: #990000">)</span> <span style="color: #990000">+</span> <span style="font-weight: bold"><span style="color: #000000">str</span></span><span style="color: #990000">(</span>num<span style="color: #990000">)</span> <span style="color: #990000">+</span> obj<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">group</span></span><span style="color: #990000">(</span><span style="color: #993399">3</span><span style="color: #990000">)</span> <span style="color: #990000">+</span> <span style="font-weight: bold"><span style="color: #000000">str</span></span><span style="color: #990000">(</span>num<span style="color: #990000">)</span> <span style="color: #990000">+</span> obj<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">group</span></span><span style="color: #990000">(</span><span style="color: #993399">5</span><span style="color: #990000">)</span> <span style="color: #990000">+</span><span style="color: #FF0000">'\n'</span>
+    fout<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">write</span></span><span style="color: #990000">(</span>ln<span style="color: #990000">)</span>
+fin<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">close</span></span><span style="color: #990000">();</span> fout<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">close</span></span><span style="color: #990000">()</span>
+<span style="font-style: italic"><span style="color: #9A1900">#</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># for more info about regular expression syntax and KiCad component generation:</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># http://gskinner.com/RegExr/</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># http://kicad.rohrbacher.net/quicklib.php</span></span></tt></pre></div></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+While merging the two components into one, it is necessary to use the
+    Library Editor from Eeschema to move the first component so that the second
+    does not end up on top of it. Below you will find the final .lib file and
+    its representation in <em>Eeschema</em>.
+</p>
+</li>
+</ol></div>
+<div class="listingblock">
+<div class="title">Contents of a *.lib file</div>
+<div class="content monospaced">
+<pre>EESchema-LIBRARY Version 2.3
+#encoding utf-8
+# COMP
+DEF COMP U 0 40 Y Y 1 F N
+F0 "U" -1800 -100 50 H V C CNN
+F1 "COMP" -1800 100 50 H V C CNN
+DRAW
+S -2250 -800 -1350 800 0 0 0 N
+S -450 -800 450 800 0 0 0 N
+X PIN1 1 -2550 600 300 R 50 50 1 1 I
+
+...
+
+X PIN49 49 750 -500 300 L 50 50 1 1 I
+ENDDRAW
+ENDDEF
+#End Library</pre>
+</div></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/gsik_high_number_pins.png" alt="gsik_high_number_pins_png">
+</div>
+</div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+The Python script presented here is a very powerful tool for manipulating
+    both pin numbers and pin labels. Mind, however, that all its power comes for
+    the arcane and yet amazingly useful Regular Expression syntax:
+    <em>http://gskinner.com/RegExr/.</em>
+</p>
+</li>
+</ol></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="make-component-footprints">7. Make component footprints</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Unlike other EDA software tools, which have one type of library that
+contains both the schematic symbol and the footprint variations, KiCad
+<em>.lib</em> files contain schematic symbols and <em>.kicad_mod</em> files contain
+footprints. <em>Cvpcb</em> is used to successfully map footprints to symbols.</p></div>
+<div class="paragraph"><p>As for <em>.lib</em> files, <em>.kicad_mod</em> library files are text files that can
+contain anything from one to several parts.</p></div>
+<div class="paragraph"><p>There is an extensive footprint library with KiCad, however on occasion you
+might find that the footprint you need is not in the KiCad library.  Here
+are the steps for creating a new PCB footprint in KiCad:</p></div>
+<div class="sect2">
+<h3 id="using-footprint-editor">7.1. Using Footprint Editor</h3>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+From the KiCad project manager start the <em>Pcbnew</em> tool. Click on the <em>Open
+    Footprint Editor</em> icon <span class="image">
+<img src="images/icons/edit_module.png" alt="edit_module_png">
+</span>
+    on the top toolbar. This will open the <em>Footprint Editor</em>.
+</p>
+</li>
+<li>
+<p>
+We are going to save the new footprint <em>MYCONN3</em> in the new footprint
+    library <em>myfootprint</em>.  Create a new folder <em>myfootprint.pretty</em> in the
+    <em>tutorial1/</em> project folder.  Click on the <strong>Preferences</strong> &#8594; <strong>Footprint
+    Libraries Manager</strong> and press <em>Append Library</em> button. In the table, enter
+    "myfootprint" as Nickname, enter "${KIPRJMOD}/myfootprint.pretty" as
+    Library Path and enter "KiCad" as Plugin Type.  Press OK to close the PCB
+    Library Tables window.  Click on the <em>Select active library</em> icon
+    <span class="image">
+<img src="images/icons/library.png" alt="library_png">
+</span> on the top toolbar. Select the
+    <em>myfootprint</em> library.
+</p>
+</li>
+<li>
+<p>
+Click on the <em>New Footprint</em> icon
+    <span class="image">
+<img src="images/icons/new_footprint.png" alt="new_footprint_png">
+</span> on the top toolbar.
+    Type <em>MYCONN3</em> as the <em>footprint name</em>. In the middle of the screen the
+    <em>MYCONN3</em> label will appear. Under the label you can see the <em>REF*<em></em>
+    label. Right click on <em>MYCONN3</em> and move it above <em>REF*</em></em>. Right click on
+    <em>REF__*</em>, select <em>Edit Text</em> and rename it to <em>SMD</em>. Set the <em>Display</em> value
+    to <em>Invisible</em>.
+</p>
+</li>
+<li>
+<p>
+Select the <em>Add Pads</em> icon <span class="image">
+<img src="images/icons/pad.png" alt="pad_png">
+</span> on the right
+    toolbar. Click on the working sheet to place the pad. Right click on the new
+    pad and click <em>Edit Pad</em>. You can otherwise use the e key shortcut.
+</p>
+<div class="imageblock" id="myconn3">
+<div class="content">
+<img src="images/pad_properties.png" alt="Pad Properties">
+</div>
+</div>
+</li>
+<li>
+<p>
+Set the <em>Pad Num</em> to <em>1</em>, <em>Pad Shape</em> to <em>Rect</em>, <em>Pad Type</em> to <em>SMD</em>, <em>Shape
+    Size X</em> to <em>0.4</em>, and <em>Shape Size Y</em> to <em>0.8</em>. Click OK.  Click on <em>Add
+    Pads</em> again and place two more pads.
+</p>
+</li>
+<li>
+<p>
+If you want to change the grid size, <strong>Right click</strong> &#8594; <strong>Grid Select</strong>. Be
+    sure to select the appropriate grid size before laying down the components.
+</p>
+</li>
+<li>
+<p>
+Move the <em>MYCONN3</em> label and the <em>SMD</em> label out of the way so that it looks
+    like the image shown above.
+</p>
+</li>
+<li>
+<p>
+When placing pads it is often necessary to measure relative distances. Place
+    the cursor where you want the relative coordinate point <em>(0,0)</em> to be and
+    press the space bar. While moving the cursor around, you will see a relative
+    indication of the position of the cursor at the bottom of the page. Press
+    the space bar at any time to set the new origin.
+</p>
+</li>
+<li>
+<p>
+Now add a footprint contour. Click on the <em>Add graphic line or polygon</em>
+    button <span class="image">
+<img src="images/icons/add_polygon.png" alt="add_polygon_png">
+</span> in the right
+    toolbar. Draw an outline of the connector around the component.
+</p>
+</li>
+<li>
+<p>
+Click on the <em>Save Footprint in Active Library</em> icon
+    <span class="image">
+<img src="images/icons/save_library.png" alt="save_library_png">
+</span> on the top toolbar,
+    using the default name MYCONN3.
+</p>
+</li>
+</ol></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="note-about-portability-of-kicad-project-files">8. Note about portability of KiCad project files</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>What files do you need to send to someone so that they can fully load and
+use your KiCad project?</p></div>
+<div class="paragraph"><p>When you have a KiCad project to share with somebody, it is important that
+the schematic file <em>.sch</em>, the board file <em>.kicad_pcb</em>, the project file
+<em>.pro</em> and the netlist file <em>.net</em>, are sent together with both the
+schematic parts file <em>.lib</em> and the footprints file <em>.kicad_mod</em>. Only
+this way will people have total freedom to modify the schematic and the
+board.</p></div>
+<div class="paragraph"><p>With KiCad schematics, people need the <em>.lib</em> files that contain the
+symbols. Those library files need to be loaded in the <em>Eeschema</em>
+preferences. On the other hand, with boards (<em>.kicad_pcb</em> files),
+footprints can be stored inside the <em>.kicad_pcb</em> file. You can send someone
+a <em>.kicad_pcb</em> file and nothing else, and they would still be able to look
+at and edit the board. However, when they want to load components from a
+netlist, the footprint libraries (<em>.kicad_mod</em> files) need to be present
+and loaded in the <em>Pcbnew</em> preferences just as for schematics. Also, it is
+necessary to load the <em>.kicad_mod</em> files in the preferences of <em>Pcbnew</em> in
+order for those footprints to show up in <em>Cvpcb</em>.</p></div>
+<div class="paragraph"><p>If someone sends you a <em>.kicad_pcb</em> file with footprints you would like to
+use in another board, you can open the Footprint Editor, load a footprint
+from the current board, and save or export it into another footprint
+library. You can also export all the footprints from a <em>.kicad_pcb</em> file at
+once via <strong>Pcbnew</strong> &#8594; <strong>File</strong> &#8594; <strong>Archive</strong> &#8594; <strong>Footprints</strong> &#8594; <strong>Create
+footprint archive</strong>, which will create a new <em>.kicad_mod</em> file with all the
+board&#8217;s footprints.</p></div>
+<div class="paragraph"><p>Bottom line, if the PCB is the only thing you want to distribute, then the
+board file <em>.kicad_pcb</em> is enough. However, if you want to give people the
+full ability to use and modify your schematic, its components and the PCB,
+it is highly recommended that you zip and send the following project
+directory:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>tutorial1/
+|-- tutorial1.pro
+|-- tutorial1.sch
+|-- tutorial1.kicad_pcb
+|-- tutorial1.net
+|-- library/
+|   |-- myLib.lib
+|   |-- myOwnLib.lib
+|   \-- myQuickLib.lib
+|
+|-- myfootprint.pretty/
+|   \-- MYCONN3.kicad_mod
+|
+\-- gerber/
+    |-- ...
+    \-- ...</pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="more-about-kicad-documentation">9. More about KiCad documentation</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>This has been a quick guide on most of the features in KiCad. For more
+detailed instructions consult the help files which you can access through
+each KiCad module. Click on <strong>Help</strong> &#8594; <strong>Manual</strong>.</p></div>
+<div class="paragraph"><p>KiCad comes with a pretty good set of multi-language manuals for all its
+four software components.</p></div>
+<div class="paragraph"><p>The English version of all KiCad manuals are distributed with KiCad.</p></div>
+<div class="paragraph"><p>In addition to its manuals, KiCad is distributed with this tutorial, which
+has been translated into other languages. All the different versions of this
+tutorial are distributed free of charge with all recent versions of
+KiCad. This tutorial as well as the manuals should be packaged with your
+version of KiCad on your given platform.</p></div>
+<div class="paragraph"><p>For example, on Linux the typical locations are in the following
+directories, depending on your exact distribution:</p></div>
+<div class="literalblock">
+<div class="content monospaced">
+<pre>/usr/share/doc/kicad/help/en/
+/usr/local/share/doc/kicad/help/en</pre>
+</div></div>
+<div class="paragraph"><p>On Windows it is in:</p></div>
+<div class="literalblock">
+<div class="content monospaced">
+<pre>&lt;installation directory&gt;/share/doc/kicad/help/en</pre>
+</div></div>
+<div class="paragraph"><p>On OS X:</p></div>
+<div class="literalblock">
+<div class="content monospaced">
+<pre>/Library/Application Support/kicad/help/en</pre>
+</div></div>
+<div class="sect2">
+<h3 id="kicad-documentation-on-the-web">9.1. KiCad documentation on the Web</h3>
+<div class="paragraph"><p>Latest KiCad documentations are available in multiple languages on the Web.</p></div>
+<div class="paragraph"><p><a href="http://kicad-pcb.org/help/documentation/">http://kicad-pcb.org/help/documentation/</a></p></div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr></div>
+<div id="footer">
+<div id="footer-text">
+Laatst bijgewerkt 2017-08-24 22:12:12 BST
+</div>
+</div>
+</body>
+</html>

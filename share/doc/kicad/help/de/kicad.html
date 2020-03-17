@@ -1,0 +1,1762 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="AsciiDoc 8.6.8">
+<title>KiCad</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #777777;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+tt {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+.monospaced {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+/*
+ * Theme specific overrides of the preceding (asciidoc.css) CSS.
+ *
+ */
+body {
+  font-family: Garamond, Georgia, serif;
+  font-size: 17px;
+  color: #3E4349;
+  line-height: 1.3em;
+}
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Garmond, Georgia, serif;
+  font-weight: normal;
+  border-bottom-width: 0;
+  color: #3E4349;
+}
+div.title, caption.title { color: #596673; font-weight: bold; }
+h1 { font-size: 240%; }
+h2 { font-size: 180%; }
+h3 { font-size: 150%; }
+h4 { font-size: 130%; }
+h5 { font-size: 115%; }
+h6 { font-size: 100%; }
+#header h1 { margin-top: 0; }
+#toc {
+  color: #444444;
+  line-height: 1.5;
+  padding-top: 1.5em;
+}
+#toctitle {
+  font-size: 20px;
+}
+#toc a {
+    border-bottom: 1px dotted #999999;
+    color: #444444 !important;
+    text-decoration: none !important;
+}
+#toc a:hover {
+    border-bottom: 1px solid #6D4100;
+    color: #6D4100 !important;
+    text-decoration: none !important;
+}
+div.toclevel1 { margin-top: 0.2em; font-size: 16px; }
+div.toclevel2 { margin-top: 0.15em; font-size: 14px; }
+em, dt, td.hdlist1 { color: black; }
+strong { color: #3E4349; }
+a { color: #004B6B; text-decoration: none; border-bottom: 1px dotted #004B6B; }
+a:visited { color: #615FA0; border-bottom: 1px dotted #615FA0; }
+a:hover { color: #6D4100; border-bottom: 1px solid #6D4100; }
+div.tableblock > table, table.tableblock { border: 3px solid #E8E8E8; }
+th.tableblock, td.tableblock { border: 1px solid #E8E8E8; }
+ul > li > * { color: #3E4349; }
+pre, tt, .monospaced { font-family: Consolas,Menlo,'Deja Vu Sans Mono','Bitstream Vera Sans Mono',monospace; }
+tt, .monospaced { font-size: 0.9em; color: black;
+}
+div.exampleblock > div.content, div.sidebarblock > div.content, div.listingblock > div.content { border-width: 0 0 0 3px; border-color: #E8E8E8; }
+div.verseblock { border-left-width: 0; margin-left: 3em; }
+div.quoteblock { border-left-width: 3px; margin-left: 0; margin-right: 0;}
+div.admonitionblock td.content { border-left: 3px solid #E8E8E8; }
+
+
+@media screen {
+  body {
+    max-width: 50em; /* approximately 80 characters wide */
+    margin-left: 16em;
+  }
+
+  #toc {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 13em;
+    padding: 0.5em;
+    padding-bottom: 1.5em;
+    margin: 0;
+    overflow: auto;
+    border-right: 3px solid #f8f8f8;
+    background-color: white;
+  }
+
+  #toc .toclevel1 {
+    margin-top: 0.5em;
+  }
+
+  #toc .toclevel2 {
+    margin-top: 0.25em;
+    display: list-item;
+    color: #aaaaaa;
+  }
+
+  #toctitle {
+    margin-top: 0.5em;
+  }
+}
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install(2);
+/*]]>*/
+</script>
+</head>
+<body class="book">
+<div id="header">
+<h1>KiCad</h1>
+<span id="author">The KiCad Team</span><br>
+<div id="toc">
+  <div id="toctitle">Inhaltsverzeichnis</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p><em>Referenz Handbuch</em></p></div>
+<div class="paragraph" id="copyright"><p><strong>Copyright</strong></p></div>
+<div class="paragraph"><p>Dieses Dokument ist geschützt &#169; 2010-2015 durch deren Beitragende welche
+nachfolgend aufgeführt sind. Sie können es nach den Bedingungen der GNU
+General Public License (<a href="https://www.gnu.org/licenses/gpl.html">https://www.gnu.org/licenses/gpl.html</a>), Version 3
+oder später, oder der Creative Commons Attribution License
+(<a href="https://creativecommons.org/licenses/by/3.0/">https://creativecommons.org/licenses/by/3.0/</a>), Version 3.0 oder später
+verteilen oder verändern.</p></div>
+<div class="paragraph"><p>Alle Markenrechtsnamen in diesem Guide gehören den rechtmäßigen Eigentümern.</p></div>
+<div class="paragraph" id="contributors"><p><strong>Beitragende</strong></p></div>
+<div class="paragraph"><p>Jean-Pierre Charras, Fabrizio Tappero.</p></div>
+<div class="paragraph" id="translation"><p><strong>Übersetzung</strong></p></div>
+<div class="paragraph"><p>Carsten Schönert &lt;<a href="mailto:c.schoenert@t-online.de">c.schoenert@t-online.de</a>&gt;, 2016</p></div>
+<div class="paragraph" id="feedback"><p><strong>Feedback</strong></p></div>
+<div class="paragraph"><p>Bitte senden Sie alle Fehlermeldungen, Vorschläge oder neue Versionen an:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+KiCad Dokumentation: <a href="https://github.com/KiCad/kicad-doc/issues">https://github.com/KiCad/kicad-doc/issues</a>
+</p>
+</li>
+<li>
+<p>
+KiCad Software: <a href="https://bugs.launchpad.net/kicad">https://bugs.launchpad.net/kicad</a>
+</p>
+</li>
+<li>
+<p>
+KiCad Software i18n Übersetzung: <a href="https://github.com/KiCad/kicad-i18n/issues">https://github.com/KiCad/kicad-i18n/issues</a>
+</p>
+</li>
+</ul></div>
+<div class="paragraph" id="publication_date_and_software_version"><p><strong>Datum der Veröffentlichung und Softwareversion</strong></p></div>
+<div class="paragraph"><p>21.05.2016</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_einleitung">1. Einleitung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_kicad">1.1. KiCad</h3>
+<div class="paragraph"><p>KiCad ist ein Open Source Softwaretool zum Erstellen von elektronischen
+Schaltplänen und PCB Layouts. Durch seine einheitliche Schnittstellentechnik
+verbindet KiCad elegant die einzelnen folgenden eigenständigen Software
+Tools:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>KiCad</strong> : Projektmanager
+</p>
+</li>
+<li>
+<p>
+<strong>Eeschema</strong> : Schaltplan- und Bauteileditor
+</p>
+</li>
+<li>
+<p>
+<strong>CvPcb</strong> : Footprint Auswahl Hilfe (von Eeschema aus gestartet)
+</p>
+</li>
+<li>
+<p>
+<strong>Pcbnew</strong> : Designer für gedruckte Leiterplatten und Footprinteditor
+</p>
+</li>
+<li>
+<p>
+<strong>GerbView</strong> : Gerber Betrachter
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>3 weitere Hilfstools</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>Bitmap2Component</strong>: Bauteilerstellung für Logos. Erstellt aus einem Bitmap Bild ein Bauteil oder einen Footprint.
+</p>
+</li>
+<li>
+<p>
+<strong>PcbCalculator</strong>: Ein Kalkulator der hilfreich ist wenn man Spannungsregler, Leiterbahnen, Übertragungsleitungen oder andere Elemente berechnen muss.
+</p>
+</li>
+<li>
+<p>
+<strong>PlEditor</strong>: Seiten Layout Editor.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Diese Tools werden üblicher Weise aus dem Projekt Manager heraus gestartet,
+können aber auch als eigenständige Programme gestartet werden.</p></div>
+<div class="paragraph"><p>Zum Zeitpunkt des Schreibens dieser Referenz kann KiCad als ausreichend
+ausgereift betrachtet werden um erfolgreich auch komplexe elektronische
+Schaltungen und Leiterplatten entwickeln und managen zu können.</p></div>
+<div class="paragraph"><p>KiCad besitzt keine Begrenzungen bei der Platinengröße und es kann bis zu 32
+Kupfer Lagen, 14 technische Lagen und 4 zusätzliche Lagen handhaben.</p></div>
+<div class="paragraph"><p>KiCad kann alle Dateien erstellen die notwendig sind um gedruckte
+Schaltungen erstellen zu lassen:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Gerber Dateien für Foto-Plotter
+</p>
+</li>
+<li>
+<p>
+Bohrdateien
+</p>
+</li>
+<li>
+<p>
+Bauteilpositionsdateien
+</p>
+</li>
+<li>
+<p>
+Und viele mehr.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Durch die Open Source Ausrichtung (GPL Lizenz) repräsentiert KiCad sich als
+das ideale Tool für fortschrittlich ausgerichtete Projekte die elektronische
+Hardware erstellen.</p></div>
+<div class="paragraph"><p>KiCad ist erhältlich für Linux, Windows und Apple OS X (noch experimentell,
+funktioniert aber aktuell gut).</p></div>
+</div>
+<div class="sect2">
+<h3 id="_kicad_dateien_und_ordner">1.2. KiCad Dateien und Ordner</h3>
+<div class="paragraph"><p>KiCad benutzt und erstellt folgende spezifischen Dateierweiterungen (und
+Ordner) für die Schaltplan und Leiterplattenbearbeitung.</p></div>
+<div class="paragraph"><p><strong>Projektmanagerdatei:</strong></p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:20%;">
+<col style="width:80%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.pro</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Kleine Datei die wenige Parameter für das aktuelle Projekt enthält, inklusive der Liste der Bauteilbibliotheken.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p><strong>Schaltplan Editor Dateien:</strong></p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:20%;">
+<col style="width:80%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.sch</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Schaltplandateien, welche nicht die Bauteile selbst enthalten.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.lib</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Schaltplan Bauteil-Bibliotheksdateien, enthalten die Bauteileigenschaften: grafische Formen, Pins, Felder.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.dcm</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Schaltplan Bauteil-Bibliotheken Dokumentation, enthalten einige Bauteil Beschreibungen:
+Kommentare, Schlüsselwörter, Referenzen zu Datenblättern.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*_cache.lib</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Schaltplan Bauteil-Bibliothek Cache Datei, beinhaltet Kopien der benutzen Bauteile im Schaltplan vom Projekt.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p><strong>Leiterplatteneditor Dateien und Ordner:</strong></p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:20%;">
+<col style="width:80%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.kicad_pcb</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Leiterplattendatei die allen Infos des Platinenlayouts enthält.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.pretty</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Footprint <strong>Bibliotheks-Ordner</strong>. Der Ordner selbst ist die Bibliothek.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.kicad_mod</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Footprint Dateien, beinhalten einen Footprint mit der jeweiligen Beschreibung.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.brd</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Platinendatei im alten Format.
+Kann vom Footprint oder Platinen Editor gelesen aber nicht geschrieben werden.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">fp-lib-table</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Liste der Footprint Bibliotheken (<em>Footprint Bibliotheks-Tabelle</em>):
+Liste der Footprint Bibliotheken (verschiedene Formate) welche vom
+Platinen oder Footprint Editor oder auch CvPcb geladen wird.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p><strong>Gemeinsam genutzte Dateien:</strong></p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:20%;">
+<col style="width:80%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.kicad_wks</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Die Seitenbeschreibungsdatein, für Benutzer die ein Arbeitsblatt
+mit einem angepassten Aussehen benutzen wollen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.net</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Netzliste die vom Schaltplanditor erstellt und vom Platinen Editor gelesen wird.
+Diese Datei ist mit der .cmp Datei verknüpft, wenn Benutzer eine separate Datei
+für die Bauteil Footprint Verknüpfung bevorzugen.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p><strong>Spezielle Dateien:</strong></p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:20%;">
+<col style="width:80%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.cmp</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Speichert die Zuordnung zwischen Bauteilen aus dem Schaltplan und deren zugehörigen Footprints.</p>
+<p class="tableblock">Diese Dateien können von Pcbnew erstellt und von Eeschema importiert werden.</p>
+<p class="tableblock">Die Idee hinter dieser Art der Zuordnung liegt in der Möglichkeit des Rückimports von Pcbnew nach Eeschema, die von
+manchen Benutzern angewendet wird die Footprints innerhalb von Pcbnew ändern (z.B. durch Benutzen
+des Kommandos <em>Austausch Footprint</em>) und diese Änderungen in den Schaltplan übernehmen wollen.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p><strong>Andere Dateien:</strong></p></div>
+<div class="paragraph"><p>Diese Dateien werden von KiCad erstellt für die Fabrikation oder auch
+Dokumentation.</p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:20%;">
+<col style="width:80%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.gbr</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Gerber Dateien für die Produktion der Platine.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.drl</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Bohrdateien (Excellon Format) für die Produktion der Platine.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.pos</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Positionierungsdateien (ASCII Format), für Maschinen die die automatische Bestückung der Platine durchführen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.rpt</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Report Dateien (ASCII Format), für Dokumentation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.ps</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Plot Dateien (Postscript), für Dokumentation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.pdf</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Plot Dateien (PDF Format), für Dokumentation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.svg</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Plot Dateien (SVG Format), für Dokumentation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.dxf</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Plot Dateien (DXF Format), für Dokumentation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">*.plt</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Plot Dateien (HPGL Format), für Dokumentation.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation_und_konfiguration">2. Installation und Konfiguration</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_anzeige_optionen_bedingungen">2.1. Anzeige Optionen/Bedingungen</h3>
+<div class="paragraph"><p>Pcbnew benötigt Unterstützung durch OpenGL v2.1 oder höher.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_vorbereitung_der_standard_konfiguration">2.2. Vorbereitung der Standard Konfiguration</h3>
+<div class="paragraph"><p>Die Datei <em>kicad.pro</em> wird als Standard Konfiguration im Verzeichnis
+<em>kicad/template</em> ausgeliefert. Diese Datei dient als Template für jedes
+neues Projekt.</p></div>
+<div class="paragraph"><p>Wenn eine andere Standard Konfigurationsdatei, <em>fp-lib-table</em> benannt,
+existiert dann wird die Datei einmalig benutzt um die Liste mit den
+Footprint Bibliotheken zu erstellen. (Oder, wenn nicht vorhanden wird diese
+Datei komplett neu erstellt.)</p></div>
+<div class="paragraph"><p><strong>Die Vorlagendatei <em>kicad.pro</em> kann (wenn nötig) einfach modifiziert werden,
+hauptsächlich um die Liste der Bibliotheken festzulegen die von Eeschema geladen wird.</strong></p></div>
+<div class="paragraph"><p>Es gibt einige weitere Parameter (Standard Textgröße, Standard Breite von
+Linien, hauptsächlich für Pcbnew) die hier gespeichert werden.</p></div>
+<div class="paragraph"><p>Stellen Sie sicher, dass Sie Schreibberechtigungen auf
+kicad/template/kicad.pro besitzen.</p></div>
+<div class="paragraph"><p>Starten und Laden Sie das Projekt <em>kicad.pro</em>.</p></div>
+<div class="paragraph"><p>Starten Sie Eschema via KiCad Projekt Manager. Verändern und aktualisieren
+Sie die Eeschema Konfiguration, und vorzugsweise die Liste der Bibliotheken
+die Sie jedes mal benutzen wollen wenn Sie ein neues Projekt erstellen.</p></div>
+<div class="paragraph"><p>Starten Sie Pcbnew via KiCad Projekt Manager. Modifizieren und aktualisieren
+Sie die Pcbnew Konfiguration, speziell die Liste der Footprint
+Bibliotheken. Pcbnew wird die Bibliotheksliste, <strong>Footprint
+Bibliothek-Tabelle</strong> genannt, erstellen oder aktualisieren. Es gibt zwei
+Dateien dieser Listen mit den Bibliotheken, jeweils <em>fp-lib-table</em>
+benannt. Die erste (im Heimatverzeichnis des Benutzers liegend) ist global
+für alle Projekte gültig. Die zweite Datei (wenn vorhanden und im
+Projektverzeichnis abgelegt) ist nur das Projekt gültig.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_vorbereitung_einiger_optionen_und_hilfsmittel">2.3. Vorbereitung einiger Optionen und Hilfsmittel</h3>
+<div class="paragraph"><p>Wenn KiCad benutzt wird ist ein Texteditor und ein PDF Betrachter meistens
+hilfreich. Diese einzustellen ist daher eine gute Idee.</p></div>
+<div class="paragraph"><p>Die Einstellungen sind erreichbar über das Menü Einstellungen</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/de/preferences_menu.png" alt="images/de/preferences_menu.png">
+</div>
+</div>
+<div class="paragraph"><p>3 Optionen die im Speziellen bedeutend sind:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Pfade konfigurieren
+</p>
+</li>
+<li>
+<p>
+PDF-Betrachter
+</p>
+</li>
+<li>
+<p>
+Texteditor auswählen
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_konfiguration_der_pfade">2.4. Konfiguration der Pfade</h3>
+<div class="paragraph"><p>In KiCad können manche Pfade durch <em>Umgebungsvariablen</em> definiert
+werden. Einige der Umgebunsgvariablen werden intern durch KiCad gesetzt und
+können benutzt werden um Pfade zu definieren (für Bibliotheken, 3D-Formen,
+und mehr).</p></div>
+<div class="paragraph"><p>Dies ist besonders hilfreich die absoluten Pfade nicht bekannt sind oder
+auch Gegenstand der notwendigen Veränderung sind. Dies trifft zum Beispiel
+auf die &#8222;offiziellen&#8220; für KiCad erstellten Bibliotheken zu:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+der Pfad zu diesen Bibliotheken, wenn auf der Festplatte installiert
+</p>
+</li>
+<li>
+<p>
+den Pfad der Dateien mit den 3D-Formen der in den Footprint Definitionen
+  benutzt wird.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Zum Beispiel, der volle (absolute) Pfad der Footprint Bibliothek
+<em>connect.pretty</em> wird gebildet indem die Umgebungsvariable KISYSMOD benutzt
+wird um den vollen Pfad zur Bibliothek zu definieren:
+${KISYSMOD}/connect.pretty</p></div>
+<div class="paragraph"><p>Natürlich kann auch die übliche volle Pfad Definition benutzt werden, wenn
+dieser Pfad bekannt ist und sich niemals ändert.</p></div>
+<div class="paragraph"><p>Diese Optionen erlauben es einige Pfade durch Umgebungsvariablen zu setzen
+als auch eigene Umgebungsvariablen zu benutzen, und wenn nötig, eigene
+Pfadangaben zu benutzen.</p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:20%;">
+<col style="width:80%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">KIGITHUB</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Häufig benutzt in Beispielen der Footprint Bibliothek-Tabellen.
+Wenn Sie diese Variable benutzen muss sie definiert sein.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">KISYS3DMOD</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Standard Pfad für 3D-Formen,
+muss definiert sein da ein absoluter Pfad üblicher Weise nicht benutzt wird.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">KISYSMOD</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Standard Pfad für den Ordner mit den Footprint Bibliotheken,
+muss definiert werden wenn kein absoluter Pfad in den Footprint Bibliotheken Namen benutzt wird.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="imageblock">
+<div class="content">
+<img src="images/de/configure_path_dlg.png" alt="images/de/configure_path_dlg.png">
+</div>
+</div>
+<div class="paragraph"><p><em>Beachten Sie, dass die Umgebungsvariable</em></p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>KIPRJMOD</strong>
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p><strong>immer</strong> intern durch KiCad definiert ist und den <strong>aktuellen absoluten
+Projekt Pfad</strong> abbildet.</p></div>
+<div class="paragraph"><p>Zum Beispiel, <strong><em>${KIPRJMOD}/connect.pretty</em></strong> ist immer der Ordner
+<strong><em>connect.pretty</em></strong> (die pretty Footprint Bibliothek) der <strong>innerhalb des
+aktuellen Projektes</strong> liegt.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>Wenn Sie die Konfiguration von Pfaden verändern, beenden und starten Sie KiCad neu
+  um möglichen Fehler bei der Pfad Benutzung zu verhindern.</strong>
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_voreinstellung_des_texteditors">2.5. Voreinstellung des Texteditors</h3>
+<div class="paragraph"><p>Bevor Sie einen Texteditor benutzen können um im aktuellen Projekt Dateien
+betrachten oder auch ändern zu können, müssen Sie einen Editor
+auswählen. Das Menü:</p></div>
+<div class="paragraph"><p><em>Einstellungen/Texteditor auswählen</em></p></div>
+<div class="paragraph"><p>erlaubt es Ihnen einen beliebigen Texteditor auszuwählen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_voreinstellung_des_pdf_betrachter">2.6. Voreinstellung des PDF-Betrachter</h3>
+<div class="paragraph"><p>Sie können den Standard PDF-Betrachter benutzen oder einen anderen
+PDF-Betrachter einstellen.</p></div>
+<div class="paragraph"><p>Gehen Sie zu <em>Einstellungen/PDF-Betrachter/Favorisierter PDF-Betrachter</em> um
+einen speziellen (Standard) PDF-Betrachter auszuwählen.</p></div>
+<div class="paragraph"><p>Ihr eigener (nicht Standard) Betrachter muss über das Menü
+<em>Einstellungen/PDF-Betrachter/PDF-Betrachter auswählen</em> eingestellt werden.</p></div>
+<div class="paragraph"><p>Unter Linux kann der Standard PDF-Betrachter manchmal Schwierigkeiten
+bereiten, die Auswahl und Benutzung von <em>Favorisierter PDF-Betrachter</em> nach
+der Auswahl des passenden PDF-Betrachter ist dann notwendig.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_kicad_prinzipien_der_benutzung">2.7. KiCad: Prinzipien der Benutzung</h3>
+<div class="paragraph"><p>Die Verwaltung eines KiCad Projektes: Für die Koordination von
+Schaltplandateien, Platinendateien, zusätzliche Bibliotheken,
+Fabrikationsdateien für Foto-Tracing, Bohrungen und Dateien für automatische
+Bauteilpositionierung empfiehlt es sich Projekte folgendermaßen zu
+erstellen:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>Erstellen Sie ein Arbeitsverzeichnis für das Projekt</strong> (entweder durch KiCad selbst
+  oder durch andere Tools).
+</p>
+</li>
+<li>
+<p>
+<strong>Erstellen Sie eine Projektdatei durch KiCad in diesem Verzeichnis</strong>
+  (Datei mit der Erweiterung .pro) durch "Neues Projekt &#8594; Neues Projekt"
+  oder durch "Neues Projekt &#8594; Projekt aus einer Vorlage".
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Warnung</div>
+</td>
+<td class="content">Benutzen Sie einzelne eindeutige Verzeichnisse für jedes KiCad
+Projekt. Kombinieren Sie <strong>nicht</strong> mehrere Projekte innerhalb eines
+Verzeichnisses.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>KiCad erstellt eine Datei mit der Erweiterung .pro welche eine Anzahl an
+Parametern für die Projektverwaltung wie zum Beispiel die Liste der benutzen
+Bibliotheken enthält. Der Name der Schaltplandatei als auch der
+Platinendatei wird aus dem Projektnamen abgeleitet. Wenn also ein Projekt
+<em>example.pro</em> in einem Verzeichnis <em>example</em> erstellt worden ist werden
+folgende Dateien durch KiCad erstellt:</p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:27%;">
+<col style="width:73%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">example.pro</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Projekt Management Datei.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">example.sch</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Hauptschaltplan Datei.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">example.kicad_pcb</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Platinen Datei.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">example.net</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Netzlisten Datei.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">example.xxx</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Weitere verschiedene Dateien durch andere Tools erstellt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">example-cache.lib</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Bibliotheksdatei die automatsich erstellt und vom
+Schaltplaneditor benutzt wird.
+(Diese Datei enthält Backups der Bauteile die im Schaltplan benutzt werden).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_benutzung_des_kicad_managers">3. Benutzung des KiCad Managers</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Der KiCad Manager (Linux: <em>kicad</em> oder Windows: <em>kicad.exe</em>) ist ein Tool
+welches die anderen Tools (Editoren, Betrachter für Gerberdaten und
+Hilfstools) starten kann wenn ein Entwicklungsprozess läuft.</p></div>
+<div class="paragraph"><p>Das Starten der jeweiligen Tools aus dem KiCad Manager heraus hat einige
+Vorteile:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Quervergleiche zwischen Schaltplaneditor und Platineneditor.
+</p>
+</li>
+<li>
+<p>
+Quervergleiche zwischen Schaltplaneditor und der Footprint Auswahl (CvPcb).
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Sie können aber nur an einem Projekt zeitgleich arbeiten.</p></div>
+<div class="paragraph"><p>(Wenn diese Tools als eigenständige Applikation aufgerufen werden können Sie
+jede Datei aus unterschiedlichen Projekten öffnen, Quervergleiche zwischen
+diesen Tools können dann aber merkwürdige Ergebnisse entstehen lassen.)</p></div>
+<div class="sect2">
+<h3 id="_kicad_hauptfenster">3.1. Kicad Hauptfenster</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/de/main_window.png" alt="images/de/main_window.png">
+</div>
+</div>
+<div class="paragraph"><p>Das Hauptfenster im KiCad Projekt Manager zeigt die einzelnen Dateien des
+Projektes in einem Projektbaum dargestellt, ein Schnellstart-Panel mit den
+einzelnen Icons für die unterschiedlich Tools und ein Fenster für
+Meldungen. Das Menü als auch die Toolbar kann benutzt werden um Projekte zu
+erstellen, zu öffnen oder zu speichern.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_schnellstart_panel_der_hilfstools">3.2. Schnellstart-Panel der Hilfstools</h3>
+<div class="paragraph"><p>Der KiCad Projekt Manager erlaubt es Ihnen alle einzelnen Software Tools zu
+starten die zusammen mit KiCad verteilt werden.</p></div>
+<div class="paragraph"><p>Das Schnellstart-Panel beinhaltet acht Buttons welche folgende Kommandos
+ausführen (1 bis 8, von Links nach Rechts):</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/launch_pane.png" alt="images/launch_pane.png">
+</div>
+</div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:4%;">
+<col style="width:20%;">
+<col style="width:76%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>Eeschema</strong></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Der Schaltplaneditor.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>Bauteileditor</strong></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Der Editor für Bauteile und der Manager für die Bauteil-Bibliotheken.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>Pcbnew</strong></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Der Platineneditor.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>PCB Footprinteditor</strong></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Der Footprinteditor und Footprint Bibliotheksmanager.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>GerbView</strong></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Ein Betrachter für GERBER Daten. Kann ebenfalls Bohrdateien anzeigen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>Bitmap2Component</strong></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Ein Tool um Footprints oder Bauteile von
+einem S&amp;W Bitmap zu erstellen, oder auch Logos.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>Pcb Kalkulator</strong></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Ein Kalkulationstool um Leiterbahnbreiten, oder viele andere Dinge
+berechnen zu können.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>Pl Editor</strong></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Seiten Layout Editor, erstellt oder passt Layouts an.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_die_projektubersicht">3.3. Die Projektübersicht</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/project_tree.png" alt="images/project_tree.png">
+</div>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Ein Doppel-Klick auf das Eeschema Icon startet den Schaltplaneditor welcher
+    in diesem Fall die Datei <em>pic_programmer.sch</em> öffnen wird.
+</p>
+</li>
+<li>
+<p>
+Ein Doppel-Klick auf das Pcbnew Icon startet den Platineneditor welcher hier
+    die Datei <em>pic_programmer.kicad_pcb</em> öffnen wird.
+</p>
+</li>
+<li>
+<p>
+Ein Rechts-Klick auf irgendeine Datei in der Projektübersicht ermöglicht
+    diverse generische Dateiveränderungen.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_obere_toolbar">3.4. Obere Toolbar</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/main_toolbar.png" alt="images/main_toolbar.png">
+</div>
+</div>
+<div class="paragraph"><p>Die obere Toolbar im Projektmanager erlaubt einige allgemeine
+Dateioperationen (von Links nach Rechts).</p></div>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:26%;">
+<col style="width:74%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/new_project.png" alt="images/icons/new_project.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Erstellt eine Projektdatei. Wenn eine Vorlage kicad.pro in kicad/template
+vorhanden ist wird diese in das Arbeitsverzeichnis kopiert.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/new_project_with_template.png" alt="images/icons/new_project_with_template.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Erstellt ein Projekt aus einer Vorlage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/open_project.png" alt="images/icons/open_project.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Öffnet ein bestehendes Projekt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/save_project.png" alt="images/icons/save_project.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Aktualisiert und speichert den aktuellen Projektbaum.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/zip.png" alt="images/icons/zip.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Erstellt ein Zip-Archiv vom kompletten Projekt. Diese beinhaltet Schaltplandateien,
+Bibliotheken, Leiterplattendaten und mehr.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><span class="image">
+<img src="images/icons/reload.png" alt="images/icons/reload.png">
+</span></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Erstellt den Projektbaum und dessen Anzeige neu, ist manchmal nötig nach Veränderungen im Baum.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_benutzung_von_vorlagen">4. Benutzung von Vorlagen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_definitionen">4.1. Definitionen</h3>
+<div class="paragraph"><p>Eine Vorlage ist ein Ordner mit Dateien, welche einen Ordner mit Metadaten
+inkludieren.</p></div>
+<div class="paragraph"><p>Der Vorlagen Systemname (SYSNAME) ist das Verzeichnis in dem die
+Datei-Vorlagen gespeichert sind. Das Verzeichnis mit den Metadaten enthält
+vordefinierte Dateien die Informationen über die Vorlage enthalten.</p></div>
+<div class="paragraph"><p>Alle Dateien und Ordner aus einer Vorlage werden in den neuen Projektordner
+kopiert wenn ein neues Projekt unter Verwendung dieser Vorlage erstellt
+wird. Davon ausgenommen ist das Verzeichnis METADIR.</p></div>
+<div class="paragraph"><p>Alle Verzeichnisse und Dateien die in SYSNAME liegen werden SYSNAME durch
+den neuen Namen des Projektes ersetzt bekommen, mit Ausnahme der
+Dateierweiterung.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_vorlagen">4.2. Vorlagen</h3>
+<div class="paragraph"><p>Vorlagen erleichtern das Setup eines Projektes welche gemeinsam benutzte
+Attribute wie vordefinierte Platinengrößen, Verbinder Positionen, Schaltplan
+Elemente, Design Regeln und anderes besitzen.</p></div>
+<div class="sect3">
+<h4 id="_metadaten">4.2.1. Metadaten</h4>
+<div class="paragraph"><p>Das MEATDIR einer Vorlage muss die benötigten Dateien enthalten, und kann
+andere optionale Dateien enthalten.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_benotigte_dateien">4.2.2. Benötigte Dateien:</h4>
+<div class="paragraph"><p><strong>meta/info.html</strong></p></div>
+<div class="paragraph"><p>Enthält HTML formatierte Informationen über die Vorlage, welche vom Benutzer
+benutzt werden kann um festzustellen, ob die Vorlage das ist was der
+Anwender benutzen möchte. Der &lt;title&gt; Tag bestimmt den aktuellen Namen der
+Vorlage welcher dem Benutzer angezeigt wird bei der Auswahl der Vorlagen.</p></div>
+<div class="paragraph"><p>Durch die Benutzung von HTML ist es möglich, dass Bilder einfach eingebunden
+werden können ohne das neue Schema erweitert zu müssen.</p></div>
+<div class="paragraph"><p>Es können nur Basis Elemente der HTML Sprache verwendet werden um das
+Dokument zu formatieren.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_optionale_dateien">4.2.3. Optionale Dateien:</h4>
+<div class="paragraph"><p><strong>meta/icon.png</strong></p></div>
+<div class="paragraph"><p>Eine PNG Grafik mit 64x64 Pixel welches als anklickbares Icon im
+Auswahldialog der Vorlagen verwendet wird.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_beispiel">4.2.4. Beispiel:</h4>
+<div class="paragraph"><p>Hier ist die Vorlage für das Raspberry-GPIO Board abgelegt:</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/de/template_tree.png" alt="images/de/template_tree.png">
+</div>
+</div>
+<div class="paragraph"><p>Und die Informationen mit den Metadaten:</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/de/template_tree_meta.png" alt="images/de/template_tree_meta.png">
+</div>
+</div>
+<div class="paragraph"><p>brd.png ist einen optionale Datei.</p></div>
+<div class="paragraph"><p>Und hier das Beispiel für eine Datei <em>info.html</em>.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">&lt;!DOCTYPE</span></span> <span style="color: #009900">HTML</span> <span style="color: #009900">PUBLIC</span> <span style="color: #FF0000">"-//W3C//DTD HTML 4.0 Transitional//EN"</span><span style="font-weight: bold"><span style="color: #000080">&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;HTML&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;HEAD&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;META</span></span> <span style="color: #009900">HTTP-EQUIV</span><span style="color: #990000">=</span><span style="color: #FF0000">"CONTENT-TYPE"</span> <span style="color: #009900">CONTENT</span><span style="color: #990000">=</span><span style="color: #FF0000">"text/html;</span>
+<span style="color: #FF0000">charset=windows-1252"</span><span style="font-weight: bold"><span style="color: #0000FF">&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;TITLE&gt;</span></span>Raspberry Pi - Expansion Board<span style="font-weight: bold"><span style="color: #0000FF">&lt;/TITLE&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;META</span></span> <span style="color: #009900">NAME</span><span style="color: #990000">=</span><span style="color: #FF0000">"GENERATOR"</span> <span style="color: #009900">CONTENT</span><span style="color: #990000">=</span><span style="color: #FF0000">"LibreOffice 3.6 (Windows)"</span><span style="font-weight: bold"><span style="color: #0000FF">&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;META</span></span> <span style="color: #009900">NAME</span><span style="color: #990000">=</span><span style="color: #FF0000">"CREATED"</span> <span style="color: #009900">CONTENT</span><span style="color: #990000">=</span><span style="color: #FF0000">"0;0"</span><span style="font-weight: bold"><span style="color: #0000FF">&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;META</span></span> <span style="color: #009900">NAME</span><span style="color: #990000">=</span><span style="color: #FF0000">"CHANGED"</span> <span style="color: #009900">CONTENT</span><span style="color: #990000">=</span><span style="color: #FF0000">"20121015;19015295"</span><span style="font-weight: bold"><span style="color: #0000FF">&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;/HEAD&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;BODY</span></span> <span style="color: #009900">LANG</span><span style="color: #990000">=</span><span style="color: #FF0000">"fr-FR"</span> <span style="color: #009900">DIR</span><span style="color: #990000">=</span><span style="color: #FF0000">"LTR"</span><span style="font-weight: bold"><span style="color: #0000FF">&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;P&gt;</span></span>This project template is the basis of an expansion board for the
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;A</span></span> <span style="color: #009900">HREF</span><span style="color: #990000">=</span><span style="color: #FF0000">"http://www.raspberrypi.org/"</span> <span style="color: #009900">TARGET</span><span style="color: #990000">=</span><span style="color: #FF0000">"blank"</span><span style="font-weight: bold"><span style="color: #0000FF">&gt;</span></span>Raspberry Pi $25
+ARM board.<span style="font-weight: bold"><span style="color: #0000FF">&lt;/A&gt;</span></span> <span style="font-weight: bold"><span style="color: #0000FF">&lt;BR&gt;&lt;BR&gt;</span></span>This base project includes a PCB edge defined
+as the same size as the Raspberry-Pi PCB with the connectors placed
+correctly to align the two boards. All IO present on the Raspberry-Pi
+board is connected to the project through the 0.1<span style="font-weight: bold"><span style="color: #000080">&amp;quot;</span></span> expansion
+headers. <span style="font-weight: bold"><span style="color: #0000FF">&lt;BR&gt;&lt;BR&gt;</span></span>The board outline looks like the following:
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;/P&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;P&gt;&lt;IMG</span></span> <span style="color: #009900">SRC</span><span style="color: #990000">=</span><span style="color: #FF0000">"brd.png"</span> <span style="color: #009900">NAME</span><span style="color: #990000">=</span><span style="color: #FF0000">"brd"</span> <span style="color: #009900">ALIGN</span><span style="color: #990000">=</span><span style="color: #FF0000">BOTTOM WIDTH</span>=<span style="color: #009900">680</span> <span style="color: #009900">HEIGHT</span><span style="color: #990000">=</span><span style="color: #FF0000">378</span>
+<span style="color: #009900">BORDER</span><span style="color: #990000">=</span><span style="color: #FF0000">0</span><span style="font-weight: bold"><span style="color: #0000FF">&gt;&lt;BR&gt;&lt;BR&gt;&lt;BR&gt;&lt;BR&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;/P&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;P&gt;</span></span>(c)2012 Brian Sidebotham<span style="font-weight: bold"><span style="color: #0000FF">&lt;BR&gt;</span></span>(c)2012 KiCad Developers<span style="font-weight: bold"><span style="color: #0000FF">&lt;/P&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;/BODY&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;/HTML&gt;</span></span></tt></pre></div></div>
+</div>
+<div class="sect3">
+<h4 id="_benutzung">4.2.5. Benutzung</h4>
+<div class="paragraph"><p>Das KiCad Datei Menü <em>Neues Projekt</em> enthält zwei Optionen:</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/de/menu_file.png" alt="images/de/menu_file.png">
+</div>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>Neues Projekt</strong> Erstellt ein neues leeres Projekt durch kopieren
+  von template/kicad.pro in den aktuellen Ordner.
+</p>
+</li>
+<li>
+<p>
+<strong>Projekt aus einer Vorlage</strong> Öffnet den Auswahldialog zur Auswahl einer Vorlage,
+  nachdem der Projektordner ausgewählt und ggfls. angelegt worden ist. Der Auswahldialog
+  für die Vorlagen hat eine Liste mit Icons und ein Anzeigefenster. Ein Klick auf eines der Icons
+  der Vorlagen lädt die Datei info.html und zeigt deren Inhalt im Anzeigefenster an.
+  Ein Betätigen des OK Buttons startet die Erstellung des neuen Projektes. Die Vorlagen
+  werden in den Projektordner kopiert (ohne den Inhalt von METADIR wie zuvor erläutert)
+  und jede Datei deren Name unter die Regeln der automatischen Ersetzung fällt
+  wird unter Verwendung des Projektnamens umbenannt und abgespeichert.
+</p>
+</li>
+</ul></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/de/template_selector.png" alt="images/de/template_selector.png">
+</div>
+</div>
+<div class="paragraph"><p>Nach der Auswahl einer Vorlage:</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/de/template_selected.png" alt="images/de/template_selected.png">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ablageorte_von_vorlagen">4.2.6. Ablageorte von Vorlagen:</h4>
+<div class="paragraph"><p>Die Liste der möglichen Vorlagen kann man sich aus folgenden Quellen
+zusammenstellen:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Systemweite Vorlagen: &lt;kicad bin dir&gt;/../share/template/ oder auch
+  /usr/share/kicad/template/
+</p>
+</li>
+<li>
+<p>
+Benutzer definierte Vorlagen:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Unter Linux:
+     ~/kicad/templates/
+</p>
+</li>
+<li>
+<p>
+Unter Windows:
+     C:\Documente und Einstellungen\Benutzer\Meine Dokumente\kicad\templates
+</p>
+</li>
+<li>
+<p>
+Unter Apple OS X:
+     ~/Documents/kicad/templates/
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Wenn die Umgebungsvariable KICAD_PTEMPLATES definiert ist dann gibt es einen
+  weiteren Ablageort: Portable Vorlagen, die Liste der Vorlagen welche im Pfad
+  von KICAD_PTEMPLATES gefunden werden.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr></div>
+<div id="footer">
+<div id="footer-text">
+Letzte Änderung 2017-08-24 22:15:54 BST
+</div>
+</div>
+</body>
+</html>
