@@ -1,9 +1,8 @@
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![GitHub issues](https://img.shields.io/github/issues/fossee/KiCad-eSim)](https://github.com/fossee/KiCad-eSim/issues)
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/fossee/KiCad-eSim?color=blueviolet)
+![GitHub](https://img.shields.io/github/license/fossee/esim?color=blue)
 [![GitHub forks](https://img.shields.io/github/forks/fossee/KiCad-eSim)](https://github.com/fossee/KiCad-eSim/network)
-[![GitHub stars](https://img.shields.io/github/stars/fossee/KiCad-eSim)](https://github.com/fossee/KiCad-eSim/stargazers)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/fossee/KiCad-eSim)
-![GitHub contributors](https://img.shields.io/github/contributors/fossee/kicad-esim)
+![GitHub contributors](https://img.shields.io/github/contributors/fossee/KiCad-eSim)
 
 KiCad Installer for eSim
 ====
