@@ -6,11 +6,10 @@
 
 """
     @package
-    Generate a csv list file.
-    Components are sorted by ref
-    One component per line
-    Fields are (if exist)
-    Ref, value, Part, footprint, Datasheet, Manufacturer, Vendor
+    Output: CSV (comma-separated)
+    Grouped By: ungrouped, one component per line
+    Sorted By: Ref
+    Fields: Ref, Value, Part, Footprint, Datasheet, Manufacturer, Vendor
 
     Command line:
     python "pathToFile/bom_csv_sorted_by_ref.py" "%I" "%O.csv"
@@ -20,8 +19,14 @@ from __future__ import print_function
 
 # Import the KiCad python helper module
 import kicad_netlist_reader
+import kicad_utils
 import csv
 import sys
+
+# A helper function to filter/convert a string read in netlist
+#currently: do nothing
+def fromNetlistText( aText ):
+    return aText
 
 # Generate an instance of a generic netlist, and load the netlist tree from
 # the command line option. If the file doesn't exist, execution will stop
@@ -30,7 +35,7 @@ net = kicad_netlist_reader.netlist(sys.argv[1])
 # Open a file to write to, if the file cannot be opened output to stdout
 # instead
 try:
-    f = open(sys.argv[2], 'w')
+    f = kicad_utils.open_file_writeUTF8(sys.argv[2], 'w')
 except IOError:
     e = "Can't open output file for writing: " + sys.argv[2]
     print( __file__, ":", e, sys.stderr )
@@ -43,7 +48,7 @@ out = csv.writer(f, lineterminator='\n', delimiter=',', quotechar="\"", quoting=
 def writerow( acsvwriter, columns ):
     utf8row = []
     for col in columns:
-        utf8row.append( str(col) )
+        utf8row.append( fromNetlistText( str(col) ) )
     acsvwriter.writerow( utf8row )
 
 components = net.getInterestingComponents()

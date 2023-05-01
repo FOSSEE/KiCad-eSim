@@ -21,6 +21,7 @@ import sys
 import xml.sax as sax
 import re
 import pdb
+import string
 
 #-----<Configure>----------------------------------------------------------------
 
@@ -35,7 +36,7 @@ excluded_fields = [
     ]
 
 
-# You may exlude components from the BOM by either:
+# You may exclude components from the BOM by either:
 #
 # 1) adding a custom field named "Installed" to your components and filling it
 # with a value of "NU" (Normally Uninstalled).
@@ -47,17 +48,17 @@ excluded_fields = [
 # regular expressions which match component 'Reference' fields of components that
 # are to be excluded from the BOM.
 excluded_references = [
-    'TP[0-9]+'              # all test points
+    # 'TP[0-9]+'              # all test points
     ]
 
 
 # regular expressions which match component 'Value' fields of components that
 # are to be excluded from the BOM.
 excluded_values = [
-    'MOUNTHOLE',
-    'SCOPETEST',
-    'MOUNT_HOLE',
-    'SOLDER_BRIDGE.*'
+    # 'MOUNTHOLE',
+    # 'SCOPETEST',
+    # 'MOUNT_HOLE',
+    # 'SOLDER_BRIDGE.*'
     ]
 
 
@@ -72,7 +73,7 @@ excluded_footprints = [
 
 class xmlElement():
     """xml element which can represent all nodes of the netlist tree.  It can be
-    used to easily generate various output formats by propogating format
+    used to easily generate various output formats by propagating format
     requests to children recursively.
     """
     def __init__(self, name, parent=None):
@@ -285,6 +286,16 @@ class libpart():
                 fieldNames.append( f.get('field','name') )
         return fieldNames
 
+    def getPinList(self):
+        """Return a list of pins in play for this libpart.
+        """
+        pinList = []
+        pins = self.element.getChild('pins')
+        if pins:
+            for f in pins.getChildren():
+                pinList.append( f )
+        return pinList
+
     def getDatasheet(self):
         return self.getField("Datasheet")
 
@@ -335,7 +346,8 @@ class comp():
         result = False
         if self.getValue() == other.getValue():
             if self.getFootprint() == other.getFootprint():
-                result = True
+                if self.getRef().rstrip(string.digits) == other.getRef().rstrip(string.digits):
+                    result = True
         return result
 
     def setLibPart(self, part):
@@ -359,20 +371,21 @@ class comp():
     def getValue(self):
         return self.element.get("value")
 
-    def getField(self, name, libraryToo=True):
-        """Return the value of a field named name. The component is first
+    def getField(self, name, aLibraryToo = True):
+        """
+        Return the value of a field named name. The component is first
         checked for the field, and then the components library part is checked
         for the field. If the field doesn't exist in either, an empty string is
         returned
 
         Keywords:
         name -- The name of the field to return the value for
-        libraryToo --   look in the libpart's fields for the same name if not found
+        aLibraryToo --  look in the libpart's fields for the same name if not found
                         in component itself
         """
 
         field = self.element.get("field", "name", name)
-        if field == "" and libraryToo:
+        if field == "" and aLibraryToo and self.libpart:
             field = self.libpart.getField(name)
         return field
 
@@ -392,23 +405,76 @@ class comp():
     def getRef(self):
         return self.element.get("comp", "ref")
 
-    def getFootprint(self, libraryToo=True):
+    '''
+    return the footprint name. if empty and aLibraryToo = True, return the
+    footprint name from libary
+    '''
+    def getFootprint(self, aLibraryToo = True):
         ret = self.element.get("footprint")
-        if ret =="" and libraryToo:
+
+        if ret == "" and aLibraryToo and self.libpart:
             ret = self.libpart.getFootprint()
+
         return ret
 
-    def getDatasheet(self, libraryToo=True):
+    '''
+    return the datasheet name. if empty and aLibraryToo = True, return the
+    datasheet name from libary
+    '''
+    def getDatasheet(self, aLibraryToo = True):
         ret = self.element.get("datasheet")
-        if ret == '' and libraryToo:
+        if ret == "" and aLibraryToo and self.libpart:
             ret = self.libpart.getDatasheet()
         return ret
 
     def getTimestamp(self):
-        return self.element.get("tstamp")
+        """
+        Kicad 5 uses tstamp keyword for time stamp (8 digits) as UUID
+        Kicad 6 uses tstamps keyword for UUID and a multi unit symbol has more than one UUID
+        (UUIDs are separated by spaces)
+        """
+        ret = self.element.get("tstamp")
+        if ret == "":
+            ret = self.element.get("tstamps")
+        return ret
 
     def getDescription(self):
-        return self.libpart.getDescription()
+        return self.element.get("libsource", "description")
+
+    '''
+    return the netname of the pin aPinNum in netlist aNetlist
+    if aSkipEmptyNet = True, net having only one pin will return a empty name
+    '''
+    def getPinNetname(self, aPinNum, aNetlist, aSkipEmptyNet):
+        ref = self.getRef()
+
+        for net in aNetlist.nets:
+            net_name = net.get( "net", "name" )
+
+            item_cnt = 1
+            netitems = net.children
+
+            for node in netitems:
+                curr_item_ref = node.get( "node", "ref" )
+
+                if curr_item_ref == ref:
+                    curr_pin = node.get( "node", "pin" )
+
+                    if aPinNum == curr_pin:
+                        if aSkipEmptyNet:   #ensure at least 2 pins are in net
+                            pin_count = 0
+
+                            for curr_node in netitems:
+                                pin_count += 1
+
+                                if pin_count > 1:
+                                    return net_name
+
+                            return ""
+                        else:
+                            return net_name
+
+        return "?"
 
 
 class netlist():
@@ -435,7 +501,7 @@ class netlist():
 
         self._curr_element = None
 
-        # component blacklist regexs, made from exluded_* above.
+        # component blacklist regexs, made from excluded_* above.
         self.excluded_references = []
         self.excluded_values = []
         self.excluded_footprints = []
@@ -449,7 +515,7 @@ class netlist():
 
     def addElement(self, name):
         """Add a new kicad generic element to the list"""
-        if self._curr_element == None:
+        if self._curr_element is None:
             self.tree = xmlElement(name)
             self._curr_element = self.tree
         else:
@@ -481,7 +547,7 @@ class netlist():
     def endDocument(self):
         """Called when the netlist document has been fully parsed"""
         # When the document is complete, the library parts must be linked to
-        # the components as they are seperate in the tree so as not to
+        # the components as they are separate in the tree so as not to
         # duplicate library part information for every component
         for c in self.components:
             for p in self.libparts:
@@ -520,6 +586,10 @@ class netlist():
     def getTool(self):
         """Return the tool string which was used to create the netlist tree"""
         return self.design.get("tool")
+
+    def getNets(self):
+        """Return the nets """
+        return self.nets
 
     def gatherComponentFieldUnion(self, components=None):
         """Gather the complete 'set' of unique component fields, fields found in any component.
@@ -568,8 +638,8 @@ class netlist():
         """Return a subset of all components, those that should show up in the BOM.
         Omit those that should not, by consulting the blacklists:
         excluded_values, excluded_refs, and excluded_footprints, which hold one
-        or more regular expressions.  If any of the the regular expressions match
-        the corresponding field's value in a component, then the component is exluded.
+        or more regular expressions.  If any of the regular expressions match
+        the corresponding field's value in a component, then the component is excluded.
         """
 
         # pre-compile all the regex expressions:
@@ -618,10 +688,14 @@ class netlist():
             if not exclude:
                 ret.append(c)
 
-        # Sort first by ref as this makes for easier to read BOM's
-        def f(v):
-            return re.sub(r'([A-z]+)[0-9]+', r'\1', v) + '%08i' % int(re.sub(r'[A-z]+([0-9]+)', r'\1', v))
-        ret.sort(key=lambda g: f(g.getRef()))
+        # The key to sort the components in the BOM
+        # This sorts using a natural sorting order (e.g. 100 after 99), and if it wasn't used
+        # the normal sort would place 100 before 99 since it only would look at the first digit.
+        def sortKey( str ):
+            return [ int(t) if t.isdigit() else t.lower()
+                    for t in re.split( '(\d+)', str ) ]
+
+        ret.sort(key=lambda g: sortKey(g.getRef()))
 
         return ret
 
@@ -660,15 +734,19 @@ class netlist():
                 # Add the new component group to the groups list
                 groups.append(newgroup)
 
-        # Each group is a list of components, we need to sort each list first
-        # to get them in order as this makes for easier to read BOM's
-        def f(v):
-            return re.sub(r'([A-z]+)[0-9]+', r'\1', v) + '%08i' % int(re.sub(r'[A-z]+([0-9]+)', r'\1', v))
+        # The key to sort the components in the BOM
+        # This sorts using a natural sorting order (e.g. 100 after 99), and if it wasn't used
+        # the normal sort would place 100 before 99 since it only would look at the first digit.
+        def sortKey( str ):
+            return [ int(t) if t.isdigit() else t.lower()
+                    for t in re.split( '(\d+)', str ) ]
+
         for g in groups:
-            g = sorted(g, key=lambda g: f(g.getRef()))
+            #g = sorted(g, key=lambda g: sortKey(g.getRef()))
+            g.sort(key=lambda g: sortKey(g.getRef()))
 
         # Finally, sort the groups to order the references alphabetically
-        groups = sorted(groups, key=lambda group: f(group[0].getRef()))
+        groups.sort(key=lambda group: sortKey(group[0].getRef()))
 
         return groups
 
@@ -681,7 +759,12 @@ class netlist():
             ret = c.getField(field, False)
             if ret != '':
                 return ret
-        return group[0].getLibPart().getField(field)
+
+        libpart = group[0].getLibPart()
+        if not libpart:
+            return ''
+
+        return libpart.getField(field)
 
     def getGroupFootprint(self, group):
         """Return the whatever is known about the Footprint by consulting each
