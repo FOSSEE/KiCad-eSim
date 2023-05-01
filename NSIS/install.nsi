@@ -6,7 +6,7 @@
 ; This script is provided as is with no warranties.
 ;
 ; Copyright (C) 2006 Alastair Hoyle <ahoyle@hoylesolutions.co.uk>
-; Copyright (C) 2015 Nick Østergaard
+; Copyright (C) 2015 Nick ï¿½stergaard
 ; Copyright (C) 2015 Brian Sidebotham <brian.sidebotham@gmail.com>
 ; Copyright (C) 2016 Bevan Weiss <bevan.weiss@gmail.com>
 ;
@@ -46,7 +46,7 @@
 !define gflag ;Needed to use ifdef and such
 ;Define on command line //DPRODUCT_VERSION=42
 !ifndef PRODUCT_VERSION
-  !define PRODUCT_VERSION "4.0.7"
+  !define PRODUCT_VERSION "6.0.11"
 !endif
 
 !ifndef OPTION_STRING
@@ -237,13 +237,13 @@ SectionEnd
 
 Section $(TITLE_SEC_SCHLIB) SEC02
   SetOverwrite try
-  SetOutPath "$INSTDIR\share\kicad\library"
+  SetOutPath "$INSTDIR\share\kicad\symbols"
   ;File /nonfatal /r "..\share\kicad\library\*"
 SectionEnd
 
 Section $(TITLE_SEC_FPLIB) SEC03
   SetOverwrite try
-  SetOutPath "$INSTDIR\share\kicad\modules"
+  SetOutPath "$INSTDIR\share\kicad\footprints"
   ;File /nonfatal /r "..\share\kicad\modules\*"
 SectionEnd
 
@@ -264,11 +264,11 @@ SectionEnd
 ;SectionEnd
 
 ;SectionGroup $(TITLE_SEC_DOCS) SEC06
-  Section $(LANGUAGE_NAME_EN) SEC06_EN
-    SetOverwrite try
-    SetOutPath "$INSTDIR\share\doc\kicad\help\en"
+;  Section $(LANGUAGE_NAME_EN) SEC06_EN
+;    SetOverwrite try
+;    SetOutPath "$INSTDIR\share\doc\kicad\help\en"
     ;File /nonfatal /r "..\share\doc\kicad\help\en\*"
-  SectionEnd
+;  SectionEnd
 ;  Section $(LANGUAGE_NAME_DE) SEC06_DE
 ;    SetOverwrite try
 ;    SetOutPath "$INSTDIR\share\doc\kicad\help\de"
@@ -309,8 +309,8 @@ SectionEnd
 Section $(TITLE_SEC_ENV) SEC07
   WriteRegExpandStr ${ENV_HKLM} KICAD_PTEMPLATES "$INSTDIR\share\kicad\template"
   ;WriteRegExpandStr ${ENV_HKLM} KISYS3DMOD "$INSTDIR\share\kicad\modules\packages3d"
-  WriteRegExpandStr ${ENV_HKLM} KISYSMOD "$INSTDIR\share\kicad\modules"
-  WriteRegExpandStr ${ENV_HKLM} KICAD_SYMBOL_DIR "$INSTDIR\share\kicad\library"
+  WriteRegExpandStr ${ENV_HKLM} KISYSMOD "$INSTDIR\share\kicad\footprints"
+  WriteRegExpandStr ${ENV_HKLM} KICAD_SYMBOL_DIR "$INSTDIR\share\kicad\symbols"
   
   WriteRegDWORD ${UNINST_ROOT} "${PRODUCT_UNINST_KEY}" "EnvInstalled" "1"
   
@@ -366,7 +366,7 @@ SectionEnd
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC04} $(DESC_SEC_FPWIZ)
   ;!insertmacro MUI_DESCRIPTION_TEXT ${SEC05} $(DESC_SEC_DEMOS)
   ;!insertmacro MUI_DESCRIPTION_TEXT ${SEC06} $(DESC_SEC_DOCS)
-  !insertmacro MUI_DESCRIPTION_TEXT ${SEC06_EN} $(DESC_SEC_DOCS_EN)
+  ;!insertmacro MUI_DESCRIPTION_TEXT ${SEC06_EN} $(DESC_SEC_DOCS_EN)
   ;!insertmacro MUI_DESCRIPTION_TEXT ${SEC06_DE} $(DESC_SEC_DOCS_DE)
   ;!insertmacro MUI_DESCRIPTION_TEXT ${SEC06_ES} $(DESC_SEC_DOCS_ES)
   ;!insertmacro MUI_DESCRIPTION_TEXT ${SEC06_FR} $(DESC_SEC_DOCS_FR)
@@ -424,15 +424,15 @@ Section Uninstall
   ;remove all program files now
   RMDir /r "$INSTDIR\bin"
   RMDir /r "$INSTDIR\lib"
-  RMDir /r "$INSTDIR\library"
-  RMDir /r "$INSTDIR\modules"
+  RMDir /r "$INSTDIR\symbols"
+  RMDir /r "$INSTDIR\footprints"
   RMDir /r "$INSTDIR\template"
   RMDir /r "$INSTDIR\internat"
   RMDir /r "$INSTDIR\demos"
   RMDir /r "$INSTDIR\tutorials"
   RMDir /r "$INSTDIR\help"
-  RMDir /r "$INSTDIR\share\library"
-  RMDir /r "$INSTDIR\share\modules"
+  RMDir /r "$INSTDIR\share\symbols"
+  RMDir /r "$INSTDIR\share\footprints"
   RMDir /r "$INSTDIR\share\kicad\template"
   RMDir /r "$INSTDIR\share\kicad\internat"
   ;RMDir /r "$INSTDIR\share\kicad\demos"
@@ -505,25 +505,25 @@ FunctionEnd
 
 Function EnableLiteMode
   ; TODO: Add override string for lite mode
-  !insertmacro CompileTimeIfFileExist "..\share\kicad\library" ADD_LIBS
+  !insertmacro CompileTimeIfFileExist "..\share\kicad\symbols" ADD_LIBS
   !ifndef ADD_LIBS
     !insertmacro SetSectionFlag ${SEC02} ${SF_RO}
     !insertmacro UnselectSection ${SEC02}
   !endif
 
-  !insertmacro CompileTimeIfFileExist "..\share\kicad\modules" ADD_MODULES
+  !insertmacro CompileTimeIfFileExist "..\share\kicad\footprints" ADD_MODULES
   !ifndef ADD_MODULES
     !insertmacro SetSectionFlag ${SEC03} ${SF_RO}
     !insertmacro UnselectSection ${SEC03}
   !endif
 
-  !insertmacro CompileTimeIfFileExist "..\share\doc\kicad\help" ADD_HELP
-  !ifndef ADD_HELP
+  ;!insertmacro CompileTimeIfFileExist "..\share\doc\kicad\help" ADD_HELP
+  ;!ifndef ADD_HELP
     ;!insertmacro SetSectionFlag ${SEC06} ${SF_RO}
     ;!insertmacro UnselectSection ${SEC06}
 
-    !insertmacro SetSectionFlag ${SEC06_EN} ${SF_RO}
-    !insertmacro UnselectSection ${SEC06_EN}
+   ; !insertmacro SetSectionFlag ${SEC06_EN} ${SF_RO}
+    ;!insertmacro UnselectSection ${SEC06_EN}
     
     ;!insertmacro SetSectionFlag ${SEC06_DE} ${SF_RO}
     ;!insertmacro UnselectSection ${SEC06_DE}
@@ -539,7 +539,7 @@ Function EnableLiteMode
     ;!insertmacro UnselectSection ${SEC06_NL}
     ;!insertmacro SetSectionFlag ${SEC06_PL} ${SF_RO}
     ;!insertmacro UnselectSection ${SEC06_PL}
-  !endif
+  ;!endif
 
   ; Make the envvar install not be default
   ; !insertmacro UnselectSection ${SEC07}
