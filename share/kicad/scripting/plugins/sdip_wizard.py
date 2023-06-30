@@ -17,11 +17,14 @@
 from __future__ import division
 import pcbnew
 
-import HelpfulFootprintWizardPlugin as HFPW
+import FootprintWizardBase
 import PadArray as PA
 
 
 class RowedGridArray(PA.PadGridArray):
+
+    def __init__(self, *args, **kwargs):
+        super(RowedGridArray, self).__init__(*args, **kwargs)
 
     def NamingFunction(self, x, y):
         pad_cnt = self.nx*self.ny
@@ -35,9 +38,9 @@ class RowedGridArray(PA.PadGridArray):
             return x+1
 
 
-class RowedFootprint(HFPW.HelpfulFootprintWizardPlugin):
+class RowedFootprint(FootprintWizardBase.FootprintWizard):
 
-    pad_count_key = 'pas count'
+    pad_count_key = 'pad count'
     row_count_key = 'row count'
     row_spacing_key = 'row spacing'
     pad_length_key = 'pad length'
@@ -50,31 +53,25 @@ class RowedFootprint(HFPW.HelpfulFootprintWizardPlugin):
 
     def GenerateParameterList(self):
         # defaults for a DIP package
-        self.AddParam("Pads", self.pad_count_key, self.uNatural, 24)
-        self.AddParam("Pads", self.row_count_key, self.uNatural, 2)
+        self.AddParam("Pads", self.pad_count_key, self.uInteger, 24)
+        self.AddParam("Pads", self.row_count_key, self.uInteger, 2, min_value=1, max_value=2)
 
         self.AddParam("Body", self.silkscreen_inside_key, self.uBool, False)
         self.AddParam("Body", self.outline_x_margin_key, self.uMM, 0.5)
         self.AddParam("Body", self.outline_y_margin_key, self.uMM, 0.5)
 
     def CheckParameters(self):
-        self.CheckParamInt("Pads", '*' + self.row_count_key, min_value=1, max_value=2)
-        self.CheckParamInt(
-            "Pads", '*' + self.pad_count_key,
-            is_multiple_of=self.parameters["Pads"]['*' + self.row_count_key])
-
-        # can do this internally to parameter manager?
-        self.CheckParamBool("Body", '*' + self.silkscreen_inside_key)
+        self.CheckParam("Pads", self.pad_count_key, multiple=self.parameters['Pads'][self.row_count_key], info='Pads must be multiple of row count')
 
     def BuildThisFootprint(self):
         pads = self.parameters["Pads"]
         body = self.parameters["Body"]
-        num_pads = pads['*' + self.pad_count_key]
+        num_pads = pads[self.pad_count_key]
         pad_length = pads[self.pad_length_key]
         pad_width = pads[self.pad_width_key]
         row_pitch = pads[self.row_spacing_key]
         pad_pitch = pads[self.pad_pitch_key]
-        num_rows = pads['*' + self.row_count_key]
+        num_rows = pads[self.row_count_key]
 
         pads_per_row = num_pads // num_rows
 
@@ -96,13 +93,29 @@ class RowedFootprint(HFPW.HelpfulFootprintWizardPlugin):
         ssx_offset = -pad_width / 2 - body[self.outline_x_margin_key]
         ssy_offset = -pad_length / 2 - body[self.outline_y_margin_key]
 
-        if body['*' + self.silkscreen_inside_key]:
+        if body[self.silkscreen_inside_key]:
             ssy_offset *= -1
 
         ssx = -pin1_posX - ssx_offset
         ssy = -pin1_posY - ssy_offset
 
+        cmargin = self.draw.GetLineThickness()
+        self.draw.SetLineThickness( pcbnew.FromMM( 0.12 ) ) #Default per KLC F5.1 as of 12/2018
         self.DrawBox(ssx, ssy)
+
+        # Courtyard
+        self.draw.SetLayer(pcbnew.F_CrtYd)
+        cclearance = pcbnew.FromMM(0.25)
+        sizex = (-pin1_posX + cclearance) * 2 + pad_width
+        sizey = (-pin1_posY + cclearance) * 2 + pad_length
+        # round size to nearest 0.02mm, rectangle will thus land on a 0.01mm grid
+        sizex = pcbnew.PutOnGridMM(sizex, 0.02)
+        sizey = pcbnew.PutOnGridMM(sizey, 0.02)
+        # set courtyard line thickness to the one defined in KLC
+        self.draw.SetLineThickness(pcbnew.FromMM(0.05))
+        self.draw.Box(0, 0, sizex, sizey)
+        # restore line thickness to previous value
+        self.draw.SetLineThickness(pcbnew.FromMM(cmargin))
 
         #reference and value
         text_size = self.GetTextSize()  # IPC nominal
@@ -117,6 +130,11 @@ class RowedFootprint(HFPW.HelpfulFootprintWizardPlugin):
             self.draw.Value(0, 0, text_size)
             self.draw.Reference(-text_px, 0, text_size, orientation_degree=90)
 
+        # set the attribute
+        if self.GetName() == "S-DIP":
+            self.module.SetAttributes(pcbnew.PAD_ATTRIB_PTH)
+        elif self.GetName() == "SOIC":
+            self.module.SetAttributes(pcbnew.PAD_ATTRIB_SMD)
 
 class SDIPWizard(RowedFootprint):
 
@@ -137,8 +155,8 @@ class SDIPWizard(RowedFootprint):
 
     def GetValue(self):
         pads = self.parameters["Pads"]
-        rows = pads['*' + self.row_count_key]
-        pad_count = pads['*' + self.pad_count_key]
+        rows = pads[self.row_count_key]
+        pad_count = pads[self.pad_count_key]
         row_dist_mil = pcbnew.Iu2Mils(int(self.parameters["Pads"][self.row_spacing_key])) #int(self.parameters["Pads"][self.row_spacing_key] / 2.54 * 100)
         pad_shape = ""
 
@@ -166,7 +184,7 @@ class SDIPWizard(RowedFootprint):
 
     def DrawBox(self, ssx, ssy):
 
-        if self.parameters["Pads"]['*' + self.row_count_key] == 2:
+        if self.parameters["Pads"][self.row_count_key] == 2:
 
             #  ----------
             #  |8 7 6 5 |
@@ -176,7 +194,7 @@ class SDIPWizard(RowedFootprint):
 
             # draw the notch
             notchWidth = ssy/1.5
-            notchHeight = self.draw.GetLineTickness()*3
+            notchHeight = self.draw.GetLineThickness()*3
 
             # NotchedBox draws the notch on top. Rotate the box 90 degrees
             # to have it on the left
@@ -189,7 +207,7 @@ class SDIPWizard(RowedFootprint):
 
             #line between pin1 and pin2
             pad_pitch = self.parameters["Pads"][self.pad_pitch_key]
-            pad_cnt = self.parameters["Pads"]['*' + self.pad_count_key]
+            pad_cnt = self.parameters["Pads"][self.pad_count_key]
             line_x = ( pad_cnt/2 - 1) * pad_pitch
             self.draw.VLine(-line_x, -ssy, ssy * 2)
 
@@ -207,7 +225,7 @@ class SOICWizard(RowedFootprint):
         return "SOIC, MSOP, SSOP, TSSOP, etc, footprint wizard"
 
     def GetValue(self):
-        pad_count = self.parameters["Pads"]['*' + self.pad_count_key]
+        pad_count = self.parameters["Pads"][self.pad_count_key]
         return "%s-%d" % ("SOIC", pad_count)
 
     def GenerateParameterList(self):
@@ -232,6 +250,11 @@ class SOICWizard(RowedFootprint):
         #  |1 2 3 4 |
         #  \---------
 
-        self.draw.BoxWithDiagonalAtCorner(0, 0, ssx*2, ssy*2, pcbnew.FromMM(1))
+        setback = pcbnew.FromMM(0.8)
+
+        if setback > ssy:
+            setback = ssy
+
+        self.draw.BoxWithDiagonalAtCorner(0, 0, ssx*2, ssy*2, setback, self.draw.flipY)
 
 SOICWizard().register()

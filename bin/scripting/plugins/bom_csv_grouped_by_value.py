@@ -3,12 +3,15 @@
 #
 # Example: Sorted and Grouped CSV BOM
 #
+
 """
     @package
-    Generate a csv BOM list.
-    Components are sorted by ref and grouped by value
-    Fields are (if exist)
-    Item, Qty, Reference(s), Value, LibPart, Footprint, Datasheet
+    Output: CSV (comma-separated)
+    Grouped By: Value
+    Sorted By: Ref
+    Fields: Item, Qty, Reference(s), Value, LibPart, Footprint, Datasheet, all additional symbol fields
+
+    Outputs ungrouped components first, then outputs grouped components.
 
     Command line:
     python "pathToFile/bom_csv_grouped_by_value.py" "%I" "%O.csv"
@@ -18,8 +21,14 @@ from __future__ import print_function
 
 # Import the KiCad python helper module and the csv formatter
 import kicad_netlist_reader
+import kicad_utils
 import csv
 import sys
+
+# A helper function to filter/convert a string read in netlist
+#currently: do nothing
+def fromNetlistText( aText ):
+    return aText
 
 def myEqu(self, other):
     """myEqu is a more advanced equivalence function for components which is
@@ -56,7 +65,7 @@ net = kicad_netlist_reader.netlist(sys.argv[1])
 # Open a file to write to, if the file cannot be opened output to stdout
 # instead
 try:
-    f = open(sys.argv[2], 'w')
+    f = kicad_utils.open_file_writeUTF8(sys.argv[2], 'w')
 except IOError:
     e = "Can't open output file for writing: " + sys.argv[2]
     print( __file__, ":", e, sys.stderr )
@@ -84,7 +93,7 @@ out = csv.writer( f, lineterminator='\n', delimiter=',', quotechar='\"', quoting
 def writerow( acsvwriter, columns ):
     utf8row = []
     for col in columns:
-        utf8row.append( str(col) )  # currently, no change
+        utf8row.append( fromNetlistText( str(col) ) )
     acsvwriter.writerow( utf8row )
 
 # Output a set of rows as a header providing general information
