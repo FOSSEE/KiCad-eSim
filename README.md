@@ -33,4 +33,4 @@ This repository is maintained by FOSSEE team for KiCad v6.0.11. It contains all 
 4. Use the generated `kicad-6.0.11-x86_64.exe` in the `NSIS` folder as the default installer for KiCad when building installer for eSim.
 
     > Note: This new generated installer should be pushed to the repository for any future requirements
-    > Note: The installer size should be less than 500 Mbs.
+    > The installer size should be less than 500 Mbs.
