@@ -1,27 +1,23 @@
 <!--XSL style sheet to convert EESCHEMA XML Partlist Format to grouped CSV BOM Format
     Copyright (C) 2014, Wolf Walter.
     Copyright (C) 2013, Stefan Helmert.
+    Copyright (C) 2018, Kicad developers.
     GPL v2.
 
 	Functionality:
 		Generation of Digi-Key ordering system compatible BOM
 
-    How to use this is explained in eeschema.pdf chapter 14.  You enter a command line into the
-    netlist exporter using a new (custom) tab in the netlist export dialog.
-    The command line is
-        xsltproc -o "%O.csv" "FullPathToFile/bom2groupedCsv.xsl" "%I"
+    How to use this is explained in eeschema.pdf chapter 14.
 -->
 <!--
     @package
-	Functionality:
-    * Generate a comma separated value BOM list (csv file type).
-    * Components are sorted by ref and grouped by same value+footprint
-    One value per line
-    Fields are
-    Reference, Quantity, Value, Footprint, Datasheet
+    Output: CSV (comma-separated)
+    Grouped By: Value, Footprint
+    Sorted By: Ref
+    Fields: Reference, Quantity, Value, Footprint, Datasheet, all additional symbol fields
 
-    The command line is
-        xsltproc -o "%O.csv" "FullPathToFile/bom2groupedCsv.xsl" "%I"
+    Command line:
+    xsltproc -o "%O.csv" "pathToFile/bom2grouped_csv.xsl" "%I"
 -->
 
 
@@ -33,7 +29,9 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 	<xsl:output method="text"/>
 
-	<!-- for Muenchian grouping of footprint and value combination -->
+	<xsl:variable name="digits" select="'1234567890'" />
+
+	<!-- for matching grouping of footprint and value combination -->
 	<xsl:key name="partTypeByValueAndFootprint" match="comp" use="concat(footprint, '-', value)" />
 
 	<!-- for table head and empty table fields-->
@@ -60,7 +58,8 @@
 		<xsl:text>&nl;</xsl:text>
 		<!-- list of all references -->
 		<xsl:for-each select="key('partTypeByValueAndFootprint', concat(footprint, '-', value))">
-			<xsl:sort select="@ref" />
+			<!-- strip non-digits from reference and sort based on remaining number -->
+			<xsl:sort select="translate(@ref, translate(@ref, $digits, ''), '')" data-type="number" />
 			<xsl:value-of select="@ref"/><xsl:text> </xsl:text>
 		</xsl:for-each><xsl:text>,</xsl:text>
 		<!-- quantity of parts with same footprint and value -->
@@ -91,13 +90,14 @@
 		    <xsl:if test="@name=$allnames">
 			<!-- content of the field -->
 			<xsl:value-of select="."/>
-            <xsl:text>"</xsl:text>
 		    </xsl:if>
 		    <!--
 			If it does not exist, use an empty cell in output for this row.
 			Every non-blank entry is assigned to its proper column.
 		    -->
-		</xsl:for-each>
+                </xsl:for-each>
+
+                <xsl:text>"</xsl:text>
 	    </xsl:for-each>
 	</xsl:template>
 

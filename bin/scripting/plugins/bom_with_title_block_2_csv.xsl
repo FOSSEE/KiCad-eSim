@@ -3,12 +3,12 @@
     Based on Stefan Helmert bom2csv.xsl
 
     Note:
-        The project infomation (i.e title, company and revision) is taken from the root sheet.
+        The project information (i.e title, company and revision) is taken from the root sheet.
 
     Arthur:
         Ronald Sousa HashDefineElectronics.com
 
-    Ouput Example:
+    Output Example:
         Source,
         Kicad Rev,  working director and file source
         Generated Date, date this file was generated
@@ -24,12 +24,15 @@
 -->
 <!--
     @package
-    Output format
-        Reference, Value, Fields[n], Library, Library Ref
-        U1, PIC32MX, Fields[n], KicadLib, PIC
+    Output: CSV (comma-separated)
+    Grouped By: ungrouped, one component per line
+    Sorted By: Ref
+    Fields: Reference, Value, any additional symbol fields, Library, Library Ref
 
-Command line:
-        xsltproc -o "%O.csv" "pathToFile/bom2csv.xsl" "%I"
+    Includes a title block at the top of the BOM.
+
+    Command line:
+    xsltproc -o "%O.csv" "pathToFile/bom_with_title_block_2_csv.xsl" "%I"
 -->
 
 <!DOCTYPE xsl:stylesheet [
@@ -50,7 +53,7 @@ Command line:
 
         <xsl:text>&nl;</xsl:text>
 
-        <!-- Ouput Root sheet project information -->
+        <!-- Output Root sheet project information -->
         <xsl:apply-templates select="/export/design/sheet[1]"/>
 
         <xsl:text>&nl;</xsl:text>
